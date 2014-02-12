@@ -1,8 +1,12 @@
 <?php 
 
+/* load in file of English word */
 $englishFile = file('./englishNouns.txt', true);
+
+/* open file of links */
 $file = './links.txt';
 
+/* Attempt to query the Google Images API */
 for ($i=0; $i < count($englishFile); $i++) {
 	$word = $englishFile[$i];
 	$url = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&as_filetype=jpg&q=$word";
@@ -23,5 +27,4 @@ for ($i=0; $i < count($englishFile); $i++) {
 	file_put_contents($file, $current);
 
 }
-
 ?>

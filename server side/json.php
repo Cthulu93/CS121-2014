@@ -1,23 +1,26 @@
 <?php
+/* Database parameters */
 $dbhost = 'localhost';
 $dbuser = 'echoorg1_cs121';
 $dbpass = 'cs121';
 $dbname = 'echoorg1_cs121';
 
-$con = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname) or die ('Error connecting to mysql');
-
-if (mysqli_connect_errno())
-  {
+/* Establish connection to SQL database, throw error */
+$con = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname) 
+     or die ('Error connecting to mysql');
+if (mysqli_connect_errno()) {
   echo "Failed to connect to MySQL: " . mysqli_connect_error();
-  }
+}
 
+/* Grab entire contents of SQL table */
 $result = mysqli_query($con,"SELECT * FROM Translations");
 
-/*begin json output */
-/*echo "[";*/
+/* Array to hold all JSON Output */
 $masterArray = array();
-while($row = mysqli_fetch_array($result))
-  {
+
+/* Loop through the SQL database line-by-line
+   and add each row to the array */
+while($row = mysqli_fetch_array($result)){
   $arr = array('TransID' => $row['TransID'],
   			   'English' => $row['English'],
   			   'EnglishLen' => (int)$row['EnglishLen'],
@@ -26,9 +29,8 @@ while($row = mysqli_fetch_array($result))
   			   'Image' => $row['Image']);
   /*put all of the json dictionaries into the master array*/
   array_push($masterArray, $arr);
-  }
+}
 
-  echo json_encode($masterArray);
-
-mysqli_close($con);
+/* Output the entire array of rows in JSON format */
+echo json_encode($masterArray);
 ?>
