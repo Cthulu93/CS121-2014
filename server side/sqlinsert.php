@@ -12,9 +12,14 @@ if (mysqli_connect_errno()) {
   echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
 
-/* Grab English and Spanish files */
-$englishFile = file('./englishVerbs.txt', true);
-$spanishFile = file('./spanishVerbs.txt', true);
+/* Grab English and Spanish files from URL parameters */
+$englishFile = $_GET['eng'];
+$englishFile = "./" . $englishFile . ".txt";
+$englishFile = file($englishFile, true);
+
+$spanishFile = $_GET['span'];
+$spanishFile = "./" . $spanishFile . ".txt";
+$spanishFile = file($spanishFile, true);
 
 /* Loop through all lines of file and enter each 
    into the database */
