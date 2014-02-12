@@ -14,10 +14,12 @@ if (mysqli_connect_errno()) {
 
 /* Grab English and Spanish files from URL parameters */
 $englishFile = $_GET['eng'];
+/* Create proper filename */
 $englishFile = "./" . $englishFile . ".txt";
 $englishFile = file($englishFile, true);
 
 $spanishFile = $_GET['span'];
+/* Create proper filename */
 $spanishFile = "./" . $spanishFile . ".txt";
 $spanishFile = file($spanishFile, true);
 
