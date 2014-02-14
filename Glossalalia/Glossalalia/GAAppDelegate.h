@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GATestViewController.h"
 
 @interface GAAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property GATestViewController *testvc;
 
 @end
