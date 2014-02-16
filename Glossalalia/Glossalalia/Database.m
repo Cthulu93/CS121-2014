@@ -195,6 +195,7 @@ static sqlite3_stmt *updateEntry;
         
         [Database saveEntryWithEnglish:english andSpanish:spanish andImage:image];
     }
+    NSLog(@"Database update complete");
 }
 
 + (void)cleanUpDatabaseForQuit
