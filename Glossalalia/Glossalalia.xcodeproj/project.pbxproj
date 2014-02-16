@@ -19,17 +19,14 @@
 		6736430618AD90E000EC785D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 673642EE18AD90E000EC785D /* UIKit.framework */; };
 		6736430E18AD90E000EC785D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6736430C18AD90E000EC785D /* InfoPlist.strings */; };
 		6736431018AD90E000EC785D /* GlossalaliaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6736430F18AD90E000EC785D /* GlossalaliaTests.m */; };
-<<<<<<< HEAD
 		7318B5D818ADB48F00FC9245 /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = 7318B5D718ADB48E00FC9245 /* Database.m */; };
 		7318B5DB18ADB53A00FC9245 /* DatabaseCaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 7318B5DA18ADB53A00FC9245 /* DatabaseCaller.m */; };
 		7318B5E418ADC79D00FC9245 /* entries.sql in Resources */ = {isa = PBXBuildFile; fileRef = 7318B5E318ADC79D00FC9245 /* entries.sql */; };
 		7318B5E718ADC8F500FC9245 /* GADataEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 7318B5E618ADC8F500FC9245 /* GADataEntry.m */; };
 		7318B5E918ADCA9900FC9245 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7318B5E818ADCA9900FC9245 /* libsqlite3.dylib */; };
 		73C002B518B037880066715E /* GADataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C002B418B037880066715E /* GADataViewController.m */; };
-=======
 		6736431B18ADE75C00EC785D /* GATestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6736431A18ADE75C00EC785D /* GATestViewController.m */; };
 		6736431D18ADFC7700EC785D /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6736431C18ADFC7700EC785D /* GameKit.framework */; };
->>>>>>> 3ef3e36cda65a4cb5fcd23bea9eecb406c4e109d
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,7 +56,6 @@
 		6736430B18AD90E000EC785D /* GlossalaliaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GlossalaliaTests-Info.plist"; sourceTree = "<group>"; };
 		6736430D18AD90E000EC785D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6736430F18AD90E000EC785D /* GlossalaliaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlossalaliaTests.m; sourceTree = "<group>"; };
-<<<<<<< HEAD
 		7318B5D618ADB48500FC9245 /* Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Database.h; sourceTree = "<group>"; };
 		7318B5D718ADB48E00FC9245 /* Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Database.m; sourceTree = "<group>"; };
 		7318B5D918ADB53A00FC9245 /* DatabaseCaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseCaller.h; sourceTree = "<group>"; };
@@ -70,11 +66,9 @@
 		7318B5E818ADCA9900FC9245 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		73C002B318B037880066715E /* GADataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADataViewController.h; sourceTree = "<group>"; };
 		73C002B418B037880066715E /* GADataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GADataViewController.m; sourceTree = "<group>"; };
-=======
 		6736431918ADE75C00EC785D /* GATestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GATestViewController.h; sourceTree = "<group>"; };
 		6736431A18ADE75C00EC785D /* GATestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GATestViewController.m; sourceTree = "<group>"; };
 		6736431C18ADFC7700EC785D /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
->>>>>>> 3ef3e36cda65a4cb5fcd23bea9eecb406c4e109d
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,11 +119,8 @@
 		673642E918AD90E000EC785D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
 				7318B5E818ADCA9900FC9245 /* libsqlite3.dylib */,
-=======
 				6736431C18ADFC7700EC785D /* GameKit.framework */,
->>>>>>> 3ef3e36cda65a4cb5fcd23bea9eecb406c4e109d
 				673642EA18AD90E000EC785D /* Foundation.framework */,
 				673642EC18AD90E000EC785D /* CoreGraphics.framework */,
 				673642EE18AD90E000EC785D /* UIKit.framework */,
