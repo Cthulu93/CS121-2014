@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Database.h"
+#import "GADataViewController.h"
 
 @interface GAAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property GADataViewController *dataView;
 
 @end

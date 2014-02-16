@@ -19,6 +19,12 @@
 		6736430618AD90E000EC785D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 673642EE18AD90E000EC785D /* UIKit.framework */; };
 		6736430E18AD90E000EC785D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6736430C18AD90E000EC785D /* InfoPlist.strings */; };
 		6736431018AD90E000EC785D /* GlossalaliaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6736430F18AD90E000EC785D /* GlossalaliaTests.m */; };
+		7318B5D818ADB48F00FC9245 /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = 7318B5D718ADB48E00FC9245 /* Database.m */; };
+		7318B5DB18ADB53A00FC9245 /* DatabaseCaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 7318B5DA18ADB53A00FC9245 /* DatabaseCaller.m */; };
+		7318B5E418ADC79D00FC9245 /* entries.sql in Resources */ = {isa = PBXBuildFile; fileRef = 7318B5E318ADC79D00FC9245 /* entries.sql */; };
+		7318B5E718ADC8F500FC9245 /* GADataEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 7318B5E618ADC8F500FC9245 /* GADataEntry.m */; };
+		7318B5E918ADCA9900FC9245 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7318B5E818ADCA9900FC9245 /* libsqlite3.dylib */; };
+		73C002B518B037880066715E /* GADataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C002B418B037880066715E /* GADataViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +54,16 @@
 		6736430B18AD90E000EC785D /* GlossalaliaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GlossalaliaTests-Info.plist"; sourceTree = "<group>"; };
 		6736430D18AD90E000EC785D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6736430F18AD90E000EC785D /* GlossalaliaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlossalaliaTests.m; sourceTree = "<group>"; };
+		7318B5D618ADB48500FC9245 /* Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Database.h; sourceTree = "<group>"; };
+		7318B5D718ADB48E00FC9245 /* Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Database.m; sourceTree = "<group>"; };
+		7318B5D918ADB53A00FC9245 /* DatabaseCaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseCaller.h; sourceTree = "<group>"; };
+		7318B5DA18ADB53A00FC9245 /* DatabaseCaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseCaller.m; sourceTree = "<group>"; };
+		7318B5E318ADC79D00FC9245 /* entries.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = entries.sql; sourceTree = "<group>"; };
+		7318B5E518ADC8F500FC9245 /* GADataEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADataEntry.h; sourceTree = "<group>"; };
+		7318B5E618ADC8F500FC9245 /* GADataEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GADataEntry.m; sourceTree = "<group>"; };
+		7318B5E818ADCA9900FC9245 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		73C002B318B037880066715E /* GADataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADataViewController.h; sourceTree = "<group>"; };
+		73C002B418B037880066715E /* GADataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GADataViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7318B5E918ADCA9900FC9245 /* libsqlite3.dylib in Frameworks */,
 				673642ED18AD90E000EC785D /* CoreGraphics.framework in Frameworks */,
 				673642EF18AD90E000EC785D /* UIKit.framework in Frameworks */,
 				673642EB18AD90E000EC785D /* Foundation.framework in Frameworks */,
@@ -96,6 +113,7 @@
 		673642E918AD90E000EC785D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7318B5E818ADCA9900FC9245 /* libsqlite3.dylib */,
 				673642EA18AD90E000EC785D /* Foundation.framework */,
 				673642EC18AD90E000EC785D /* CoreGraphics.framework */,
 				673642EE18AD90E000EC785D /* UIKit.framework */,
@@ -109,6 +127,7 @@
 			children = (
 				673642F918AD90E000EC785D /* GAAppDelegate.h */,
 				673642FA18AD90E000EC785D /* GAAppDelegate.m */,
+				7318B5DC18ADB59300FC9245 /* backend */,
 				673642FC18AD90E000EC785D /* Images.xcassets */,
 				673642F118AD90E000EC785D /* Supporting Files */,
 			);
@@ -142,6 +161,22 @@
 				6736430C18AD90E000EC785D /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7318B5DC18ADB59300FC9245 /* backend */ = {
+			isa = PBXGroup;
+			children = (
+				7318B5D618ADB48500FC9245 /* Database.h */,
+				7318B5D718ADB48E00FC9245 /* Database.m */,
+				7318B5D918ADB53A00FC9245 /* DatabaseCaller.h */,
+				7318B5DA18ADB53A00FC9245 /* DatabaseCaller.m */,
+				7318B5E518ADC8F500FC9245 /* GADataEntry.h */,
+				7318B5E618ADC8F500FC9245 /* GADataEntry.m */,
+				73C002B318B037880066715E /* GADataViewController.h */,
+				73C002B418B037880066715E /* GADataViewController.m */,
+				7318B5E318ADC79D00FC9245 /* entries.sql */,
+			);
+			name = backend;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,6 +255,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7318B5E418ADC79D00FC9245 /* entries.sql in Resources */,
 				673642F518AD90E000EC785D /* InfoPlist.strings in Resources */,
 				673642FD18AD90E000EC785D /* Images.xcassets in Resources */,
 			);
@@ -240,7 +276,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73C002B518B037880066715E /* GADataViewController.m in Sources */,
 				673642FB18AD90E000EC785D /* GAAppDelegate.m in Sources */,
+				7318B5D818ADB48F00FC9245 /* Database.m in Sources */,
+				7318B5DB18ADB53A00FC9245 /* DatabaseCaller.m in Sources */,
+				7318B5E718ADC8F500FC9245 /* GADataEntry.m in Sources */,
 				673642F718AD90E000EC785D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -442,6 +482,7 @@
 				6736431518AD90E000EC785D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6736431618AD90E000EC785D /* Build configuration list for PBXNativeTarget "GlossalaliaTests" */ = {
 			isa = XCConfigurationList;
@@ -450,6 +491,7 @@
 				6736431818AD90E000EC785D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
