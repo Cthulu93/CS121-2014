@@ -29,6 +29,18 @@
     return [_dataEntries objectAtIndex:rand];
 }
 
-
+-(NSMutableArray*)grabRandomEntries:(int)num{
+    // find out how many entries we have to work with
+    NSUInteger numEntries = [_dataEntries count];
+    
+    // create array of num entries selected at random
+    NSMutableArray *randomEntries = [NSMutableArray new];
+    for(int i = 0; i < num; ++i){
+        NSUInteger rand = arc4random_uniform(numEntries);
+        [randomEntries addObject:[_dataEntries objectAtIndex:rand]];
+    }
+    
+    return randomEntries;
+}
 
 @end

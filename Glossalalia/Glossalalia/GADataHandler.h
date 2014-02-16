@@ -18,4 +18,6 @@
 
 -(GADataEntry*)grabRandomEntry;
 
+-(NSMutableArray*)grabRandomEntries:(int)num;
+
 @end
