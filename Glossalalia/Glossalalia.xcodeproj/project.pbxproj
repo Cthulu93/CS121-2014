@@ -26,6 +26,7 @@
 		7318B5E418ADC79D00FC9245 /* entries.sql in Resources */ = {isa = PBXBuildFile; fileRef = 7318B5E318ADC79D00FC9245 /* entries.sql */; };
 		7318B5E718ADC8F500FC9245 /* GADataEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 7318B5E618ADC8F500FC9245 /* GADataEntry.m */; };
 		7318B5E918ADCA9900FC9245 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7318B5E818ADCA9900FC9245 /* libsqlite3.dylib */; };
+		73251C8918B16A7F000ABEAD /* GADataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 73251C8818B16A7F000ABEAD /* GADataHandler.m */; };
 		73C002B518B037880066715E /* GADataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C002B418B037880066715E /* GADataViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +68,8 @@
 		7318B5E518ADC8F500FC9245 /* GADataEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADataEntry.h; sourceTree = "<group>"; };
 		7318B5E618ADC8F500FC9245 /* GADataEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GADataEntry.m; sourceTree = "<group>"; };
 		7318B5E818ADCA9900FC9245 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		73251C8718B16A7F000ABEAD /* GADataHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADataHandler.h; sourceTree = "<group>"; };
+		73251C8818B16A7F000ABEAD /* GADataHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GADataHandler.m; sourceTree = "<group>"; };
 		73C002B318B037880066715E /* GADataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADataViewController.h; sourceTree = "<group>"; };
 		73C002B418B037880066715E /* GADataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GADataViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -175,17 +178,35 @@
 		7318B5DC18ADB59300FC9245 /* backend */ = {
 			isa = PBXGroup;
 			children = (
-				7318B5D618ADB48500FC9245 /* Database.h */,
-				7318B5D718ADB48E00FC9245 /* Database.m */,
-				7318B5D918ADB53A00FC9245 /* DatabaseCaller.h */,
-				7318B5DA18ADB53A00FC9245 /* DatabaseCaller.m */,
-				7318B5E518ADC8F500FC9245 /* GADataEntry.h */,
-				7318B5E618ADC8F500FC9245 /* GADataEntry.m */,
+				73251C8A18B16AFD000ABEAD /* database */,
+				73251C8B18B16B15000ABEAD /* data objects */,
 				73C002B318B037880066715E /* GADataViewController.h */,
 				73C002B418B037880066715E /* GADataViewController.m */,
 				7318B5E318ADC79D00FC9245 /* entries.sql */,
 			);
 			name = backend;
+			sourceTree = "<group>";
+		};
+		73251C8A18B16AFD000ABEAD /* database */ = {
+			isa = PBXGroup;
+			children = (
+				7318B5D618ADB48500FC9245 /* Database.h */,
+				7318B5D718ADB48E00FC9245 /* Database.m */,
+				7318B5D918ADB53A00FC9245 /* DatabaseCaller.h */,
+				7318B5DA18ADB53A00FC9245 /* DatabaseCaller.m */,
+			);
+			name = database;
+			sourceTree = "<group>";
+		};
+		73251C8B18B16B15000ABEAD /* data objects */ = {
+			isa = PBXGroup;
+			children = (
+				7318B5E518ADC8F500FC9245 /* GADataEntry.h */,
+				7318B5E618ADC8F500FC9245 /* GADataEntry.m */,
+				73251C8718B16A7F000ABEAD /* GADataHandler.h */,
+				73251C8818B16A7F000ABEAD /* GADataHandler.m */,
+			);
+			name = "data objects";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -295,6 +316,7 @@
 			files = (
 				73C002B518B037880066715E /* GADataViewController.m in Sources */,
 				673642FB18AD90E000EC785D /* GAAppDelegate.m in Sources */,
+				73251C8918B16A7F000ABEAD /* GADataHandler.m in Sources */,
 				7318B5D818ADB48F00FC9245 /* Database.m in Sources */,
 				7318B5DB18ADB53A00FC9245 /* DatabaseCaller.m in Sources */,
 				7318B5E718ADC8F500FC9245 /* GADataEntry.m in Sources */,

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Database.h"
+#import "GADataHandler.h"
 #import "GADataViewController.h"
 #import "GATestViewController.h"
 

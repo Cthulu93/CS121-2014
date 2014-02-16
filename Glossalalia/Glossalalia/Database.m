@@ -136,9 +136,12 @@ static sqlite3_stmt *updateEntry;
 // TO DO- fix this function so that it does not erase an arbitrarily large number of database entries
 +(void)eraseAllEntries
 {
-    // grab all of the entries, get a count of how many we have, and delete them one-by-one
+
+    // TODO- enable delete to work properly on the exact number of entries
     NSMutableArray *array = [Database fetchAllEntries];
     int numEntries = [array count];
+    
+    // grab all of the entries, get a count of how many we have, and delete them one-by-one
     NSLog(@"erasing all database entries");
     for(int i = 1; i < 100000; ++i){
         [Database deleteEntry:i];
