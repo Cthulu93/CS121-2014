@@ -22,9 +22,6 @@
     
     // view controller to visualize the contents of the database
     _dataView = [GADataViewController new];
-
-    _testvc = [[GATestViewController alloc] init];
-    [self.window setRootViewController:_testvc];
     
     [self.window makeKeyAndVisible];
     return YES;
