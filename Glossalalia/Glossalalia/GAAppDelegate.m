@@ -22,7 +22,8 @@
     
     // view controller to visualize the contents of the database
     _dataView = [GADataViewController new];
-        
+    
+    // create the test view controller
     _testvc = [[GATestViewController alloc] init];
     [self.window setRootViewController:_testvc];
     

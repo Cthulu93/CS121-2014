@@ -21,6 +21,7 @@
 		6736431018AD90E000EC785D /* GlossalaliaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6736430F18AD90E000EC785D /* GlossalaliaTests.m */; };
 		6736431B18ADE75C00EC785D /* GATestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6736431A18ADE75C00EC785D /* GATestViewController.m */; };
 		6736431D18ADFC7700EC785D /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6736431C18ADFC7700EC785D /* GameKit.framework */; };
+		67BCB5D418B30DB800D5EF9F /* GAMatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67BCB5D318B30DB800D5EF9F /* GAMatchViewController.m */; };
 		7318B5D818ADB48F00FC9245 /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = 7318B5D718ADB48E00FC9245 /* Database.m */; };
 		7318B5DB18ADB53A00FC9245 /* DatabaseCaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 7318B5DA18ADB53A00FC9245 /* DatabaseCaller.m */; };
 		7318B5E418ADC79D00FC9245 /* entries.sql in Resources */ = {isa = PBXBuildFile; fileRef = 7318B5E318ADC79D00FC9245 /* entries.sql */; };
@@ -60,6 +61,8 @@
 		6736431918ADE75C00EC785D /* GATestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GATestViewController.h; sourceTree = "<group>"; };
 		6736431A18ADE75C00EC785D /* GATestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GATestViewController.m; sourceTree = "<group>"; };
 		6736431C18ADFC7700EC785D /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		67BCB5D218B30DB800D5EF9F /* GAMatchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAMatchViewController.h; sourceTree = "<group>"; };
+		67BCB5D318B30DB800D5EF9F /* GAMatchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAMatchViewController.m; sourceTree = "<group>"; };
 		7318B5D618ADB48500FC9245 /* Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Database.h; sourceTree = "<group>"; };
 		7318B5D718ADB48E00FC9245 /* Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Database.m; sourceTree = "<group>"; };
 		7318B5D918ADB53A00FC9245 /* DatabaseCaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseCaller.h; sourceTree = "<group>"; };
@@ -139,6 +142,8 @@
 				673642FA18AD90E000EC785D /* GAAppDelegate.m */,
 				6736431918ADE75C00EC785D /* GATestViewController.h */,
 				6736431A18ADE75C00EC785D /* GATestViewController.m */,
+				67BCB5D218B30DB800D5EF9F /* GAMatchViewController.h */,
+				67BCB5D318B30DB800D5EF9F /* GAMatchViewController.m */,
 				7318B5DC18ADB59300FC9245 /* backend */,
 				673642FC18AD90E000EC785D /* Images.xcassets */,
 				673642F118AD90E000EC785D /* Supporting Files */,
@@ -320,6 +325,7 @@
 				7318B5D818ADB48F00FC9245 /* Database.m in Sources */,
 				7318B5DB18ADB53A00FC9245 /* DatabaseCaller.m in Sources */,
 				7318B5E718ADC8F500FC9245 /* GADataEntry.m in Sources */,
+				67BCB5D418B30DB800D5EF9F /* GAMatchViewController.m in Sources */,
 				673642F718AD90E000EC785D /* main.m in Sources */,
 				6736431B18ADE75C00EC785D /* GATestViewController.m in Sources */,
 			);

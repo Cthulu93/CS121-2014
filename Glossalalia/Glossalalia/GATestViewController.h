@@ -8,15 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import <GameKit/GameKit.h>
+#import "GAMatchViewController.h"
 
-@interface GATestViewController : UIViewController <GKMatchmakerViewControllerDelegate, GKMatchDelegate>
+@interface GATestViewController : UIViewController <GKMatchmakerViewControllerDelegate, GAMatchViewControllerDelegate>
 
+@property GAMatchViewController *matchVC;
 @property UIButton *matchmakeButton;
 @property UILabel *gameStatus;
 @property UIButton *gameButton;
 @property GKMatch *theMatch;
 @property BOOL matchOn;
 
+- (void) beginMatch;
 - (void) requestMatch;
 - (void) authenticatedPlayer: (GKLocalPlayer*) lp;
 - (void) match:(GKMatch *)match didReceiveData:(NSData *)data fromPlayer:(NSString *)playerID;

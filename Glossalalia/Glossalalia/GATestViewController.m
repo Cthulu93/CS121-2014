@@ -22,29 +22,30 @@
         _fWidth = self.view.frame.size.width;
         _fHeight = self.view.frame.size.height;
         
-        _matchmakeButton = [[UIButton alloc] initWithFrame: CGRectMake(0.05*_fWidth, 0.05*_fHeight, 0.9*_fWidth, 0.1*_fHeight)];
+        // create buttons, etc.
+        _matchmakeButton = [[UIButton alloc] initWithFrame: CGRectMake(0.05*_fWidth, 0.75*_fHeight, 0.9*_fWidth, 0.1*_fHeight)];
         [_matchmakeButton setTitle: @"Request a match" forState:UIControlStateNormal];
         [_matchmakeButton setBackgroundColor:[UIColor purpleColor]];
+        [_matchmakeButton setShowsTouchWhenHighlighted:YES];
+        [_matchmakeButton setEnabled:NO];
         [self.view addSubview:_matchmakeButton];
-        [_matchmakeButton addTarget:self action:@selector(requestMatch) forControlEvents:UIControlEventTouchUpInside];
         
-        _gameStatus = [[UILabel alloc] initWithFrame:CGRectMake(0.05*_fWidth, 0.2*_fHeight, 0.9*_fWidth, 0.2*_fHeight)];
-        [_gameStatus setBackgroundColor:[UIColor magentaColor]];
+        _gameStatus = [[UILabel alloc] initWithFrame:CGRectMake(0.05*_fWidth, 0.2*_fHeight, 0.9*_fWidth, 0.3*_fHeight)];
+        //[_gameStatus setBackgroundColor:[UIColor magentaColor]];
+        [_gameStatus setFont:[UIFont fontWithName:@"Avenir-MediumOblique" size:50.0]];
+        [_gameStatus setText:@"Glossalalia"];
+        [_gameStatus setTextAlignment:NSTextAlignmentCenter];
+        [_gameStatus setTextColor:[UIColor blackColor]];
         [self.view addSubview:_gameStatus];
         
-        _gameButton = [[UIButton alloc] initWithFrame:CGRectMake(0.05*_fWidth, 0.45*_fHeight, 0.9*_fWidth, 0.1*_fHeight)];
-        
-        [_gameButton setTitle:@"Push them!" forState:UIControlStateNormal];
-        [_gameButton setBackgroundColor:[UIColor purpleColor]];
-        [_gameButton addTarget:self action:@selector(sendMessage) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:_gameButton];
-        
+        // there is no match going, and then we authenticate the local player.
         _matchOn = false;
         [self authenticateLocalPlayer];
     }
     return self;
 }
 
+// Called to log the player in to Game center. Presents an Apple VC for authentication.
 - (void) authenticateLocalPlayer
 {
     GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
@@ -52,7 +53,6 @@
     localPlayer.authenticateHandler = ^(UIViewController *viewController, NSError *error){
         if (viewController != nil)
         {
-            //showAuthenticationDialogWhenReasonable: is an example method name. Create your own method that displays an authentication view when appropriate for your app.
             //[self showAuthenticationDialogWhenReasonable: viewController];
             [self presentViewController:viewController animated:false completion:^(void){
                 [self authenticateLocalPlayer];}];
@@ -71,6 +71,7 @@
     };
 }
 
+// Requests a match using Game Center. Presents an Apple VC for match creation.
 - (void) requestMatch {
     if (!_matchOn) {
         GKMatchRequest *request = [[GKMatchRequest alloc] init];
@@ -84,40 +85,52 @@
     }
 }
 
+// Method called when player is authenticated. more should go here at some point.
 - (void) authenticatedPlayer: (GKLocalPlayer*) lp {
     NSLog(@"%@ has been authenticated!", [lp displayName]);
+    [_matchmakeButton addTarget:self action:@selector(requestMatch) forControlEvents:UIControlEventTouchUpInside];
+    [_matchmakeButton setEnabled:YES];
 }
 
-- (void) sendMessage {
-    if (_matchOn) {
-        [_theMatch sendDataToAllPlayers:[@"Push now!" dataUsingEncoding:NSUTF8StringEncoding] withDataMode:GKMatchSendDataUnreliable error:nil];
-    }
-    [_gameStatus setText:@"Wait!"];
+#pragma mark GAMatchViewController methods
+
+- (void) matchDidEnd {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    _matchOn = NO;
 }
+
+#pragma mark GKMatchmakerViewControllerDelegate methods
 
 - (void)matchmakerViewControllerWasCancelled:(GKMatchmakerViewController *)viewController
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
-    // Implement any specific code in your game here.
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (void)matchmakerViewController:(GKMatchmakerViewController *)viewController didFailWithError:(NSError *)error
 {
-    NSLog(@"Matchmaking failed with error: %@", [error localizedDescription]);
     [self dismissViewControllerAnimated:YES completion:nil];
+    
     // Implement any specific code in your game here.
+    NSLog(@"%lu recovery options.", (unsigned long)[[error localizedRecoveryOptions] count]);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[error localizedDescription] message:[error localizedRecoverySuggestion] delegate:self cancelButtonTitle:[error localizedRecoveryOptions][0] otherButtonTitles:[error localizedRecoveryOptions][1], nil];
+    [alert show];
+    
+    NSLog(@"Matchmaking failed with error: %@", [error localizedDescription]);
 }
 
 - (void)matchmakerViewController:(GKMatchmakerViewController *)viewController didFindMatch:(GKMatch *)match
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
-    _theMatch = match; // Use a retaining property to retain the match.
-    match.delegate = self;
-    if (!_matchOn && match.expectedPlayerCount == 0)
-    {
-        _matchOn = YES;
-        // Insert game-specific code to start the match.
-    }
+    _matchVC = [[GAMatchViewController alloc] initWithMatch:match];
+    
+    [self dismissViewControllerAnimated:YES completion:^(void) {
+        if (!_matchOn && match.expectedPlayerCount == 0)
+        {
+            _matchOn = YES;
+            _matchVC = [[GAMatchViewController alloc] initWithMatch:match];
+            [_matchVC setDelegate:self];
+            [self presentViewController:_matchVC animated:NO completion:nil];
+        }
+    }];
 }
 
 - (void) match:(GKMatch *)match didReceiveData:(NSData *)data fromPlayer:(NSString *)playerID {
