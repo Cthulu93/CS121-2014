@@ -24,8 +24,11 @@
     _dataView = [GADataViewController new];
     
     // create the test view controller
-    _testvc = [[GATestViewController alloc] init];
-    [self.window setRootViewController:_testvc];
+    //_testvc = [[GATestViewController alloc] init];
+    //[self.window setRootViewController:_testvc];
+    
+    _elementView = [[GAElementViewController alloc] initWithNibName:nil bundle:nil];
+    [self.window setRootViewController:_elementView];
     
     [self.window makeKeyAndVisible];
     return YES;

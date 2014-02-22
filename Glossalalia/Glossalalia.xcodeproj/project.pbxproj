@@ -28,6 +28,9 @@
 		7318B5E718ADC8F500FC9245 /* GADataEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 7318B5E618ADC8F500FC9245 /* GADataEntry.m */; };
 		7318B5E918ADCA9900FC9245 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7318B5E818ADCA9900FC9245 /* libsqlite3.dylib */; };
 		73251C8918B16A7F000ABEAD /* GADataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 73251C8818B16A7F000ABEAD /* GADataHandler.m */; };
+		734DF0AA18B6AEE7000845E0 /* GAElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 734DF0A918B6AEE7000845E0 /* GAElement.m */; };
+		734DF0AD18B6B0AB000845E0 /* GAElementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 734DF0AC18B6B0AB000845E0 /* GAElementViewController.m */; };
+		734DF0B318B819F2000845E0 /* GATransferHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 734DF0B218B819F2000845E0 /* GATransferHandler.m */; };
 		73C002B518B037880066715E /* GADataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C002B418B037880066715E /* GADataViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +76,12 @@
 		7318B5E818ADCA9900FC9245 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		73251C8718B16A7F000ABEAD /* GADataHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADataHandler.h; sourceTree = "<group>"; };
 		73251C8818B16A7F000ABEAD /* GADataHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GADataHandler.m; sourceTree = "<group>"; };
+		734DF0A818B6AEE7000845E0 /* GAElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAElement.h; sourceTree = "<group>"; };
+		734DF0A918B6AEE7000845E0 /* GAElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAElement.m; sourceTree = "<group>"; };
+		734DF0AB18B6B0AB000845E0 /* GAElementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAElementViewController.h; sourceTree = "<group>"; };
+		734DF0AC18B6B0AB000845E0 /* GAElementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAElementViewController.m; sourceTree = "<group>"; };
+		734DF0B118B819F2000845E0 /* GATransferHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GATransferHandler.h; sourceTree = "<group>"; };
+		734DF0B218B819F2000845E0 /* GATransferHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GATransferHandler.m; sourceTree = "<group>"; };
 		73C002B318B037880066715E /* GADataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADataViewController.h; sourceTree = "<group>"; };
 		73C002B418B037880066715E /* GADataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GADataViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -144,6 +153,7 @@
 				6736431A18ADE75C00EC785D /* GATestViewController.m */,
 				67BCB5D218B30DB800D5EF9F /* GAMatchViewController.h */,
 				67BCB5D318B30DB800D5EF9F /* GAMatchViewController.m */,
+				734DF0A118B6AD2D000845E0 /* GAElement */,
 				7318B5DC18ADB59300FC9245 /* backend */,
 				673642FC18AD90E000EC785D /* Images.xcassets */,
 				673642F118AD90E000EC785D /* Supporting Files */,
@@ -212,6 +222,19 @@
 				73251C8818B16A7F000ABEAD /* GADataHandler.m */,
 			);
 			name = "data objects";
+			sourceTree = "<group>";
+		};
+		734DF0A118B6AD2D000845E0 /* GAElement */ = {
+			isa = PBXGroup;
+			children = (
+				734DF0A818B6AEE7000845E0 /* GAElement.h */,
+				734DF0A918B6AEE7000845E0 /* GAElement.m */,
+				734DF0B118B819F2000845E0 /* GATransferHandler.h */,
+				734DF0B218B819F2000845E0 /* GATransferHandler.m */,
+				734DF0AB18B6B0AB000845E0 /* GAElementViewController.h */,
+				734DF0AC18B6B0AB000845E0 /* GAElementViewController.m */,
+			);
+			name = GAElement;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -319,14 +342,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				734DF0B318B819F2000845E0 /* GATransferHandler.m in Sources */,
 				73C002B518B037880066715E /* GADataViewController.m in Sources */,
 				673642FB18AD90E000EC785D /* GAAppDelegate.m in Sources */,
 				73251C8918B16A7F000ABEAD /* GADataHandler.m in Sources */,
+				734DF0AD18B6B0AB000845E0 /* GAElementViewController.m in Sources */,
 				7318B5D818ADB48F00FC9245 /* Database.m in Sources */,
 				7318B5DB18ADB53A00FC9245 /* DatabaseCaller.m in Sources */,
 				7318B5E718ADC8F500FC9245 /* GADataEntry.m in Sources */,
 				67BCB5D418B30DB800D5EF9F /* GAMatchViewController.m in Sources */,
 				673642F718AD90E000EC785D /* main.m in Sources */,
+				734DF0AA18B6AEE7000845E0 /* GAElement.m in Sources */,
 				6736431B18ADE75C00EC785D /* GATestViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

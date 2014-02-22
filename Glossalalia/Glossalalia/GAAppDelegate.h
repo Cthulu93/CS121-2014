@@ -11,11 +11,14 @@
 #import "GADataHandler.h"
 #import "GADataViewController.h"
 #import "GATestViewController.h"
+#import "GAElementViewController.h"
 
 @interface GAAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property GADataViewController *dataView;
 @property GATestViewController *testvc;
+
+@property GAElementViewController *elementView;
 
 @end
