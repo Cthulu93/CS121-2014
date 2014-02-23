@@ -17,9 +17,24 @@
         _english = english;
         _spanish = spanish;
         _image = image;
+        
+        // randomly decide whether english or spanish is local.
+        if ((arc4random() % 20) < 10) _englishLocal = YES;
+        else _englishLocal = NO;
     }
     
     return self;
+}
+
+
+-(NSString*)local {
+    if (_englishLocal) return _english;
+    else return _spanish;
+}
+
+-(NSString*)remote {
+    if (_englishLocal) return _spanish;
+    else return _english;
 }
 
 @end

@@ -19,10 +19,8 @@
 @property GKMatch *theMatch;
 @property BOOL matchOn;
 
-- (void) beginMatch;
 - (void) requestMatch;
 - (void) authenticatedPlayer: (GKLocalPlayer*) lp;
 - (void) match:(GKMatch *)match didReceiveData:(NSData *)data fromPlayer:(NSString *)playerID;
-- (void) sendMessage;
 
 @end

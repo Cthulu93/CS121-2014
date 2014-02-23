@@ -13,10 +13,21 @@
 @property NSString *english;
 @property NSString *spanish;
 
+// Determines which string is displayed on which players'
+// screens. If true, then the english word is displayed
+// on the player's button, and the spanish word scrolls
+// across his teammate's screen. And vice versa if false.
+@property BOOL englishLocal;
+
 @property NSInteger ID;
 
 @property UIImage *image;
 
+
+
 -(id)initWithEnglish:(NSString*)english andSpanish:(NSString*)spanish andImage:(UIImage*)image;
+-(NSString*) local;
+-(NSString*) remote;
+
 
 @end
