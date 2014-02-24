@@ -190,6 +190,7 @@ static sqlite3_stmt *updateEntry;
 
 +(void)addEntries:(NSMutableArray*)array{
     // add an entrie array of entries to the database
+    NSLog(@"There are %d entries in the database", [array count]);
     for(NSMutableDictionary *dict in array) {
         NSString *english = [dict objectForKey:@"English"];
         NSString *spanish = [dict objectForKey:@"Spanish"];

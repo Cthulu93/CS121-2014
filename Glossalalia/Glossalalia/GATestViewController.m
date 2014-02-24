@@ -119,9 +119,7 @@
 }
 
 - (void)matchmakerViewController:(GKMatchmakerViewController *)viewController didFindMatch:(GKMatch *)match
-{
-    _matchVC = [[GAMatchViewController alloc] initWithMatch:match];
-    
+{    
     [self dismissViewControllerAnimated:YES completion:^(void) {
         if (!_matchOn && match.expectedPlayerCount == 0)
         {

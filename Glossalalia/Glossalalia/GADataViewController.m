@@ -21,6 +21,8 @@
         // Custom initialization
         _data = [NSMutableArray new];
         _data = [Database fetchAllEntries];
+        if ([_data count] == 0) NSLog(@"DB is empty in GADataVC init");
+        else NSLog(@"DB entries are %d", [_data count]);
     }
     return self;
 }
