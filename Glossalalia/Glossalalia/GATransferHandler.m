@@ -14,4 +14,8 @@
     NSLog(@"transferring word %@", word);
 }
 
++(void)transferWord:(NSString *)word atSliderValue:(int)value{
+    NSLog(@"transferring word %@ with value %d", word, value);
+}
+
 @end

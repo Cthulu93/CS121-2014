@@ -11,7 +11,9 @@
 @interface GATransferHandler : NSObject
 
 // Class method to transfer a local word
-
 +(void)transferWord:(NSString*)word;
+
+// Class method to transfer a local word and the value of the GASlider
++(void)transferWord:(NSString *)word atSliderValue:(int)value;
 
 @end
