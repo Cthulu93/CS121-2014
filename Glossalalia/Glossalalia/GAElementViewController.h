@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "GAElement.h"
+#import "GASlider.h"
 
 @interface GAElementViewController : UIViewController
 

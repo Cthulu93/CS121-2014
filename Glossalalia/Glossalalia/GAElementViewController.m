@@ -37,6 +37,9 @@
 //        GAElement *slideUpButton = [[GAElement alloc] initSlideUpWithX:80 andY:370 andWidth:160 andHeight:40 andLocal:@"Slide Up Test" andRemote:@"TEST"];
 //        [self.view addSubview:slideUpButton];
         
+        GASlider *slider = [[GASlider alloc] initWithX:80 andY:410 andWidth:90 andHeight:20 andMin:1 andMax:5 andLocal:@"test slider local" andRemote:@"test slider remote"];
+        [self.view addSubview:slider];
+        
     }
     return self;
 }
