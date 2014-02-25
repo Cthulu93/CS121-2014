@@ -157,12 +157,11 @@
 				673642FA18AD90E000EC785D /* GAAppDelegate.m */,
 				6736431918ADE75C00EC785D /* GATestViewController.h */,
 				6736431A18ADE75C00EC785D /* GATestViewController.m */,
-
 				67501DC818BB36EB000992E6 /* GAMatchViewController.h */,
 				67501DC918BB36EB000992E6 /* GAMatchViewController.m */,
 				67BCB5D218B30DB800D5EF9F /* GALevelViewController.h */,
 				67BCB5D318B30DB800D5EF9F /* GALevelViewController.m */,
-				734DF0A118B6AD2D000845E0 /* GAElement */,
+				734DF0A118B6AD2D000845E0 /* GAElements */,
 				7318B5DC18ADB59300FC9245 /* backend */,
 				673642FC18AD90E000EC785D /* Images.xcassets */,
 				673642F118AD90E000EC785D /* Supporting Files */,
@@ -297,7 +296,7 @@
 				ORGANIZATIONNAME = "Rupert Deese";
 				TargetAttributes = {
 					673642E618AD90E000EC785D = {
-						DevelopmentTeam = 7GA2W4JMQ4;
+						DevelopmentTeam = 7Z39AD8EF3;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
 								enabled = 1;
