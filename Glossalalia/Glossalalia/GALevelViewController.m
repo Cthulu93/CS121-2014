@@ -82,6 +82,7 @@
         }
 
         // ask a random player for a new command word!
+        [self stopCommandRequestTimer];
         [self getNewCommandWord];
     }
     
@@ -117,10 +118,11 @@
         [_commandLabel setText:@"Success!"];
         _commandWord = @"";
         [self stopCommandCompletionTimer];
+        [self stopCommandRequestTimer];
         [self getNewCommandWord];
         
         NSData *scoreData = [self gameMessage:@"change score" asDataWithWord:nil andPoints:[NSNumber numberWithInt:10]];
-        [_theMatch sendDataToAllPlayers:scoreData withDataMode:GKMatchSendDataUnreliable error:nil];
+        [_theMatch sendDataToAllPlayers:scoreData withDataMode:GKMatchSendDataReliable error:nil];
     }
     else {
         // RD: I don't think it makes sense to decrement the score when a guess is incorrect.
@@ -193,7 +195,7 @@
     
     [self changeScoreBy:[NSNumber numberWithInt:-10]];
     NSData *scoreData = [self gameMessage:@"change score" asDataWithWord:nil andPoints:[NSNumber numberWithInt:-10]];
-    [_theMatch sendDataToAllPlayers:scoreData withDataMode:GKMatchSendDataUnreliable error:nil];
+    [_theMatch sendDataToAllPlayers:scoreData withDataMode:GKMatchSendDataReliable error:nil];
 }
 
 // Encodes message data generated locally for transmission to other players.
@@ -228,7 +230,7 @@
 
 - (void) endMatch {
     NSData *endMatchMessage = [self gameMessage:@"end match" asDataWithWord:nil andPoints:nil];
-    [_theMatch sendDataToAllPlayers:endMatchMessage withDataMode:GKMatchSendDataUnreliable error:nil];
+    [_theMatch sendDataToAllPlayers:endMatchMessage withDataMode:GKMatchSendDataReliable error:nil];
     [self stopCommandCompletionTimer];
     [self stopCommandRequestTimer];
     [_theMatch disconnect];
