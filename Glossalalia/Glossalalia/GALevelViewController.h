@@ -26,9 +26,11 @@
 @property GADataHandler *dataHandler;
 
 @property int score;
+@property int numButtonWordsPerPlayer;
 @property int commandCompletionTimeLimit;
 @property int commandCompletionTimeRemaining;
 
+@property NSMutableArray *legalCommandWords;
 @property NSString *commandWord;
 @property NSMutableArray *buttonWords;
 
@@ -46,15 +48,18 @@
 @property NSTimer *commandCompletionTimer;
 
 - (id)initWithMatch:(GKMatch*)match;
-- (void) endMatch;
-- (void) askRandomPlayerForNewCommandWord;
 
+//- (void) askRandomPlayerForNewCommandWord;
+- (void) getNewCommandWord;
+- (void) addLegalCommandWords:(NSArray*)newWords;
 - (void) remotePlayerPressedButtonWithWord:(NSString*)remoteWord;
-- (void) receivedCommandRequestFromPlayer:(NSString*)playerID;
-- (void) receivedCommandWord:(GADataEntry*)word;
+//- (void) receivedCommandListRequestFromPlayer:(NSString*)playerID;
+//- (void) receivedCommandWord:(GADataEntry*)word;
 - (void) changeScoreBy:(NSNumber*) points;
-
-
-- (NSData*) gameMessage:(NSString*)message asDataWithWord:(NSString*)word andPoints:(NSNumber*) points;
+- (void) decrementAndCheckCommandTimeLimit;
+- (void) commandTimedOut;
+- (NSData*) gameMessage:(NSString*)message asDataWithWord:(NSString*)remoteWord andPoints:(NSNumber*) points;
+- (void) endLevel;
+- (void) endMatch;
 
 @end
