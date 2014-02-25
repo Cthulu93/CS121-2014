@@ -24,6 +24,7 @@
 @property GKMatch *theMatch;
 @property NSObject <GALevelViewControllerDelegate> *delegate;
 @property GADataHandler *dataHandler;
+
 @property int score;
 @property int commandCompletionTimeLimit;
 @property int commandCompletionTimeRemaining;
