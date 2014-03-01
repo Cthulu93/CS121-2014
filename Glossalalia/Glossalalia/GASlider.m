@@ -38,7 +38,7 @@
     int roundedValue = (int)lroundf(value);
     
     // push to transfer handler
-    [GATransferHandler transferWord:_local atSliderValue:roundedValue];
+    //[GATransferHandler transferWord:_local atSliderValue:roundedValue];
 }
 
 -(BOOL)checkMatch:(NSString*)received{

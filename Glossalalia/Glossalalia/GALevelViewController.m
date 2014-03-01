@@ -71,7 +71,8 @@
         
         float y = 0.4;
         for (GADataEntry* buttonWord in _buttonWords) {
-            GAElement *wordButton = [[GAElement alloc] initSingleTapWithX:0 andY:y*_fHeight andWidth:_fWidth andHeight:0.15*_fHeight andWord:buttonWord];
+            GAElement *wordButton = [[GAElement alloc] initSingleTapWithFrame:CGRectMake(0,y*_fHeight, _fWidth, y*_fHeight) andWord:buttonWord];
+                                     
             [wordButton setBackgroundColor:[UIColor magentaColor]];
             [wordButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-Medium" size:30.0]];
             wordButton.delegate = self;

@@ -33,4 +33,6 @@
 
 +(void)cleanUpDatabaseForQuit;
 
++(BOOL)isPopulated;
+
 @end

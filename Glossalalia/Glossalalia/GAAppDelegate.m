@@ -16,10 +16,19 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
-    // setup app database
+    // setup app database, display loading screen if database needs to be updated
     [Database createEditableCopyOfDatabaseIfNeeded];
     [Database initDatabase];
-    //[Database updateDatabase];
+    if(![Database isPopulated]){
+        NSLog(@"pushing load view");
+        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        _loadView = [[GADatabaseLoadingView alloc] initWithFrame:screenRect];
+        [self.window insertSubview:_loadView atIndex:0];
+        [Database updateDatabase];
+        NSLog(@"popping load view");
+        [_loadView removeFromSuperview];
+        // push database loading screen
+    }
     
     // view controller to visualize the contents of the database
     //_dataView = [GADataViewController new];
@@ -29,7 +38,7 @@
     [self.window setRootViewController:_testvc];
     
     //_elementView = [[GAElementViewController alloc] initWithNibName:nil bundle:nil];
-    [self.window setRootViewController:_testvc];
+    //[self.window setRootViewController:_elementView];
     
     [self.window makeKeyAndVisible];
     return YES;

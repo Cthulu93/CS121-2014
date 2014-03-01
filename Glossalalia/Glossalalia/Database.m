@@ -213,4 +213,16 @@ static sqlite3_stmt *updateEntry;
     sqlite3_close(db);
 }
 
++(BOOL)isPopulated
+{
+    if ([[Database fetchAllEntries] count] == 0){
+        NSLog(@"database is not populated");
+        return FALSE;
+    }
+    else{
+        NSLog(@"database is populated");
+        return TRUE;
+    }
+}
+
 @end

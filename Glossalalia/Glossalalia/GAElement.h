@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "GATransferHandler.h"
 #import "GADataEntry.h"
 
 @protocol GAElementDelegate <NSObject>
@@ -25,22 +24,22 @@
 - (id)initWithFrame:(CGRect)frame;
 
 // initalizer for button that is trigered by a single tap
--(id)initSingleTapWithX:(int)x andY:(int)y andWidth:(int)width andHeight:(int)height andWord:(GADataEntry*)word;
+-(id)initSingleTapWithFrame:(CGRect)frame andWord:(GADataEntry*)word;
 
 // initializer for a button that is triggered by five consecutive taps
--(id)init5TapWithX:(int)x andY:(int)y andWidth:(int)width andHeight:(int)height andWord:(GADataEntry*)word;
+-(id)init5TapWithFrame:(CGRect)frame andWord:(GADataEntry*)word;
 
 // initalizer for button that is trigered by a left slide
--(id)initSlideLeftWithX:(int)x andY:(int)y andWidth:(int)width andHeight:(int)height andWord:(GADataEntry*)word;
+-(id)initSlideLeftWithFrame:(CGRect)frame andWord:(GADataEntry*)word;
 
 // initalizer for button that is trigered by a right slide
--(id)initSlideRightWithX:(int)x andY:(int)y andWidth:(int)width andHeight:(int)height andWord:(GADataEntry*)word;
+-(id)initSlideRightWithFrame:(CGRect)frame andWord:(GADataEntry*)word;
 
 // initalizer for button that is trigered by a downward slide
--(id)initSlideDownWithX:(int)x andY:(int)y andWidth:(int)width andHeight:(int)height andWord:(GADataEntry*)word;
+-(id)initSlideDownWithFrame:(CGRect)frame andWord:(GADataEntry*)word;
 
 // // initalizer for button that is trigered by an upward slide
--(id)initSlideUpWithX:(int)x andY:(int)y andWidth:(int)width andHeight:(int)height andWord:(GADataEntry*)word;
+-(id)initSlideUpWithFrame:(CGRect)frame andWord:(GADataEntry*)word;
 
 // method to see if a received word matches the local word on a GAElement
 -(BOOL)checkMatch:(NSString*)received;

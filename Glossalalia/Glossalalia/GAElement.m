@@ -12,10 +12,10 @@
 
 // All GAElement buttons take the usual coordinate and dimension parameters, as well as a local NSString and a remote NSString
 
--(id)initSingleTapWithX:(int)x andY:(int)y andWidth:(int)width andHeight:(int)height andWord:(GADataEntry*)word{
+-(id)initSingleTapWithFrame:(CGRect)frame andWord:(GADataEntry*)word{
     
     self = [GAElement buttonWithType:UIButtonTypeRoundedRect];
-    self.frame = CGRectMake(x,y,width,height);
+    self.frame = frame;
     
     if(self){
         _word = word;
@@ -30,10 +30,10 @@
 }
 
 
--(id)init5TapWithX:(int)x andY:(int)y andWidth:(int)width andHeight:(int)height andWord:(GADataEntry*)word{
+-(id)init5TapWithFrame:(CGRect)frame andWord:(GADataEntry*)word{
     
     self = [GAElement buttonWithType:UIButtonTypeRoundedRect];
-    self.frame = CGRectMake(x,y,width,height);
+    self.frame = frame;
     
     if(self){
         _word = word;
@@ -48,10 +48,10 @@
     return self;
 }
 
--(id)initSlideLeftWithX:(int)x andY:(int)y andWidth:(int)width andHeight:(int)height andWord:(GADataEntry*)word{
+-(id)initSlideLeftWithFrame:(CGRect)frame andWord:(GADataEntry*)word{
     
     self = [GAElement buttonWithType:UIButtonTypeRoundedRect];
-    self.frame = CGRectMake(x,y,width,height);
+    self.frame = frame;
     
     if(self){
         _word = word;
@@ -67,10 +67,10 @@
     return self;
 }
 
--(id)initSlideRightWithX:(int)x andY:(int)y andWidth:(int)width andHeight:(int)height andWord:(GADataEntry*)word{
+-(id)initSlideRightWithFrame:(CGRect)frame andWord:(GADataEntry*)word{
     
     self = [GAElement buttonWithType:UIButtonTypeRoundedRect];
-    self.frame = CGRectMake(x,y,width,height);
+    self.frame = frame;
     
     if(self){
         _word = word;
@@ -86,10 +86,10 @@
     return self;
 }
 
--(id)initSlideDownWithX:(int)x andY:(int)y andWidth:(int)width andHeight:(int)height andWord:(GADataEntry*)word{
+-(id)initSlideDownWithFrame:(CGRect)frame andWord:(GADataEntry*)word{
     
     self = [GAElement buttonWithType:UIButtonTypeRoundedRect];
-    self.frame = CGRectMake(x,y,width,height);
+    self.frame = frame;
     
     if(self){
         _word = word;
@@ -105,10 +105,10 @@
     return self;
 }
 
--(id)initSlideUpWithX:(int)x andY:(int)y andWidth:(int)width andHeight:(int)height andWord:(GADataEntry*)word{
+-(id)initSlideUpWithFrame:(CGRect)frame andWord:(GADataEntry*)word{
     
     self = [GAElement buttonWithType:UIButtonTypeRoundedRect];
-    self.frame = CGRectMake(x,y,width,height);
+    self.frame = frame;
     
     if(self){
         _word = word;

@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "GATransferHandler.h"
 
 @interface GASlider : UISlider
 
