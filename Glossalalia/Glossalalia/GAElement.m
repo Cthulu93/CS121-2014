@@ -40,7 +40,7 @@
         
         UITapGestureRecognizer *fiveGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchDetected)];
         fiveGesture.numberOfTapsRequired = 5;
-        
+
         [self addGestureRecognizer:fiveGesture];
         [self setTitle:_word.local forState:UIControlStateNormal];
     }
