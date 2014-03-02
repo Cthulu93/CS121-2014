@@ -80,9 +80,13 @@
         _wordButtons = [[NSMutableArray alloc] initWithCapacity:0];
         
         float y = 0.4;
+        
+        // create GAElement Buttons
         for (GADataEntry* buttonWord in _buttonWords) {
-            GAElement *wordButton = [[GAElement alloc] initSingleTapWithFrame:CGRectMake(0,y*_fHeight, _fWidth, 0.15*_fHeight) andWord:buttonWord];
-                                     
+            //GAElement *wordButton = [[GAElement alloc] initSingleTapWithFrame:CGRectMake(0,y*_fHeight, _fWidth, 0.15*_fHeight) andWord:buttonWord];
+            GAElement *wordButton = [[GAElement alloc] initRandomWithFrame:CGRectMake(0, y*_fHeight, _fWidth, 0.15 * _fHeight) andWord:buttonWord];
+            
+            // TODO - stylize buttons within initalizers to differentiate them accordingly //
             [wordButton setBackgroundColor:[UIColor magentaColor]];
             [wordButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-Medium" size:30.0]];
             [wordButton.titleLabel setTextColor:[UIColor whiteColor]];

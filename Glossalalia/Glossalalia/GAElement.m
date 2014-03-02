@@ -23,7 +23,7 @@
         singleGesture.numberOfTapsRequired = 1;
         
         [self addGestureRecognizer:singleGesture];
-        [self setTitle:_word.local forState:UIControlStateNormal];
+        [self setTitle:[NSString stringWithFormat:@"%@ - single tap",_word.local] forState:UIControlStateNormal];
     }
     
     return self;
@@ -42,7 +42,7 @@
         fiveGesture.numberOfTapsRequired = 5;
 
         [self addGestureRecognizer:fiveGesture];
-        [self setTitle:_word.local forState:UIControlStateNormal];
+        [self setTitle:[NSString stringWithFormat:@"%@ - five tap",_word.local] forState:UIControlStateNormal];
     }
     
     return self;
@@ -61,7 +61,7 @@
         slideGesture.numberOfTouchesRequired = 1;
         
         [self addGestureRecognizer:slideGesture];
-        [self setTitle:_word.local forState:UIControlStateNormal];
+        [self setTitle:[NSString stringWithFormat:@"%@ - slide left",_word.local] forState:UIControlStateNormal];
     }
     
     return self;
@@ -80,7 +80,7 @@
         slideGesture.numberOfTouchesRequired = 1;
         
         [self addGestureRecognizer:slideGesture];
-        [self setTitle:_word.local forState:UIControlStateNormal];
+        [self setTitle:[NSString stringWithFormat:@"%@ - slide right",_word.local] forState:UIControlStateNormal];
     }
     
     return self;
@@ -99,7 +99,7 @@
         slideGesture.numberOfTouchesRequired = 1;
         
         [self addGestureRecognizer:slideGesture];
-        [self setTitle:_word.local forState:UIControlStateNormal];
+        [self setTitle:[NSString stringWithFormat:@"%@ - slide down",_word.local] forState:UIControlStateNormal];
     }
     
     return self;
@@ -118,7 +118,32 @@
         slideGesture.numberOfTouchesRequired = 1;
         
         [self addGestureRecognizer:slideGesture];
-        [self setTitle:_word.local forState:UIControlStateNormal];
+        [self setTitle:[NSString stringWithFormat:@"%@ - slide up",_word.local] forState:UIControlStateNormal];
+    }
+    
+    return self;
+}
+
+-(id)initRandomWithFrame:(CGRect)frame andWord:(GADataEntry*)word{
+    int random = arc4random_uniform(6);
+    
+    if (random == 0) {
+        self = [[GAElement alloc] initSingleTapWithFrame:frame andWord:word];
+    }
+    else if (random == 1){
+        self = [[GAElement alloc] init5TapWithFrame:frame andWord:word];
+    }
+    else if (random == 2){
+        self = [[GAElement alloc] initSlideLeftWithFrame:frame andWord:word];
+    }
+    else if (random == 3){
+        self = [[GAElement alloc] initSlideRightWithFrame:frame andWord:word];
+    }
+    else if (random == 4){
+        self = [[GAElement alloc] initSlideUpWithFrame:frame andWord:word];
+    }
+    else{
+        self = [[GAElement alloc] initSlideDownWithFrame:frame andWord:word];
     }
     
     return self;
