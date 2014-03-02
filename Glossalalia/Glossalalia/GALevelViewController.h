@@ -11,6 +11,7 @@
 #import "GADataHandler.h"
 #import "GADataEntry.h"
 #import "GAElement.h"
+#import "ROUSession.h"
 
 @protocol GALevelViewControllerDelegate <NSObject>
 
@@ -19,18 +20,20 @@
 
 @end
 
-@interface GALevelViewController : UIViewController <GKMatchDelegate, GAElementDelegate>
+@interface GALevelViewController : UIViewController <GKMatchDelegate, GAElementDelegate, ROUSessionDelegate>
 
 @property GKMatch *theMatch;
+@property ROUSession *rouSession;
 @property NSObject <GALevelViewControllerDelegate> *delegate;
 @property GADataHandler *dataHandler;
 
 @property int score;
 @property int numButtonWordsPerPlayer;
-@property int commandCompletionTimeLimit;
-@property int commandCompletionTimeRemaining;
+@property float commandCompletionTimeLimit;
+@property float commandCompletionTimeRemaining;
 
 @property NSMutableArray *legalCommandWords;
+@property NSMutableArray *commandsFromLocalButtons;
 @property NSString *commandWord;
 @property NSMutableArray *buttonWords;
 
@@ -40,6 +43,8 @@
 
 @property UILabel *scoreLabel;
 @property UILabel *commandLabel;
+@property CGRect commandLabelStartFrame;
+@property CGRect commandLabelEndFrame;
 @property UILabel *commandTimeLabel;
 @property NSMutableArray *wordButtons;
 
@@ -56,9 +61,9 @@
 //- (void) receivedCommandListRequestFromPlayer:(NSString*)playerID;
 //- (void) receivedCommandWord:(GADataEntry*)word;
 - (void) changeScoreBy:(NSNumber*) points;
-- (void) decrementAndCheckCommandTimeLimit;
+//- (void) decrementAndCheckCommandTimeLimit;
 - (void) commandTimedOut;
-- (NSData*) gameMessage:(NSString*)message asDataWithWord:(NSString*)remoteWord andPoints:(NSNumber*) points;
+- (void) sendGameMessage:(NSString*)message asDataWithWord:(NSString*)remoteWord andPoints:(NSNumber*) points;
 - (void) endLevel;
 - (void) endMatch;
 
