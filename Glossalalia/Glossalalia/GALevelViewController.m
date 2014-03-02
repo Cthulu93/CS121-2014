@@ -307,8 +307,8 @@
     }
     else if ([components[0]  isEqual: @"2"]) {
         // send out a message to increment the score
-        NSLog(@"Changing the score...");
-        [self locallyUpdateScoreBy:[[NSNumber alloc] initWithInt:[components[1] integerValue]]];
+        //NSLog(@"Changing the score...");
+        [self locallyUpdateScoreBy:[[NSNumber alloc] initWithInteger:[components[1] integerValue]]];
     }
     else if ([components[0]  isEqual: @"3"]) {
         // match is over
