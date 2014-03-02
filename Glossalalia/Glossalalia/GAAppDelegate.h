@@ -20,8 +20,6 @@
 @property GADataViewController *dataView;
 @property GATestViewController *testvc;
 
-@property (strong, nonatomic) GADatabaseLoadingView *loadView;
-
 @property GAElementViewController *elementView;
 
 @end

@@ -332,6 +332,7 @@
 				ORGANIZATIONNAME = "Rupert Deese";
 				TargetAttributes = {
 					673642E618AD90E000EC785D = {
+						DevelopmentTeam = 7Z39AD8EF3;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
 								enabled = 1;
@@ -524,13 +525,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Paul Dapolito (EHGJ2W3887)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Glossalalia/Glossalalia-Prefix.pch";
 				INFOPLIST_FILE = "Glossalalia/Glossalalia-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+<<<<<<< HEAD
 				PROVISIONING_PROFILE = "FE09D13F-104F-421A-A3EF-209A166CF54B";
+=======
+				PROVISIONING_PROFILE = "1AF1CD65-072D-46BA-9A73-CEB110525257";
+>>>>>>> c1e498c248c489e795839b734a78d39c86002cab
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -540,7 +545,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Paul Dapolito (EHGJ2W3887)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Glossalalia/Glossalalia-Prefix.pch";

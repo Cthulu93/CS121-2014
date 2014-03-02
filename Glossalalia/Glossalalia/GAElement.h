@@ -38,8 +38,11 @@
 // initalizer for button that is trigered by a downward slide
 -(id)initSlideDownWithFrame:(CGRect)frame andWord:(GADataEntry*)word;
 
-// // initalizer for button that is trigered by an upward slide
+// initalizer for button that is trigered by an upward slide
 -(id)initSlideUpWithFrame:(CGRect)frame andWord:(GADataEntry*)word;
+
+// initalizer for button that is randomly triggered (random amongst the GAElements we declared above)
+-(id)initRandomWithFrame:(CGRect)frame andWord:(GADataEntry*)word;
 
 // method to see if a received word matches the local word on a GAElement
 -(BOOL)checkMatch:(NSString*)received;
