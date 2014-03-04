@@ -56,6 +56,11 @@
         _fWidth = self.view.frame.size.width;
         _fHeight = self.view.frame.size.height;
         
+        // instantiate progress bar
+        _progressFrame = CGRectMake(0, 0, 0, _fHeight);
+        _progressBar = [[UIView alloc] initWithFrame:_progressFrame];
+        _progressBar.backgroundColor = [UIColor colorWithRed:0.5 green:0.1 blue:0.4 alpha:0.4];
+        [self.view addSubview:_progressBar];
         
         _exitButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_exitButton.layer setCornerRadius:10.0];
@@ -113,15 +118,6 @@
         // wait for the phones to communicate for a second before the game begins. Should
         // flesh this out into a real wait screen ("Ready, set, go!")
         [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(getNewCommandWord) userInfo:nil repeats:NO];
-   
-        //[self getNewCommandWord];
-        
-        // instantiate progress bar
-        _progressFrame = CGRectMake(0, .3333 * _fHeight, 0, 30);
-        _progressBar = [[UIView alloc] initWithFrame:_progressFrame];
-        _progressBar.backgroundColor = [UIColor redColor];
-        [self.view addSubview:_progressBar];
-        
     }
     
     return self;
@@ -183,10 +179,11 @@
     }
     
     //progress bar update
-    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width; // grab screen width
-    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height; // grab screen height (unused thus far)
-    _progressBar.frame = CGRectMake(0, _progressBar.frame.origin.y, _score * screenWidth/50, 30);
-
+//    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width; // grab screen width
+//    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height; // grab screen height (unused thus far)
+    [UIView animateWithDuration:0.5 animations:^(void) {
+        _progressBar.frame = CGRectMake(0, 0, _score * _fWidth/50, _fHeight);
+    }];
 }
 
 - (void) stopCommandCompletionTimer {
