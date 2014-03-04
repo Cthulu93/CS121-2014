@@ -48,6 +48,9 @@
 @property UILabel *commandTimeLabel;
 @property NSMutableArray *wordButtons;
 
+@property UIView *progressBar;
+@property CGRect progressFrame;
+
 @property UIButton *exitButton;
 @property NSTimer *commandRequestTimer;
 @property NSTimer *commandCompletionTimer;
