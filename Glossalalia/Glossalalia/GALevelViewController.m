@@ -101,7 +101,6 @@
         
         // create GAElement Buttons
         for (GADataEntry* buttonWord in _buttonWords) {
-
             GAElement *wordButton = [[GAElement alloc] initRandomWithFrame:CGRectMake(0.05*_fWidth, y*_fHeight, 0.9*_fWidth, 0.15 * _fHeight) andWord:buttonWord];
             
             wordButton.delegate = self;
@@ -114,6 +113,15 @@
         // wait for the phones to communicate for a second before the game begins. Should
         // flesh this out into a real wait screen ("Ready, set, go!")
         [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(getNewCommandWord) userInfo:nil repeats:NO];
+   
+        //[self getNewCommandWord];
+        
+        // instantiate progress bar
+        _progressFrame = CGRectMake(0, .3333 * _fHeight, 0, 30);
+        _progressBar = [[UIView alloc] initWithFrame:_progressFrame];
+        _progressBar.backgroundColor = [UIColor redColor];
+        [self.view addSubview:_progressBar];
+        
     }
     
     return self;
@@ -165,12 +173,20 @@
     [self locallyUpdateScoreBy:points];
 }
 
+// score update is performed here, as well as progress bar updating
 - (void) locallyUpdateScoreBy:(NSNumber*)points {
+    NSLog(@"updating score");
     _score += [points integerValue];
     [_scoreLabel setText:[[NSString alloc] initWithFormat:@"%d", _score]];
     if (_score >= 50) {
         [self endLevel];
     }
+    
+    //progress bar update
+    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width; // grab screen width
+    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height; // grab screen height (unused thus far)
+    _progressBar.frame = CGRectMake(0, _progressBar.frame.origin.y, _score * screenWidth/50, 30);
+
 }
 
 - (void) stopCommandCompletionTimer {

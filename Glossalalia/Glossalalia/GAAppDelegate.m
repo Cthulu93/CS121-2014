@@ -27,10 +27,19 @@
     // setup app database, update the database if needed
     [Database createEditableCopyOfDatabaseIfNeeded];
     [Database initDatabase];
+    
+    // change this boolean to enable/disable testing mode
+    BOOL testing = TRUE;
     if(![Database isPopulated]){
-        NSLog(@"updating database");
-        [Database updateDatabase];
+        if(testing){
+            NSLog(@"updating database for testing mode");
+            [Database updateDatabaseForTesting];}
+        else{
+            NSLog(@"updating database for regular mode");
+            [Database updateDatabase];
+        }
     }
+    
     // view controller to test out the GAElement buttons
     /*_elementView = [[GAElementViewController alloc] initWithNibName:nil bundle:nil];
     [self.window setRootViewController:_elementView]; */

@@ -29,10 +29,18 @@
 
 +(void)updateDatabase;
 
++(void)updateDatabaseForTesting;
+
 +(void)addEntries:(NSMutableArray*)array;
+
++(void)addEntriesForTesting:(NSMutableArray*)array;
 
 +(void)cleanUpDatabaseForQuit;
 
 +(BOOL)isPopulated;
+
++(void)enableTesting;
+
++(void)disableTesting;
 
 @end
