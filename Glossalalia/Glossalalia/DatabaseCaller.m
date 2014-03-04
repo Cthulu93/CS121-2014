@@ -11,7 +11,7 @@
 @implementation DatabaseCaller
 
 // initialize the caller and provide authentication
-- (id)initForCallwithTarget:(id)incomingTarget andAction:(SEL)incomingAction
+- (id)initForCallwithTarget:(id)incomingTarget andAction:(SEL)incomingAction andTesting:(BOOL)testing
 {
     self = [super init];
     if (self) {
@@ -20,7 +20,13 @@
         
         // connection object passes authentication information with the URL
         // returns to the connectionDidFinishLoading method below
-        _connection = [[NSURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://paul:paul123@pauldapolito.com/cs121/json.php"]] delegate:self];        
+        if(!testing){
+        _connection = [[NSURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://paul:paul123@pauldapolito.com/cs121/json.php"]] delegate:self];
+        }
+        if(testing){
+            _connection = [[NSURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://paul:paul123@pauldapolito.com/cs121/jsonTest.php"]] delegate:self];
+
+        }
     }
     return self;
 }

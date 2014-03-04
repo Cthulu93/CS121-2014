@@ -23,7 +23,7 @@
 @property id target;
 @property SEL action;
 
-- (id)initForCallwithTarget:(id)incomingTarget andAction:(SEL)incomingAction;
+- (id)initForCallwithTarget:(id)incomingTarget andAction:(SEL)incomingAction andTesting:(BOOL)testing;
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response;
 

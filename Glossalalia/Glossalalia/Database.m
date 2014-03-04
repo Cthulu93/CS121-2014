@@ -185,11 +185,18 @@ static sqlite3_stmt *updateEntry;
 +(void)updateDatabase{
     // first erase all of the database entries, then make the HTTP request
     [Database eraseAllEntries];
-    DatabaseCaller *updateCall = [[DatabaseCaller alloc] initForCallwithTarget:self andAction:@selector(addEntries:)];
+    DatabaseCaller *updateCall = [[DatabaseCaller alloc] initForCallwithTarget:self andAction:@selector(addEntries:) andTesting:FALSE];
+}
+
++(void)updateDatabaseForTesting{
+    // first erase all of the database entries, then make the HTTP request
+    [Database eraseAllEntries];
+    DatabaseCaller *updateCall = [[DatabaseCaller alloc] initForCallwithTarget:self andAction:@selector(addEntriesForTesting:) andTesting:TRUE];
+    
 }
 
 +(void)addEntries:(NSMutableArray*)array{
-    // add an entrie array of entries to the database
+    // add an entire array of entries to the database
     NSLog(@"There are %d entries in the database", [array count]);
     for(NSMutableDictionary *dict in array) {
         NSString *english = [dict objectForKey:@"English"];
@@ -198,6 +205,20 @@ static sqlite3_stmt *updateEntry;
         UIImage *image = nil;
         
         [Database saveEntryWithEnglish:english andSpanish:spanish andImage:image];
+    }
+    NSLog(@"Database update complete");
+}
+
++(void)addEntriesForTesting:(NSMutableArray*)array{
+    // add an entire array of entries to the database
+    NSLog(@"There are %d entries in the database", [array count]);
+    for(NSMutableDictionary *dict in array) {
+        NSString *english = [dict objectForKey:@"English"];
+        NSString *englishEx = [dict objectForKey:@"EnglishEx"];
+        
+        UIImage *image = nil;
+        
+        [Database saveEntryWithEnglish:english andSpanish:englishEx andImage:image];
     }
     NSLog(@"Database update complete");
 }
@@ -225,4 +246,19 @@ static sqlite3_stmt *updateEntry;
     }
 }
 
++(void)enableTesting
+{
+    NSLog(@"testing database enabled");
+    // first erase all of the database entries, then make the HTTP request with TRUE for testing
+    [Database eraseAllEntries];
+    DatabaseCaller *updateCall = [[DatabaseCaller alloc] initForCallwithTarget:self andAction:@selector(addEntries:) andTesting:TRUE];
+}
+
++(void)disableTesting
+{
+    NSLog(@"testing database disabled");
+    // first erase all of the database entries, then make the HTTP request with FALSE for testing
+    [Database eraseAllEntries];
+    DatabaseCaller *updateCall = [[DatabaseCaller alloc] initForCallwithTarget:self andAction:@selector(addEntries:) andTesting:FALSE];
+}
 @end
