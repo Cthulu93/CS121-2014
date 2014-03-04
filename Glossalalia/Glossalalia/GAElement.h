@@ -44,6 +44,8 @@
 // initalizer for button that is randomly triggered (random amongst the GAElements we declared above)
 -(id)initRandomWithFrame:(CGRect)frame andWord:(GADataEntry*)word;
 
+-(void)setupStandardButton;
+
 // method to see if a received word matches the local word on a GAElement
 -(BOOL)checkMatch:(NSString*)received;
 

@@ -25,6 +25,11 @@
         _rouSession = [ROUSession new];
         _rouSession.delegate = self;
         
+        _GAButtonPressedMessage = @"button pressed";
+        _GACommandListMessage = @"send command list";
+        _GAScoreChangeMessage = @"change score";
+        _GAEndMatchMessage = @"end match";
+        
         _numButtonWordsPerPlayer = 4;
         
         _dataHandler = [GADataHandler new];
@@ -51,13 +56,20 @@
         _fWidth = self.view.frame.size.width;
         _fHeight = self.view.frame.size.height;
         
-        _exitButton = [[UIButton alloc] initWithFrame:CGRectMake(0*_fWidth, 0*_fHeight, 0.3*_fWidth, 0.15*_fHeight)];
-        [_exitButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-Medium" size:30.0]];
-        [_exitButton setBackgroundColor:[UIColor grayColor]];
-        [_exitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        
+        _exitButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_exitButton.layer setCornerRadius:10.0];
+        [_exitButton.layer setBorderWidth:2.0];
+        [_exitButton.layer setBorderColor:[UIColor grayColor].CGColor];
+        [_exitButton setFrame:CGRectMake(0.04*_fWidth, 0.06*_fHeight, 0.20*_fWidth, 0.1*_fHeight)];
         [_exitButton setTitle: @"Quit" forState:UIControlStateNormal];
+        [_exitButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-MediumOblique" size:20.0]];
+        [_exitButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [_exitButton setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
         [_exitButton addTarget:self action:@selector(endMatch) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:_exitButton];
+        
+        
         
         _scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.3*_fWidth, 0*_fHeight, 0.4*_fWidth, 0.15*_fHeight)];
         [_scoreLabel setFont:[UIFont fontWithName:@"Avenir-Medium" size:30.0]];
@@ -76,35 +88,32 @@
         _commandLabelStartFrame = CGRectMake(-.4*_fWidth, 0.15*_fHeight, 0.4*_fWidth, 0.15*_fHeight);
         _commandLabelEndFrame = CGRectMake(1.4*_fWidth, 0.15*_fHeight, 0.4*_fWidth, 0.15*_fHeight);
         _commandLabel = [[UILabel alloc] initWithFrame:_commandLabelStartFrame];
-        [_commandLabel setFont:[UIFont fontWithName:@"Avenir-Medium" size:30.0]];
+        [_commandLabel setFont:[UIFont fontWithName:@"Avenir-Medium" size:35.0]];
         [_commandLabel setTextAlignment:NSTextAlignmentCenter];
-        [_commandLabel setTextColor:[UIColor purpleColor]];
+        [_commandLabel setTextColor:[UIColor magentaColor]];
         [_commandLabel setAdjustsFontSizeToFitWidth:YES];
         [_commandLabel setText:_commandWord];
         [self.view addSubview:_commandLabel];
         
         _wordButtons = [[NSMutableArray alloc] initWithCapacity:0];
         
-        float y = 0.4;
+        float y = 0.32;
         
         // create GAElement Buttons
         for (GADataEntry* buttonWord in _buttonWords) {
-            //GAElement *wordButton = [[GAElement alloc] initSingleTapWithFrame:CGRectMake(0,y*_fHeight, _fWidth, 0.15*_fHeight) andWord:buttonWord];
-            GAElement *wordButton = [[GAElement alloc] initRandomWithFrame:CGRectMake(0, y*_fHeight, _fWidth, 0.15 * _fHeight) andWord:buttonWord];
+
+            GAElement *wordButton = [[GAElement alloc] initRandomWithFrame:CGRectMake(0.05*_fWidth, y*_fHeight, 0.9*_fWidth, 0.15 * _fHeight) andWord:buttonWord];
             
-            // TODO - stylize buttons within initalizers to differentiate them accordingly //
-            [wordButton setBackgroundColor:[UIColor magentaColor]];
-            [wordButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-Medium" size:30.0]];
-            [wordButton.titleLabel setTextColor:[UIColor whiteColor]];
             wordButton.delegate = self;
             [self.view addSubview:wordButton];
             [_wordButtons addObject:wordButton];
             
-            y += 0.15;
+            y += 0.17;
         }
 
+        // wait for the phones to communicate for a second before the game begins. Should
+        // flesh this out into a real wait screen ("Ready, set, go!")
         [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(getNewCommandWord) userInfo:nil repeats:NO];
-        //[self getNewCommandWord];
     }
     
     return self;
@@ -126,17 +135,8 @@
 }
 
 - (void) announceButtonWordsToAllPlayers {
-    [self sendGameMessage:@"send command list" asDataWithWord:nil andPoints:nil];
-}
-
-//- (void) askRandomPlayerForNewCommandWord {
-//    NSLog(@"Asking a random player for a new command word.");
-//    NSString *playerID = [[_theMatch playerIDs] objectAtIndex:arc4random_uniform([[_theMatch playerIDs] count])];
-//    NSData *dataToSend = [self gameMessage:@"need command" asDataWithWord:nil andPoints:nil];
-//    [_theMatch sendData:dataToSend toPlayers:[[NSArray alloc] initWithObjects:playerID, nil] withDataMode:GKMatchSendDataUnreliable error:nil];
-//
-//    //if (!_commandRequestTimer) _commandRequestTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(askRandomPlayerForNewCommandWord) userInfo:nil repeats:YES];
-//}
+    [self sendGameMessage:_GACommandListMessage asDataWithWord:nil andPoints:nil];
+} 
 
 - (void) remotePlayerPressedButtonWithWord:(NSString*)remoteWord {
     //NSLog(@"Remote player pressed button with word: %@", remoteWord);
@@ -156,36 +156,12 @@
         [self stopCommandCompletionTimer];
         [self getNewCommandWord];
     }
-//    else {
-        // RD: I don't think it makes sense to decrement the score when a guess is incorrect.
-        // That would make people less likely to freak out and mash buttons, which is something
-        // that makes spaceteam fun.
-//        [self changeScoreBy:[NSNumber numberWithInt:-10]];
-        //NSLog(@"Not the right word! \"%@\" and \"%@\"", _commandWord, remoteWord);
-//    }
 }
 
-//- (void) receivedCommandListRequestFromPlayer:(NSString*)playerID {
-//    // Choose a random word from those on the player's buttons.
-//    GADataEntry *word = [_buttonWords objectAtIndex:arc4random_uniform([_buttonWords count])];
-//    NSLog(@"received command request from other player! Sending word %@", word.remote);
-//    // send the player a word in a send word message
-//    NSData *dataToSend = [self gameMessage:@"send word" asDataWithWord:word.remote andPoints:nil];
-//    [_theMatch sendData:dataToSend toPlayers:[[NSArray alloc] initWithObjects:playerID, nil] withDataMode:GKMatchSendDataUnreliable error:nil];
-//}
-
-//- (void) receivedCommandWord:(NSString*)remoteWord {
-//    _commandWord = remoteWord;
-//    [_commandLabel setText:_commandWord];
-//    NSLog(@"Recived command word %@", _commandWord);
-//    [self stopCommandRequestTimer];
-//    [self stopCommandCompletionTimer];
-//    _commandCompletionTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(decrementAndCheckCommandTimeLimit) userInfo:nil repeats:YES];
-//}
 
 - (void) changeScoreBy:(NSNumber*)points {
     //NSLog(@"Changing the score by %@ points", points);
-    [self sendGameMessage:@"change score" asDataWithWord:nil andPoints:points];
+    [self sendGameMessage:_GAScoreChangeMessage asDataWithWord:nil andPoints:points];
     [self locallyUpdateScoreBy:points];
 }
 
@@ -248,11 +224,11 @@
     int messageCode = -1;
     
     // Encode our message for ease of transmission to other players.
-    if ([message  isEqual: @"button pressed"]) {
+    if ([message  isEqual: _GAButtonPressedMessage]) {
         messageCode = 0;
         theMessage = [[[NSString alloc] initWithFormat:@"%d;%@", messageCode, remoteWord] dataUsingEncoding:NSUTF8StringEncoding];
     }
-    else if ([message  isEqual: @"send command list"]) {
+    else if ([message  isEqual: _GACommandListMessage]) {
         messageCode = 1;
         NSMutableArray *commandList = [[NSMutableArray alloc] initWithCapacity:0];
         for (GADataEntry *word in _buttonWords) {
@@ -261,11 +237,11 @@
         NSString *stringOfCommands = [commandList componentsJoinedByString:@","];
         theMessage =  [[[NSString alloc] initWithFormat:@"%d;%@", messageCode, stringOfCommands] dataUsingEncoding:NSUTF8StringEncoding];
     }
-    else if ([message  isEqual: @"change score"]) {
+    else if ([message  isEqual: _GAScoreChangeMessage]) {
         messageCode = 2;
         theMessage =  [[[NSString alloc] initWithFormat:@"%d;%@", messageCode, points] dataUsingEncoding:NSUTF8StringEncoding];
     }
-    else if ([message  isEqual: @"end match"]) {
+    else if ([message  isEqual: _GAEndMatchMessage]) {
         messageCode = 3;
         theMessage =  [[[NSString alloc] initWithFormat:@"%d", messageCode] dataUsingEncoding:NSUTF8StringEncoding];
     }
@@ -285,7 +261,7 @@
 }
 
 - (void) endMatch {
-    [self sendGameMessage:@"end match" asDataWithWord:nil andPoints:nil];
+    [self sendGameMessage:_GAEndMatchMessage asDataWithWord:nil andPoints:nil];
     [self stopCommandCompletionTimer];
 //    [self stopCommandRequestTimer];
     [_theMatch disconnect];
@@ -338,7 +314,7 @@
 
 - (void) localPlayerPressedButtonForWord:(GADataEntry *)word {
     //NSLog(@"Sending data with remote word %@ to all players", word.remote);
-    [self sendGameMessage:@"button pressed" asDataWithWord:word.remote andPoints:nil];
+    [self sendGameMessage:_GAButtonPressedMessage asDataWithWord:word.remote andPoints:nil];
     
     // to account for the fact that we may have had a command from our own list.
     [self remotePlayerPressedButtonWithWord:word.remote];

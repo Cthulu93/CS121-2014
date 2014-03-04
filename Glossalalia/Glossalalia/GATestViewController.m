@@ -23,17 +23,38 @@
         _fHeight = self.view.frame.size.height;
         
         // create buttons, etc.
-        _matchmakeButton = [[UIButton alloc] initWithFrame: CGRectMake(0.05*_fWidth, 0.75*_fHeight, 0.9*_fWidth, 0.1*_fHeight)];
-        [_matchmakeButton setTitle: @"Request a match" forState:UIControlStateNormal];
-        [_matchmakeButton setBackgroundColor:[UIColor purpleColor]];
-        [_matchmakeButton setShowsTouchWhenHighlighted:YES];
+//        _matchmakeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//        [_matchmakeButton.layer setCornerRadius:10.0];
+//        [_matchmakeButton.layer setBorderWidth:2.0];
+//        [_matchmakeButton.layer setBorderColor:[UIColor purpleColor].CGColor];
+//        [_matchmakeButton setFrame:CGRectMake(0.2*_fWidth, 0.6*_fHeight, 0.6*_fWidth, 0.15*_fHeight)];
+//        [_matchmakeButton setTitle: @"Play" forState:UIControlStateNormal];
+//        [_matchmakeButton setTitle: @"Wait" forState:UIControlStateDisabled];
+//        [_matchmakeButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-MediumOblique" size:30.0]];
+//        [_matchmakeButton setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
+//        [_matchmakeButton setTitleColor:[UIColor purpleColor] forState:UIControlStateNormal];
+//        [_matchmakeButton setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+//        [_matchmakeButton setEnabled:NO];
+//        [self.view addSubview:_matchmakeButton];
+        
+        _matchmakeButton = [[FUIButton alloc] initWithFrame:CGRectMake(0.2*_fWidth, 0.6*_fHeight, 0.6*_fWidth, 0.15*_fHeight)];
+        _matchmakeButton.buttonColor = [UIColor carrotColor];
+        _matchmakeButton.shadowColor = [UIColor pumpkinColor];
+        _matchmakeButton.shadowHeight = 3.0f;
+        _matchmakeButton.cornerRadius = 6.0f;
+        [_matchmakeButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-MediumOblique" size:30.0]];
+        [_matchmakeButton setTitleColor:[UIColor cloudsColor] forState:UIControlStateNormal];
+        [_matchmakeButton setTitleColor:[UIColor cloudsColor] forState:UIControlStateHighlighted];
+        [_matchmakeButton setTitle: @"Play" forState:UIControlStateNormal];
+        [_matchmakeButton setTitle: @"Wait" forState:UIControlStateDisabled];
         [_matchmakeButton setEnabled:NO];
         [self.view addSubview:_matchmakeButton];
+
         
         _gameStatus = [[UILabel alloc] initWithFrame:CGRectMake(0.05*_fWidth, 0.2*_fHeight, 0.9*_fWidth, 0.3*_fHeight)];
         //[_gameStatus setBackgroundColor:[UIColor magentaColor]];
         [_gameStatus setFont:[UIFont fontWithName:@"Avenir-MediumOblique" size:50.0]];
-        [_gameStatus setText:@"Glossalalia"];
+        [_gameStatus setText:@"Glossolalia"];
         [_gameStatus setTextAlignment:NSTextAlignmentCenter];
         [_gameStatus setTextColor:[UIColor blackColor]];
         [self.view addSubview:_gameStatus];

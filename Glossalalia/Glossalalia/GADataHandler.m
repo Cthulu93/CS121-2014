@@ -15,10 +15,10 @@
     
     if (self) {
         _dataEntries = [Database fetchAllEntries];
-        if ([_dataEntries count] == 0) {
-            NSLog(@"DB is empty in GADataHandler init");
-        }
-        else NSLog(@"DB entries are %d", [_dataEntries count]);
+//        if ([_dataEntries count] == 0) {
+//            NSLog(@"DB is empty in GADataHandler init");
+//        }
+//        else NSLog(@"DB entries are %d", [_dataEntries count]);
     }
     
     return self;

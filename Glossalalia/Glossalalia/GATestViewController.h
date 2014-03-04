@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 #import <GameKit/GameKit.h>
 #import "GAMatchViewController.h"
+#import "FlatUIKit.h"
 
 @interface GATestViewController : UIViewController <GKMatchmakerViewControllerDelegate, GAMatchViewControllerDelegate>
 
 @property GAMatchViewController *matchVC;
-@property UIButton *matchmakeButton;
+@property FUIButton *matchmakeButton;
 @property UILabel *gameStatus;
 @property UIButton *gameButton;
 @property GKMatch *theMatch;

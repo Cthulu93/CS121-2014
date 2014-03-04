@@ -15,10 +15,13 @@
 -(id)initSingleTapWithFrame:(CGRect)frame andWord:(GADataEntry*)word{
     
     self = [GAElement buttonWithType:UIButtonTypeRoundedRect];
-    self.frame = frame;
     
     if(self){
+        self.frame = frame;
+        [self setupStandardButton];
+        
         _word = word;
+        
         UITapGestureRecognizer *singleGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchDetected)];
         singleGesture.numberOfTapsRequired = 1;
         
@@ -33,9 +36,11 @@
 -(id)init5TapWithFrame:(CGRect)frame andWord:(GADataEntry*)word{
     
     self = [GAElement buttonWithType:UIButtonTypeRoundedRect];
-    self.frame = frame;
     
     if(self){
+        self.frame = frame;
+        [self setupStandardButton];
+        
         _word = word;
         
         UITapGestureRecognizer *fiveGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchDetected)];
@@ -50,10 +55,12 @@
 
 -(id)initSlideLeftWithFrame:(CGRect)frame andWord:(GADataEntry*)word{
     
-    self = [GAElement buttonWithType:UIButtonTypeRoundedRect];
-    self.frame = frame;
+    self = [GAElement buttonWithType:UIButtonTypeCustom];
     
     if(self){
+        self.frame = frame;
+        [self setupStandardButton];
+        
         _word = word;
         
         UISwipeGestureRecognizer *slideGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(touchDetected)];
@@ -70,9 +77,11 @@
 -(id)initSlideRightWithFrame:(CGRect)frame andWord:(GADataEntry*)word{
     
     self = [GAElement buttonWithType:UIButtonTypeRoundedRect];
-    self.frame = frame;
     
     if(self){
+        self.frame = frame;
+        [self setupStandardButton];
+        
         _word = word;
         
         UISwipeGestureRecognizer *slideGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(touchDetected)];
@@ -89,9 +98,11 @@
 -(id)initSlideDownWithFrame:(CGRect)frame andWord:(GADataEntry*)word{
     
     self = [GAElement buttonWithType:UIButtonTypeRoundedRect];
-    self.frame = frame;
     
     if(self){
+        self.frame = frame;
+        [self setupStandardButton];
+        
         _word = word;
         
         UISwipeGestureRecognizer *slideGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(touchDetected)];
@@ -108,9 +119,11 @@
 -(id)initSlideUpWithFrame:(CGRect)frame andWord:(GADataEntry*)word{
     
     self = [GAElement buttonWithType:UIButtonTypeRoundedRect];
-    self.frame = frame;
     
     if(self){
+        self.frame = frame;
+        [self setupStandardButton];
+        
         _word = word;
         
         UISwipeGestureRecognizer *slideGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(touchDetected)];
@@ -152,6 +165,18 @@
 // This method is called when a touch is detected to transfer the local word
 -(void)touchDetected{
     [_delegate localPlayerPressedButtonForWord:_word];
+}
+
+// TODO - stylize buttons within initalizers to differentiate them accordingly //
+- (void) setupStandardButton {
+    [self.layer setCornerRadius:10.0];
+    [self.layer setBorderWidth:2.0];
+    [self.layer setBorderColor:[UIColor purpleColor].CGColor];
+    [self.titleLabel setFont:[UIFont fontWithName:@"Avenir-MediumOblique" size:30.0]];
+    [self setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
+    [self setTitleColor:[UIColor purpleColor] forState:UIControlStateNormal];
+    [self setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+    [self.titleLabel setAdjustsFontSizeToFitWidth:YES];
 }
 
 -(BOOL)checkMatch:(NSString*)received{

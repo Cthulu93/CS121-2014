@@ -16,6 +16,8 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+    
     // view controller to visualize the contents of the database
     /* _dataView = [GADataViewController new]; */
     

@@ -24,6 +24,8 @@
 
 @property GKMatch *theMatch;
 @property ROUSession *rouSession;
+@property NSString *GAButtonPressedMessage, *GACommandListMessage,
+                   *GAScoreChangeMessage, *GAEndMatchMessage;
 @property NSObject <GALevelViewControllerDelegate> *delegate;
 @property GADataHandler *dataHandler;
 
@@ -36,10 +38,6 @@
 @property NSMutableArray *commandsFromLocalButtons;
 @property NSString *commandWord;
 @property NSMutableArray *buttonWords;
-
-//@property UILabel *gameStatus;
-//@property UIButton *gameButton;
-//@property UIButton *quitButton;
 
 @property UILabel *scoreLabel;
 @property UILabel *commandLabel;
