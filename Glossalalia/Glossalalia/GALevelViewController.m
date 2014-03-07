@@ -32,6 +32,8 @@
         
         _numButtonWordsPerPlayer = 4;
         
+        // Grab the number of words pairs specified in numButtonsWordsPerPlayer
+        // and initialize buttonWords
         _dataHandler = [GADataHandler new];
         _buttonWords = [_dataHandler grabRandomEntries:_numButtonWordsPerPlayer];
         
@@ -40,6 +42,8 @@
         
         _legalCommandWords = [[NSMutableArray alloc] initWithCapacity:0];
         
+        // Set command words for other devices, based on what
+        // this device's local words are
         _commandsFromLocalButtons = [[NSMutableArray alloc] initWithCapacity:0];
         for (GADataEntry *word in _buttonWords) {
             [_commandsFromLocalButtons addObject:word.remote];
@@ -285,20 +289,27 @@
     NSString* message = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSArray* components = [message componentsSeparatedByString:@";"];
     
+    // message is a button press
     if ([components[0]  isEqual: @"0"]) {
         // query to see if we have this word displayed in the command bar
         [self remotePlayerPressedButtonWithWord:components[1]];
     }
+    
+    // message is a list of command words sent from another device
     else if ([components[0]  isEqual: @"1"]) {
         // put the received command words into our list.
         [self addLegalCommandWords:[components[1] componentsSeparatedByString:@","]];
         //NSLog(@"Got command words: %@", [components[1] componentsSeparatedByString:@","]);
     }
+    
+    // message is to change the score
     else if ([components[0]  isEqual: @"2"]) {
         // send out a message to increment the score
         //NSLog(@"Changing the score...");
         [self locallyUpdateScoreBy:[[NSNumber alloc] initWithInteger:[components[1] integerValue]]];
     }
+    
+    // message is to signify the game is over
     else if ([components[0]  isEqual: @"3"]) {
         // match is over
         [self endMatch];
