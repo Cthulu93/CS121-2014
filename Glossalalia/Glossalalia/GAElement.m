@@ -137,6 +137,7 @@
     return self;
 }
 
+// Randomly selects one of the GAElement types, and creates it
 -(id)initRandomWithFrame:(CGRect)frame andWord:(GADataEntry*)word{
     int random = arc4random_uniform(6);
     
