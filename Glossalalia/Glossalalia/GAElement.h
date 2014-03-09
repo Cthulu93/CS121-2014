@@ -18,7 +18,6 @@
 @interface GAElement : UIButton
 
 @property GADataEntry *word;
-
 @property NSObject <GAElementDelegate> *delegate;
 
 // regular button initializer
