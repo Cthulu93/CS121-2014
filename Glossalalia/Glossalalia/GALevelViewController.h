@@ -30,6 +30,7 @@
 @property GADataHandler *dataHandler;
 
 @property int score;
+@property int numWordsCorrect;
 @property int numButtonWordsPerPlayer;
 @property float commandCompletionTimeLimit;
 @property float commandCompletionTimeRemaining;

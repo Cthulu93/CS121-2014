@@ -177,6 +177,11 @@
 - (void) locallyUpdateScoreBy:(NSNumber*)points {
     NSLog(@"updating score");
     _score += [points integerValue];
+    // if we are updating the score because of a button
+    // was correctly pressed
+    if (points > 0) {
+        _numWordsCorrect++;
+    }
     [_scoreLabel setText:[[NSString alloc] initWithFormat:@"%d", _score]];
     if (_score >= 50) {
         [self endLevel];
