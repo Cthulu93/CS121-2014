@@ -53,6 +53,13 @@
         
         _score = 0;
         
+        // Let high score begin at 5
+        _highScore = 5;
+        
+        // number of words needed to be pressed
+        // before movement speeds up
+        _numWordsNeededToSpeedUp = 4;
+        
         // The initial amount of a time a word will take to scroll across
         // the screen. It will be changed as the level progresses
         _commandCompletionTimeLimit = 20.0;
@@ -178,11 +185,15 @@
 - (void) locallyUpdateScoreBy:(NSNumber*)points {
     NSLog(@"updating score by %@ points", points);
     _score += [points integerValue];
+    
+    
     // if we are updating the score because of a button
     // was correctly pressed
     if ([points intValue] > 0) {
         ++_numWordsCorrect;
-        if (_numWordsCorrect % 3 == 0) {
+        
+        if (_numWordsCorrect % _numWordsNeededToSpeedUp == 0) {
+            // double the command bar word's movement speed
             _commandCompletionTimeLimit = _commandCompletionTimeLimit / 2;
             NSLog(@"Updating command bar time limit... time limit is now %f",
                   _commandCompletionTimeLimit);
@@ -284,11 +295,6 @@
     }
 }
 
-- (void) endLevel {
-    [self stopCommandCompletionTimer];
-//    [self stopCommandRequestTimer];
-    [self.delegate levelDidEnd];
-}
 
 - (void) endMatch {
     [self sendGameMessage:_GAEndMatchMessage asDataWithWord:nil andPoints:nil];

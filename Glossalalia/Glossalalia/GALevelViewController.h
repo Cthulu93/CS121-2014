@@ -30,7 +30,9 @@
 @property GADataHandler *dataHandler;
 
 @property int score;
+@property int highScore;
 @property int numWordsCorrect;
+@property int numWordsNeededToSpeedUp;
 @property int numButtonWordsPerPlayer;
 @property CGFloat commandCompletionTimeLimit;
 @property float commandCompletionTimeRemaining;
@@ -66,7 +68,6 @@
 //- (void) decrementAndCheckCommandTimeLimit;
 - (void) commandTimedOut;
 - (void) sendGameMessage:(NSString*)message asDataWithWord:(NSString*)remoteWord andPoints:(NSNumber*) points;
-- (void) endLevel;
 - (void) endMatch;
 
 @end
