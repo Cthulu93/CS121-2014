@@ -53,7 +53,8 @@
         
         _score = 0;
         
-        // The amount of time we give players to finish a command.
+        // The initial amount of a time a word will take to scroll across
+        // the screen. It will be changed as the level progresses
         _commandCompletionTimeLimit = 20.0;
         _commandCompletionTimeRemaining = _commandCompletionTimeLimit;
         
@@ -175,17 +176,24 @@
 
 // score update is performed here, as well as progress bar updating
 - (void) locallyUpdateScoreBy:(NSNumber*)points {
-    NSLog(@"updating score");
+    NSLog(@"updating score by %@ points", points);
     _score += [points integerValue];
     // if we are updating the score because of a button
     // was correctly pressed
-    if (points > 0) {
-        _numWordsCorrect++;
+    if ([points intValue] > 0) {
+        ++_numWordsCorrect;
+        if (_numWordsCorrect % 3 == 0) {
+            _commandCompletionTimeLimit = _commandCompletionTimeLimit / 2;
+            NSLog(@"Updating command bar time limit... time limit is now %f",
+                  _commandCompletionTimeLimit);
+        }
     }
     [_scoreLabel setText:[[NSString alloc] initWithFormat:@"%d", _score]];
-    if (_score >= 50) {
-        [self endLevel];
-    }
+    
+// Commented out in order to implement continuous level
+//    if (_score >= 50) {
+//        [self endLevel];
+//    }
     
     //progress bar update
 //    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width; // grab screen width
