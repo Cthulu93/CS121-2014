@@ -25,7 +25,7 @@
 @property GKMatch *theMatch;
 @property ROUSession *rouSession;
 @property NSString *GAButtonPressedMessage, *GACommandListMessage,
-                   *GAScoreChangeMessage, *GAEndMatchMessage;
+                   *GAScoreChangeMessage, *GAEndMatchMessage, *GAConfirmCorrectButtonPressed;
 @property NSObject <GALevelViewControllerDelegate> *delegate;
 @property GADataHandler *dataHandler;
 

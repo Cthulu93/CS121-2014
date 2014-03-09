@@ -10,6 +10,8 @@
 
 @implementation GAElement
 
+static NSInteger *const NUMBER_OF_TAPS_UNTIL_SWAP = 5;
+
 // All GAElement buttons take the usual coordinate and dimension parameters, as well as a local NSString and a remote NSString
 
 -(id)initSingleTapWithFrame:(CGRect)frame andWord:(GADataEntry*)word{
@@ -178,6 +180,9 @@
     [self setTitleColor:[UIColor purpleColor] forState:UIControlStateNormal];
     [self setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
     [self.titleLabel setAdjustsFontSizeToFitWidth:YES];
+
+    self.numToSwap = NUMBER_OF_TAPS_UNTIL_SWAP;
+    self.numTap = 0;
 }
 
 -(BOOL)checkMatch:(NSString*)received{

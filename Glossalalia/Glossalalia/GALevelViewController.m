@@ -26,6 +26,7 @@
         _rouSession.delegate = self;
         
         _GAButtonPressedMessage = @"button pressed";
+        _GAConfirmCorrectButtonPressed = @"correct button";
         _GACommandListMessage = @"send command list";
         _GAScoreChangeMessage = @"change score";
         _GAEndMatchMessage = @"end match";
@@ -164,7 +165,7 @@
     // query to see if we have this word displayed in the command bar
     // -- if it is, we increase the score and get a new word.
     if ([_commandWord isEqual:remoteWord]) {
-        //NSLog(@"Got the right word! %@ and %@", _commandWord, remoteWord);
+        
         
         [self changeScoreBy:[NSNumber numberWithInt:10]];
         [_commandLabel setText:@"Success!"];
@@ -286,6 +287,10 @@
         messageCode = 3;
         theMessage =  [[[NSString alloc] initWithFormat:@"%d", messageCode] dataUsingEncoding:NSUTF8StringEncoding];
     }
+    else if ([message isEqual: _GAConfirmCorrectButtonPressed]) {
+        messageCode = 4;
+        theMessage = [[[NSString alloc] initWithFormat:@"%d;%@", messageCode, remoteWord] dataUsingEncoding:NSUTF8StringEncoding];
+    }
     else {
         NSLog(@"Unrecognized message: %@", message);
         theMessage =  nil;
@@ -328,10 +333,16 @@
         [self locallyUpdateScoreBy:[[NSNumber alloc] initWithInteger:[components[1] integerValue]]];
     }
     
-    // message is to signify the game is over
+    // message is to signal the game is over
     else if ([components[0]  isEqual: @"3"]) {
         // match is over
         [self endMatch];
+    }
+    
+    // message is to notify an player that they pressed the correct button,
+    // in order to increment that GAElemet's tap count
+    else if ([components[0] isEqual: @"4"]) {
+        [self incrementGAElementNumTap];
     }
     else NSLog(@"Received unrecognized message code: %@", components[0]);
 }
