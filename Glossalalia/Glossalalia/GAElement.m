@@ -169,13 +169,30 @@
 
 // TODO - stylize buttons within initalizers to differentiate them accordingly //
 - (void) setupStandardButton {
-    [self.layer setCornerRadius:10.0];
-    [self.layer setBorderWidth:2.0];
-    [self.layer setBorderColor:[UIColor purpleColor].CGColor];
-    [self.titleLabel setFont:[UIFont fontWithName:@"Avenir-MediumOblique" size:30.0]];
+    UIImage *disableButton = [UIImage buttonImageWithColor:[UIColor whiteColor]
+                                              cornerRadius:10.0
+                                               shadowColor:[UIColor grayColor]
+                                              shadowInsets:UIEdgeInsetsMake(2.0, 2.0, 2.0, 2.0)];
+    UIImage *normalButton = [UIImage buttonImageWithColor:[UIColor whiteColor]
+                                             cornerRadius:10.0
+                                              shadowColor:[UIColor purpleColor]
+                                             shadowInsets:UIEdgeInsetsMake(2.0, 2.0, 2.0, 2.0)];
+    UIImage *highlightButton = [UIImage buttonImageWithColor:[UIColor whiteColor]
+                                                cornerRadius:10.0
+                                                 shadowColor:[UIColor redColor]
+                                                shadowInsets:UIEdgeInsetsMake(2.0, 2.0, 2.0, 2.0)];
+    
     [self setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
+    [self setBackgroundImage:disableButton forState:UIControlStateDisabled];
     [self setTitleColor:[UIColor purpleColor] forState:UIControlStateNormal];
+    [self setBackgroundImage:normalButton forState:UIControlStateNormal];
     [self setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+    [self setBackgroundImage:highlightButton forState:UIControlStateHighlighted];
+    
+    [self.layer setCornerRadius:10.0];
+
+    [self.titleLabel setFont:[UIFont fontWithName:@"Avenir-MediumOblique" size:30.0]];
+
     [self.titleLabel setAdjustsFontSizeToFitWidth:YES];
 }
 

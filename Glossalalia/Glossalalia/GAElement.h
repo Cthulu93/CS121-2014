@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FlatUIKit.h"
 #import "GADataEntry.h"
 
 @protocol GAElementDelegate <NSObject>
 
-- (void) localPlayerPressedButtonForWord:(GADataEntry*)word;
+- (void) localPlayerPressedButtonForWord:(GADataEntry*)word; 
 
 @end
 
