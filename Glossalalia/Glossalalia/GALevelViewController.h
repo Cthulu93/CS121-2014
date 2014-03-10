@@ -32,7 +32,6 @@
 @property int score;
 @property int highScore;
 @property int numWordsCorrect;
-@property int numWordsNeededToSpeedUp;
 @property int numButtonWordsPerPlayer;
 @property CGFloat commandCompletionTimeLimit;
 @property float commandCompletionTimeRemaining;
@@ -63,6 +62,7 @@
 - (void) remotePlayerPressedButtonWithWord:(NSString*)remoteWord;
 - (void) changeScoreBy:(NSNumber*) points;
 - (void) commandTimedOut;
+- (void) checkForSpeedup;
 - (void) sendGameMessage:(NSString*)message asDataWithWord:(NSString*)remoteWord andPoints:(NSNumber*) points;
 - (void) updateGAElementWithWord:(GAElement *)elem;
 - (void) exchangeWordsWithNewWord:(NSString*)newWord andOldWord:(NSString*)oldWord;

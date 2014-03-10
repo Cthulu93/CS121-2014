@@ -16,6 +16,13 @@
 
 @implementation GALevelViewController
 
+// speed by which the command word is decreased
+static double const SPEEDUP_DECREASE = 2.0;
+
+// number of words needed to be pressed
+// before movement speeds up
+static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
+
 - (id)initWithMatch:(GKMatch*)match {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
@@ -56,10 +63,6 @@
         
         // Let high score begin at 5
         _highScore = 5;
-        
-        // number of words needed to be pressed
-        // before movement speeds up
-        _numWordsNeededToSpeedUp = 4;
         
         // The initial amount of a time a word will take to scroll across
         // the screen. It will be changed as the level progresses
@@ -212,14 +215,9 @@
     // if we are updating the score because of a button
     // was correctly pressed
     if ([points intValue] > 0) {
-        ++_numWordsCorrect;
         
-        if (_numWordsCorrect % _numWordsNeededToSpeedUp == 0) {
-            // decrease time to completion by 30%
-            _commandCompletionTimeLimit = _commandCompletionTimeLimit * 0.7;
-            NSLog(@"Updating command bar time limit... time limit is now %f",
-                  _commandCompletionTimeLimit);
-        }
+        ++_numWordsCorrect;
+        [self checkForSpeedup];
     }
     [_scoreLabel setText:[[NSString alloc] initWithFormat:@"%d", _score]];
     
@@ -261,6 +259,16 @@
     [self getNewCommandWord];
     
     [self changeScoreBy:[NSNumber numberWithInt:-10]];
+}
+
+// Checks if it's time for a speed boost
+- (void) checkForSpeedup {
+    if (_numWordsCorrect % NUM_WORDS_NEEDED_FOR_SPEEDUP == 0) {
+        _commandCompletionTimeLimit = _commandCompletionTimeLimit - SPEEDUP_DECREASE;
+        NSLog(@"Updating command bar time limit... time limit is now %f",
+              _commandCompletionTimeLimit);
+    }
+    
 }
 
 // Encodes message data generated locally for transmission to other players.
