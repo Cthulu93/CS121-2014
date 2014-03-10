@@ -64,7 +64,6 @@
         // The initial amount of a time a word will take to scroll across
         // the screen. It will be changed as the level progresses
         _commandCompletionTimeLimit = 20.0;
-        _commandCompletionTimeRemaining = _commandCompletionTimeLimit;
         
         _fWidth = self.view.frame.size.width;
         _fHeight = self.view.frame.size.height;
@@ -129,12 +128,36 @@
     return self;
 }
 
-- (void) getNewCommandWord {
+// Get a new command word, but we don't want it to be equal to the device's previous command
+// because it might grab a word that is supposed to be swapped out, but whose message hasn't arrive
+- (void) getNewCommandWordThatIsNot:(NSString *)remoteWord {
+    NSString* newWord;
+
     if ([_legalCommandWords count] != 0 && arc4random_uniform(1000000) > 0) {
-        _commandWord = [_legalCommandWords objectAtIndex:arc4random_uniform([_legalCommandWords count])];
+        newWord = [_legalCommandWords objectAtIndex:arc4random_uniform([_legalCommandWords count])];
+        while ([newWord isEqualToString:remoteWord])
+            newWord = [_legalCommandWords objectAtIndex:arc4random_uniform([_legalCommandWords count])];
     }
+    else {
+        newWord = [_commandsFromLocalButtons objectAtIndex:arc4random_uniform([_commandsFromLocalButtons count])];
+        while ([newWord isEqualToString:remoteWord])
+            newWord = [_commandsFromLocalButtons objectAtIndex:arc4random_uniform([_commandsFromLocalButtons count])];
+    }
+    
+    _commandWord = newWord;
+    [_commandLabel setText:_commandWord];
+    [self startCommandCompletionTimer];
+}
+
+// get new command word, where we don't have to worry about grabbing a nonexistent command word
+- (void) getNewCommandWord {
+    NSString* newWord;
+    if ([_legalCommandWords count] != 0 && arc4random_uniform(1000000) > 0)
+        newWord = [_legalCommandWords objectAtIndex:arc4random_uniform([_legalCommandWords count])];
     else
-        _commandWord = [_commandsFromLocalButtons objectAtIndex:arc4random_uniform([_commandsFromLocalButtons count])];
+        newWord = [_commandsFromLocalButtons objectAtIndex:arc4random_uniform([_commandsFromLocalButtons count])];
+
+    _commandWord = newWord;
     [_commandLabel setText:_commandWord];
     [self startCommandCompletionTimer];
 }
@@ -171,7 +194,7 @@
         [_commandLabel setText:@"Success!"];
         _commandWord = @"";
         [self stopCommandCompletionTimer];
-        [self getNewCommandWord];
+        [self getNewCommandWordThatIsNot:remoteWord];
     }
 }
 
@@ -192,8 +215,8 @@
         ++_numWordsCorrect;
         
         if (_numWordsCorrect % _numWordsNeededToSpeedUp == 0) {
-            // increase speed by 200%
-            _commandCompletionTimeLimit = _commandCompletionTimeLimit * 2;
+            // decrease time to completion by 30%
+            _commandCompletionTimeLimit = _commandCompletionTimeLimit * 0.7;
             NSLog(@"Updating command bar time limit... time limit is now %f",
                   _commandCompletionTimeLimit);
         }

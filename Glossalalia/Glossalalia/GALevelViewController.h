@@ -59,6 +59,7 @@
 - (id)initWithMatch:(GKMatch*)match;
 
 - (void) getNewCommandWord;
+- (void) getNewCommandWordThatIsNot:(NSString*)remoteWord;
 - (void) remotePlayerPressedButtonWithWord:(NSString*)remoteWord;
 - (void) changeScoreBy:(NSNumber*) points;
 - (void) commandTimedOut;
