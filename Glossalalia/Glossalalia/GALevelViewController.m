@@ -166,8 +166,9 @@
     // -- if it is, we increase the score and get a new word.
     if ([_commandWord isEqual:remoteWord]) {
         
-        
+        [self sendGameMessage:_GAConfirmCorrectButtonPressed asDataWithWord:remoteWord andPoints:nil];
         [self changeScoreBy:[NSNumber numberWithInt:10]];
+        
         [_commandLabel setText:@"Success!"];
         _commandWord = @"";
         [self stopCommandCompletionTimer];
@@ -260,7 +261,7 @@
 }
 
 // Encodes message data generated locally for transmission to other players.
-- (void) sendGameMessage:(NSString*)message asDataWithWord:(NSString*)remoteWord andPoints:(NSNumber*) points {
+- (void) sendGameMessage:(NSString*)message asDataWithWord:(NSString*)word andPoints:(NSNumber*) points {
     //NSLog(@"Encoding a game message for: %@", message);
     NSData *theMessage;
     int messageCode = -1;
@@ -268,7 +269,7 @@
     // Encode our message for ease of transmission to other players.
     if ([message  isEqual: _GAButtonPressedMessage]) {
         messageCode = 0;
-        theMessage = [[[NSString alloc] initWithFormat:@"%d;%@", messageCode, remoteWord] dataUsingEncoding:NSUTF8StringEncoding];
+        theMessage = [[[NSString alloc] initWithFormat:@"%d;%@", messageCode, word] dataUsingEncoding:NSUTF8StringEncoding];
     }
     else if ([message  isEqual: _GACommandListMessage]) {
         messageCode = 1;
@@ -289,7 +290,7 @@
     }
     else if ([message isEqual: _GAConfirmCorrectButtonPressed]) {
         messageCode = 4;
-        theMessage = [[[NSString alloc] initWithFormat:@"%d;%@", messageCode, remoteWord] dataUsingEncoding:NSUTF8StringEncoding];
+        theMessage = [[[NSString alloc] initWithFormat:@"%d;%@", messageCode, word] dataUsingEncoding:NSUTF8StringEncoding];
     }
     else {
         NSLog(@"Unrecognized message: %@", message);
@@ -342,9 +343,42 @@
     // message is to notify an player that they pressed the correct button,
     // in order to increment that GAElemet's tap count
     else if ([components[0] isEqual: @"4"]) {
-        [self incrementGAElementNumTap];
+        [self updateGAElementWithWord:components[1]];
     }
     else NSLog(@"Received unrecognized message code: %@", components[0]);
+}
+
+// Increments the number of times the button has been
+// tapped by 1, and if this is equal to the total number
+// of taps that button needs to be swapped out, it performs
+// the swap
+- (void) updateGAElementWithWord:(NSString *)localWord {
+    for (GAElement* elem in _wordButtons) {
+    
+        if ([[elem.word local] isEqualToString:localWord]) {
+            // increment the number of times that GAElement
+            // has been correctly tapped
+            [elem setNumTap:[elem numTap] + 1];
+            
+            // if the number of taps for this button equals
+            // the number needed to swap, create a new GAElement
+            // and swap it with the existing one
+            if ([elem numTap] == [elem numToSwap]) {
+                
+                CGFloat buttonYLoc = elem.frame.origin.y;
+                
+                GADataEntry *newWord = [_dataHandler grabRandomEntry];
+                GAElement *newButton = [[GAElement alloc] initRandomWithFrame:CGRectMake(0.05*_fWidth, buttonYLoc*_fHeight, 0.9*_fWidth, 0.15 * _fHeight) andWord:newWord];
+                
+                newButton.delegate = self;
+                
+                [elem removeFromSuperview];
+                [self.view addSubview:newButton];
+                [_wordButtons removeObject:elem];
+                [_wordButtons addObject:newButton];
+            }
+        }
+    }
 }
 
 #pragma mark ROUSessionDelegate methods

@@ -68,6 +68,7 @@
 //- (void) decrementAndCheckCommandTimeLimit;
 - (void) commandTimedOut;
 - (void) sendGameMessage:(NSString*)message asDataWithWord:(NSString*)remoteWord andPoints:(NSNumber*) points;
+- (void) updateGAElementWithWord:(NSString *)localWord;
 - (void) endMatch;
 
 @end
