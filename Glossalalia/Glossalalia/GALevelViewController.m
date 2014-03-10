@@ -161,11 +161,11 @@
             if ([[elem.word remote] isEqualToString:remoteWord]) {
                 [self updateGAElementWithWord:elem];
                 break;
-            } else {
-                [self sendGameMessage:_GAConfirmCorrectButtonPressed asDataWithWord:remoteWord andPoints:nil];
-                break;
             }
         }
+        
+        [self sendGameMessage:_GAConfirmCorrectButtonPressed asDataWithWord:remoteWord andPoints:nil];
+
         [self changeScoreBy:[NSNumber numberWithInt:10]];
         
         [_commandLabel setText:@"Success!"];
@@ -183,7 +183,6 @@
 
 // score update is performed here, as well as progress bar updating
 - (void) locallyUpdateScoreBy:(NSNumber*)points {
-    NSLog(@"updating score by %@ points", points);
     _score += [points integerValue];
     
     
@@ -193,8 +192,8 @@
         ++_numWordsCorrect;
         
         if (_numWordsCorrect % _numWordsNeededToSpeedUp == 0) {
-            // double the command bar word's movement speed
-            _commandCompletionTimeLimit = _commandCompletionTimeLimit / 2;
+            // increase speed by 200%
+            _commandCompletionTimeLimit = _commandCompletionTimeLimit * 2;
             NSLog(@"Updating command bar time limit... time limit is now %f",
                   _commandCompletionTimeLimit);
         }
@@ -243,7 +242,6 @@
 
 // Encodes message data generated locally for transmission to other players.
 - (void) sendGameMessage:(NSString*)message asDataWithWord:(NSString*)word andPoints:(NSNumber*) points {
-    //NSLog(@"Encoding a game message for: %@", message);
     NSData *theMessage;
     int messageCode = -1;
     
@@ -253,16 +251,13 @@
         theMessage = [[[NSString alloc] initWithFormat:@"%d;%@", messageCode, word] dataUsingEncoding:NSUTF8StringEncoding];
     }
     else if ([message  isEqual: _GACommandListMessage]) {
+        
+        messageCode = 1;
         // if word is nil, that means this command is being used to initially populate
         // every other device's command word dictionaries
         if (word == nil) {
-            
-            messageCode = 1;
-            NSMutableArray *commandList = [[NSMutableArray alloc] initWithCapacity:0];
-            for (GADataEntry *word in _buttonWords) {
-                [commandList addObject:word.remote];
-            }
-            NSString *stringOfCommands = [commandList componentsJoinedByString:@","];
+
+            NSString *stringOfCommands = [_commandsFromLocalButtons componentsJoinedByString:@","];
             theMessage =  [[[NSString alloc] initWithFormat:@"%d;%@", messageCode, stringOfCommands] dataUsingEncoding:NSUTF8StringEncoding];
             
         // if word is not nil, then we know the message is being sent to update other devices
@@ -326,6 +321,7 @@
             // the third string is oldWordToBeDeleted
             NSString* newWordToBeInserted = components[1];
             NSString* oldWordToBeDeleted = components[2];
+            NSLog(@"new Word message received. newWord: %@ and oldWord: %@", newWordToBeInserted, oldWordToBeDeleted);
             [self exchangeWordsWithNewWord:newWordToBeInserted andOldWord:oldWordToBeDeleted];
         }
     }
@@ -351,8 +347,8 @@
             
             if ([[elem.word remote] isEqualToString:components[1]]) {
                 [self updateGAElementWithWord:elem];
+                break;
             }
-            break;
         }
     }
     else NSLog(@"Received unrecognized message code: %@", components[0]);
@@ -364,31 +360,36 @@
 // the swap
 - (void) updateGAElementWithWord:(GAElement *)elem {
     
-        // increment the number of times that GAElement
-        // has been correctly tapped
-        [elem setNumTap:[elem numTap] + 1];
+    // increment the number of times that GAElement
+    // has been correctly tapped
+    elem.numTap += 1;
+
+    
+    // if the number of taps for this button equals
+    // the number needed to swap, create a new GAElement
+    // and swap it with the existing one
+    if ([elem numTap] == [elem numToSwap]) {
         
-        // if the number of taps for this button equals
-        // the number needed to swap, create a new GAElement
-        // and swap it with the existing one
-        if ([elem numTap] == [elem numToSwap]) {
-            
-            CGFloat buttonYLoc = elem.frame.origin.y;
-            
-            GADataEntry *newWord = [_dataHandler grabRandomEntry];
-            GAElement *newButton = [[GAElement alloc] initRandomWithFrame:CGRectMake(0.05*_fWidth, buttonYLoc*_fHeight, 0.9*_fWidth, 0.15 * _fHeight) andWord:newWord];
-            newButton.delegate = self;
-            
-            // update the commandWord dictionaries of the other devices
-            NSString* theMessage = [[[NSString alloc] initWithFormat:@"%@;%@", [newWord remote], [elem.word remote]] dataUsingEncoding:NSUTF8StringEncoding];
-            [self sendGameMessage:_GACommandListMessage asDataWithWord:theMessage andPoints:nil];
-            
-            // out with the old, in with the new
-            [elem removeFromSuperview];
-            [_wordButtons removeObject:elem];
-            [self.view addSubview:newButton];
-            [_wordButtons addObject:newButton];
-        }
+        CGFloat buttonYLoc = elem.frame.origin.y;
+        
+        GADataEntry *newWord = [_dataHandler grabRandomEntry];
+        GAElement *newButton = [[GAElement alloc] initRandomWithFrame:CGRectMake(0.05*_fWidth, buttonYLoc, 0.9*_fWidth, 0.15 * _fHeight) andWord:newWord];
+        newButton.delegate = self;
+        
+        NSString* newRemoteWord = [newWord remote];
+        NSString* oldRemoteWord = [elem.word remote];
+        NSLog(@"updating. remote: %@ local: %@", [newWord remote], [elem.word remote]);
+        
+        // update the commandWord dictionaries of the other devices
+        NSString* theMessage = [[NSString alloc] initWithFormat:@"%@;%@", newRemoteWord, oldRemoteWord];
+        [self sendGameMessage:_GACommandListMessage asDataWithWord:theMessage andPoints:nil];
+        
+        // out with the old, in with the new
+        [elem removeFromSuperview];
+        [_wordButtons removeObject:elem];
+        [self.view addSubview:newButton];
+        [_wordButtons addObject:newButton];
+    }
 }
 
 - (void) exchangeWordsWithNewWord:(NSString*)newWord andOldWord:(NSString*)oldWord {

@@ -10,7 +10,10 @@
 
 @implementation GAElement
 
-static NSInteger *const NUMBER_OF_TAPS_UNTIL_SWAP = 5;
+// This is hacky right here, but for some reason in the levelviewcontroller
+// the numTap variable increments by 4 every time, so to make it 3
+// taps we set this variable to 3*4 = 12
+static NSInteger *const NUMBER_OF_TAPS_UNTIL_SWAP = 12;
 
 // All GAElement buttons take the usual coordinate and dimension parameters, as well as a local NSString and a remote NSString
 
