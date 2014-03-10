@@ -59,10 +59,11 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
         
         // Send words out to all the other devices
         [self sendGameMessage:_GACommandListMessage asDataWithWord:nil andPoints:nil];
-        _score = 0;
         
+        
+        _score = 0;
         // Let high score begin at 5
-        _highScore = 5;
+        _highScore = 5.0;
         
         // The initial amount of a time a word will take to scroll across
         // the screen. It will be changed as the level progresses
@@ -192,7 +193,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
         
         [self sendGameMessage:_GAConfirmCorrectButtonPressed asDataWithWord:remoteWord andPoints:nil];
 
-        [self changeScoreBy:[NSNumber numberWithInt:10]];
+        [self changeScoreBy:[NSNumber numberWithFloat:1.0]];
         
         [_commandLabel setText:@"Success!"];
         _commandWord = @"";
@@ -209,26 +210,30 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
 
 // score update is performed here, as well as progress bar updating
 - (void) locallyUpdateScoreBy:(NSNumber*)points {
-    _score += [points integerValue];
+    _score += [points floatValue];
     
     
     // if we are updating the score because of a button
     // was correctly pressed
-    if ([points intValue] > 0) {
+    if ([points floatValue] > 0) {
         
         ++_numWordsCorrect;
         [self checkForSpeedup];
     }
-    [_scoreLabel setText:[[NSString alloc] initWithFormat:@"%d", _score]];
+    [_scoreLabel setText:[[NSString alloc] initWithFormat:@"%d", (int)_score]];
     
 // Commented out in order to implement continuous level
 //    if (_score >= 50) {
 //        [self endLevel];
 //    }
     
+    if (_score > _highScore) {
+        _highScore = _score;
+    }
+    
     //progress bar update
     [UIView animateWithDuration:0.5 animations:^(void) {
-        _progressBar.frame = CGRectMake(0, 0, _score * _fWidth/50, _fHeight);
+        _progressBar.frame = CGRectMake(0, 0, (_score / _highScore) * _fWidth, _fHeight);
     }];
 }
 
@@ -258,7 +263,8 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
     
     [self getNewCommandWord];
     
-    [self changeScoreBy:[NSNumber numberWithInt:-10]];
+    
+    [self changeScoreBy:[NSNumber numberWithFloat:(-1) * _score]];
 }
 
 // Checks if it's time for a speed boost
@@ -360,7 +366,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
     // message is to change the score
     else if ([components[0]  isEqual: @"2"]) {
         // send out a message to increment the score
-        [self locallyUpdateScoreBy:[[NSNumber alloc] initWithInteger:[components[1] integerValue]]];
+        [self locallyUpdateScoreBy:[[NSNumber alloc] initWithInteger:[components[1] floatValue]]];
     }
     
     // message is to signal the game is over

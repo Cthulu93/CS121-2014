@@ -29,8 +29,8 @@
 @property NSObject <GALevelViewControllerDelegate> *delegate;
 @property GADataHandler *dataHandler;
 
-@property int score;
-@property int highScore;
+@property float score;
+@property float highScore;
 @property int numWordsCorrect;
 @property int numButtonWordsPerPlayer;
 @property CGFloat commandCompletionTimeLimit;
