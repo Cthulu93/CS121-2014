@@ -96,13 +96,6 @@
         [_scoreLabel setText:[[NSString alloc] initWithFormat:@"%d", _score]];
         [self.view addSubview:_scoreLabel];
         
-//        _commandTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.7*_fWidth, 0*_fHeight, 0.3*_fWidth, 0.15*_fHeight)];
-//        [_commandTimeLabel setFont:[UIFont fontWithName:@"Avenir-Medium" size:30.0]];
-//        [_commandTimeLabel setTextAlignment:NSTextAlignmentCenter];
-//        [_commandTimeLabel setTextColor:[UIColor magentaColor]];
-//        [_commandTimeLabel setText:[[NSString alloc] initWithFormat:@"%f", _commandCompletionTimeRemaining]];
-//        [self.view addSubview:_commandTimeLabel];
-        
         _commandLabelStartFrame = CGRectMake(-.4*_fWidth, 0.15*_fHeight, 0.4*_fWidth, 0.15*_fHeight);
         _commandLabelEndFrame = CGRectMake(1.4*_fWidth, 0.15*_fHeight, 0.4*_fWidth, 0.15*_fHeight);
         _commandLabel = [[UILabel alloc] initWithFrame:_commandLabelStartFrame];
@@ -156,7 +149,6 @@
 } 
 
 - (void) remotePlayerPressedButtonWithWord:(NSString*)remoteWord {
-    //NSLog(@"Remote player pressed button with word: %@", remoteWord);
     
     // If we have no command word, this method should do nothing--we
     // don't want to penalize the player.
@@ -178,7 +170,6 @@
 
 
 - (void) changeScoreBy:(NSNumber*)points {
-    //NSLog(@"Changing the score by %@ points", points);
     [self sendGameMessage:_GAScoreChangeMessage asDataWithWord:nil andPoints:points];
     [self locallyUpdateScoreBy:points];
 }
@@ -209,27 +200,19 @@
 //    }
     
     //progress bar update
-//    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width; // grab screen width
-//    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height; // grab screen height (unused thus far)
     [UIView animateWithDuration:0.5 animations:^(void) {
         _progressBar.frame = CGRectMake(0, 0, _score * _fWidth/50, _fHeight);
     }];
 }
 
 - (void) stopCommandCompletionTimer {
-//    if (_commandCompletionTimer) {
-//        [_commandCompletionTimer invalidate];
-//        _commandCompletionTimer = nil;
-//    }
-//    _commandCompletionTimeRemaining = _commandCompletionTimeLimit;
-//    [_commandTimeLabel setText:[[NSString alloc] initWithFormat:@"%f", _commandCompletionTimeRemaining]];
     [self.view.layer removeAllAnimations];
     [_commandLabel setFrame:_commandLabelStartFrame];
 }
 
 - (void) startCommandCompletionTimer {
     [self stopCommandCompletionTimer];
-//    _commandCompletionTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(decrementAndCheckCommandTimeLimit) userInfo:nil repeats:YES];
+    
     [UIView animateWithDuration:_commandCompletionTimeLimit animations:^(void){
         [_commandLabel setFrame:_commandLabelEndFrame];
     } completion:^(BOOL finished){
@@ -239,23 +222,14 @@
     }];
 }
 
-//- (void) decrementAndCheckCommandTimeLimit {
-//    _commandCompletionTimeRemaining -= 0.1;
-//    [_commandTimeLabel setText:[[NSString alloc] initWithFormat:@"%f", _commandCompletionTimeRemaining]];
-//    if (_commandCompletionTimeRemaining <= 0) [self commandTimedOut];
-//    CGPoint newCenter = _commandLabel.center;
-//    newCenter.x += 0.009*_fWidth;
-//    [_commandLabel setCenter:newCenter];
-//}
-
 - (void) commandTimedOut {
+    NSLog(@"Player failed to get this command in time!");
     [_commandLabel setText:@"Spacerats!"];
     _commandWord = @"";
     
     [self stopCommandCompletionTimer];
     
     [self getNewCommandWord];
-    //NSLog(@"Player failed to get this command in time!");
     
     [self changeScoreBy:[NSNumber numberWithInt:-10]];
 }
@@ -305,7 +279,6 @@
 - (void) endMatch {
     [self sendGameMessage:_GAEndMatchMessage asDataWithWord:nil andPoints:nil];
     [self stopCommandCompletionTimer];
-//    [self stopCommandRequestTimer];
     [_theMatch disconnect];
     [_delegate matchDidEnd];
 }
@@ -324,13 +297,11 @@
     else if ([components[0]  isEqual: @"1"]) {
         // put the received command words into our list.
         [self addLegalCommandWords:[components[1] componentsSeparatedByString:@","]];
-        //NSLog(@"Got command words: %@", [components[1] componentsSeparatedByString:@","]);
     }
     
     // message is to change the score
     else if ([components[0]  isEqual: @"2"]) {
         // send out a message to increment the score
-        //NSLog(@"Changing the score...");
         [self locallyUpdateScoreBy:[[NSNumber alloc] initWithInteger:[components[1] integerValue]]];
     }
     
@@ -384,7 +355,6 @@
 #pragma mark ROUSessionDelegate methods
 
 -(void)session:(ROUSession *)session preparedDataForSending:(NSData *)data{
-    // 7. Send prepared data from ROUSession to GKMatch
     NSError *theError;
     [_theMatch sendDataToAllPlayers:data
                        withDataMode:GKMatchSendDataUnreliable // we can use unreliable mode now
@@ -394,7 +364,6 @@
 }
 
 -(void)session:(ROUSession *)session receivedData:(NSData *)data{
-    // 8. Process ready data from ROUSession
     [self receiveDataFromPlayer:data];
 }
 
@@ -418,7 +387,6 @@
 #pragma mark GKMatchDelegate methods
 
 - (void) match:(GKMatch *)match didFailWithError:(NSError *)error {
-    //NSLog(@"%lu recovery options", (unsigned long)[[error localizedRecoveryOptions] count]);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[error localizedDescription] message:[error localizedRecoverySuggestion] delegate:self cancelButtonTitle:[error localizedRecoveryOptions][0] otherButtonTitles:[error localizedRecoveryOptions][1], nil];
     [alert show];
 }

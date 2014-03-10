@@ -58,14 +58,10 @@
 
 - (id)initWithMatch:(GKMatch*)match;
 
-//- (void) askRandomPlayerForNewCommandWord;
 - (void) getNewCommandWord;
 - (void) addLegalCommandWords:(NSArray*)newWords;
 - (void) remotePlayerPressedButtonWithWord:(NSString*)remoteWord;
-//- (void) receivedCommandListRequestFromPlayer:(NSString*)playerID;
-//- (void) receivedCommandWord:(GADataEntry*)word;
 - (void) changeScoreBy:(NSNumber*) points;
-//- (void) decrementAndCheckCommandTimeLimit;
 - (void) commandTimedOut;
 - (void) sendGameMessage:(NSString*)message asDataWithWord:(NSString*)remoteWord andPoints:(NSNumber*) points;
 - (void) updateGAElementWithWord:(NSString *)localWord;

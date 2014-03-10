@@ -35,8 +35,6 @@
 {
     [super viewDidAppear:animated];
 	// Do any additional setup after loading the view.
-//    if (_shouldShowLevel) [self presentViewController:_theLevel animated:YES completion:nil];
-//    _shouldShowLevel = NO;
     _theLevel = [[GALevelViewController alloc] initWithMatch:_theMatch];
     _theLevel.delegate = self;
     [self presentViewController:_theLevel animated:YES completion:nil];

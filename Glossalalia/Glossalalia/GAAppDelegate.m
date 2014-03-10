@@ -41,10 +41,6 @@
         }
     }
     
-    // view controller to test out the GAElement buttons
-    /*_elementView = [[GAElementViewController alloc] initWithNibName:nil bundle:nil];
-    [self.window setRootViewController:_elementView]; */
-    
     [self.window setRootViewController:_testvc];
     [self.window makeKeyAndVisible];
     return YES;
