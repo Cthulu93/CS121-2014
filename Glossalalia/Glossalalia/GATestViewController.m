@@ -22,64 +22,53 @@
         _fWidth = self.view.frame.size.width;
         _fHeight = self.view.frame.size.height;
         
+
         // create buttons, etc.
+        
 //        _matchmakeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//        [_matchmakeButton.layer setCornerRadius:10.0];
-//        [_matchmakeButton.layer setBorderWidth:2.0];
-//        [_matchmakeButton.layer setBorderColor:[UIColor purpleColor].CGColor];
+//        UIImage *disableButton = [UIImage buttonImageWithColor:[UIColor whiteColor]
+//                                                  cornerRadius:10.0
+//                                                   shadowColor:[UIColor grayColor]
+//                                                  shadowInsets:UIEdgeInsetsMake(2.0, 2.0, 2.0, 2.0)];
+//        UIImage *normalButton = [UIImage buttonImageWithColor:[UIColor whiteColor]
+//                                                 cornerRadius:10.0
+//                                                  shadowColor:[UIColor purpleColor]
+//                                                 shadowInsets:UIEdgeInsetsMake(2.0, 2.0, 2.0, 2.0)];
+//        UIImage *highlightButton = [UIImage buttonImageWithColor:[UIColor whiteColor]
+//                                                    cornerRadius:10.0
+//                                                     shadowColor:[UIColor redColor]
+//                                                    shadowInsets:UIEdgeInsetsMake(2.0, 2.0, 2.0, 2.0)];
+//        
 //        [_matchmakeButton setFrame:CGRectMake(0.2*_fWidth, 0.6*_fHeight, 0.6*_fWidth, 0.15*_fHeight)];
+//
+//
 //        [_matchmakeButton setTitle: @"Play" forState:UIControlStateNormal];
 //        [_matchmakeButton setTitle: @"Wait" forState:UIControlStateDisabled];
 //        [_matchmakeButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-MediumOblique" size:30.0]];
 //        [_matchmakeButton setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
+//        [_matchmakeButton setBackgroundImage:disableButton forState:UIControlStateDisabled];
 //        [_matchmakeButton setTitleColor:[UIColor purpleColor] forState:UIControlStateNormal];
+//        [_matchmakeButton setBackgroundImage:normalButton forState:UIControlStateNormal];
 //        [_matchmakeButton setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+//        [_matchmakeButton setBackgroundImage:highlightButton forState:UIControlStateHighlighted];
 //        [_matchmakeButton setEnabled:NO];
 //        [self.view addSubview:_matchmakeButton];
         
-        _matchmakeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        UIImage *disableButton = [UIImage buttonImageWithColor:[UIColor whiteColor]
-                                                  cornerRadius:10.0
-                                                   shadowColor:[UIColor grayColor]
-                                                  shadowInsets:UIEdgeInsetsMake(2.0, 2.0, 2.0, 2.0)];
-        UIImage *normalButton = [UIImage buttonImageWithColor:[UIColor whiteColor]
-                                                 cornerRadius:10.0
-                                                  shadowColor:[UIColor purpleColor]
-                                                 shadowInsets:UIEdgeInsetsMake(2.0, 2.0, 2.0, 2.0)];
-        UIImage *highlightButton = [UIImage buttonImageWithColor:[UIColor whiteColor]
-                                                    cornerRadius:10.0
-                                                     shadowColor:[UIColor redColor]
-                                                    shadowInsets:UIEdgeInsetsMake(2.0, 2.0, 2.0, 2.0)];
-        
-        [_matchmakeButton setFrame:CGRectMake(0.2*_fWidth, 0.6*_fHeight, 0.6*_fWidth, 0.15*_fHeight)];
+        _matchmakeButton = [[FUIButton alloc] initWithFrame:CGRectMake(0.2*_fWidth, 0.6*_fHeight, 0.6*_fWidth, 0.15*_fHeight)];
+        _matchmakeButton.buttonColor = [UIColor carrotColor];
+        _matchmakeButton.shadowColor = [UIColor pumpkinColor];
+        _matchmakeButton.shadowHeight = 3.0f;
+        _matchmakeButton.cornerRadius = 6.0f;
+        [_matchmakeButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-MediumOblique" size:30.0]];
+        [_matchmakeButton setTitleColor:[UIColor cloudsColor] forState:UIControlStateNormal];
+        [_matchmakeButton setTitleColor:[UIColor cloudsColor] forState:UIControlStateHighlighted];
         [_matchmakeButton setTitle: @"Play" forState:UIControlStateNormal];
         [_matchmakeButton setTitle: @"Wait" forState:UIControlStateDisabled];
-        [_matchmakeButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-MediumOblique" size:30.0]];
-        [_matchmakeButton setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
-        [_matchmakeButton setBackgroundImage:disableButton forState:UIControlStateDisabled];
-        [_matchmakeButton setTitleColor:[UIColor purpleColor] forState:UIControlStateNormal];
-        [_matchmakeButton setBackgroundImage:normalButton forState:UIControlStateNormal];
-        [_matchmakeButton setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
-        [_matchmakeButton setBackgroundImage:highlightButton forState:UIControlStateHighlighted];
         [_matchmakeButton setEnabled:NO];
         [self.view addSubview:_matchmakeButton];
-        
-//        _matchmakeButton = [[FUIButton alloc] initWithFrame:CGRectMake(0.2*_fWidth, 0.6*_fHeight, 0.6*_fWidth, 0.15*_fHeight)];
-//        _matchmakeButton.buttonColor = [UIColor carrotColor];
-//        _matchmakeButton.shadowColor = [UIColor pumpkinColor];
-//        _matchmakeButton.shadowHeight = 3.0f;
-//        _matchmakeButton.cornerRadius = 6.0f;
-//        [_matchmakeButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-MediumOblique" size:30.0]];
-//        [_matchmakeButton setTitleColor:[UIColor cloudsColor] forState:UIControlStateNormal];
-//        [_matchmakeButton setTitleColor:[UIColor cloudsColor] forState:UIControlStateHighlighted];
-//        [_matchmakeButton setTitle: @"Play" forState:UIControlStateNormal];
-//        [_matchmakeButton setTitle: @"Wait" forState:UIControlStateDisabled];
-//        [_matchmakeButton setEnabled:NO];
-//        [self.view addSubview:_matchmakeButton];
 
         
         _gameStatus = [[UILabel alloc] initWithFrame:CGRectMake(0.05*_fWidth, 0.2*_fHeight, 0.9*_fWidth, 0.3*_fHeight)];
-        //[_gameStatus setBackgroundColor:[UIColor magentaColor]];
         [_gameStatus setFont:[UIFont fontWithName:@"Avenir-MediumOblique" size:50.0]];
         [_gameStatus setText:@"Glossolalia"];
         [_gameStatus setTextAlignment:NSTextAlignmentCenter];
@@ -101,14 +90,12 @@
     localPlayer.authenticateHandler = ^(UIViewController *viewController, NSError *error){
         if (viewController != nil)
         {
-            //[self showAuthenticationDialogWhenReasonable: viewController];
             [self presentViewController:viewController animated:false completion:^(void){
                 [self authenticateLocalPlayer];}];
             NSLog(@"trying to auth local player");
         }
         else if (wp.isAuthenticated)
         {
-            //authenticatedPlayer: is an example method name. Create your own method that is called after the loacal player is authenticated.
             [self authenticatedPlayer: wp];
         }
         else

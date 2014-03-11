@@ -10,6 +10,11 @@
 
 @implementation GAElement
 
+// This is hacky right here, but for some reason in the levelviewcontroller
+// the numTap variable increments by 4 every time, so to make it 3
+// taps we set this variable to 3*4 = 12
+static NSInteger *const NUMBER_OF_TAPS_UNTIL_SWAP = 12;
+
 // All GAElement buttons take the usual coordinate and dimension parameters, as well as a local NSString and a remote NSString
 
 -(id)initSingleTapWithFrame:(CGRect)frame andWord:(GADataEntry*)word{
@@ -137,6 +142,7 @@
     return self;
 }
 
+// Randomly selects one of the GAElement types, and creates it
 -(id)initRandomWithFrame:(CGRect)frame andWord:(GADataEntry*)word{
     int random = arc4random_uniform(6);
     
@@ -194,6 +200,9 @@
     [self.titleLabel setFont:[UIFont fontWithName:@"Avenir-MediumOblique" size:30.0]];
 
     [self.titleLabel setAdjustsFontSizeToFitWidth:YES];
+
+    self.numToSwap = NUMBER_OF_TAPS_UNTIL_SWAP;
+    self.numTap = 0;
 }
 
 -(BOOL)checkMatch:(NSString*)received{

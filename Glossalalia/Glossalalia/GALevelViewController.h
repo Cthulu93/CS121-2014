@@ -25,13 +25,15 @@
 @property GKMatch *theMatch;
 @property ROUSession *rouSession;
 @property NSString *GAButtonPressedMessage, *GACommandListMessage,
-                   *GAScoreChangeMessage, *GAEndMatchMessage;
+                   *GAScoreChangeMessage, *GAEndMatchMessage, *GAConfirmCorrectButtonPressed;
 @property NSObject <GALevelViewControllerDelegate> *delegate;
 @property GADataHandler *dataHandler;
 
-@property int score;
+@property float score;
+@property float highScore;
+@property int numWordsCorrect;
 @property int numButtonWordsPerPlayer;
-@property float commandCompletionTimeLimit;
+@property CGFloat commandCompletionTimeLimit;
 @property float commandCompletionTimeRemaining;
 
 @property NSMutableArray *legalCommandWords;
@@ -55,17 +57,15 @@
 
 - (id)initWithMatch:(GKMatch*)match;
 
-//- (void) askRandomPlayerForNewCommandWord;
 - (void) getNewCommandWord;
-- (void) addLegalCommandWords:(NSArray*)newWords;
+- (void) getNewCommandWordThatIsNot:(NSString*)remoteWord;
 - (void) remotePlayerPressedButtonWithWord:(NSString*)remoteWord;
-//- (void) receivedCommandListRequestFromPlayer:(NSString*)playerID;
-//- (void) receivedCommandWord:(GADataEntry*)word;
 - (void) changeScoreBy:(NSNumber*) points;
-//- (void) decrementAndCheckCommandTimeLimit;
 - (void) commandTimedOut;
+- (void) checkForSpeedup;
 - (void) sendGameMessage:(NSString*)message asDataWithWord:(NSString*)remoteWord andPoints:(NSNumber*) points;
-- (void) endLevel;
+- (void) updateGAElementWithWord:(GAElement *)elem;
+- (void) exchangeWordsWithNewWord:(NSString*)newWord andOldWord:(NSString*)oldWord;
 - (void) endMatch;
 
 @end

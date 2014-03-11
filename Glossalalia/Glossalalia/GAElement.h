@@ -19,6 +19,8 @@
 @interface GAElement : UIButton
 
 @property GADataEntry *word;
+@property NSInteger *numToSwap;
+@property NSInteger *numTap;
 @property NSObject <GAElementDelegate> *delegate;
 
 // regular button initializer

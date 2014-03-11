@@ -27,7 +27,7 @@
 -(GADataEntry*)grabRandomEntry{
     NSUInteger numEntries = [_dataEntries count];
     
-    // generate random number with numEntries as uppder bound
+    // generate random number with numEntries as upper bound
     NSUInteger rand = arc4random_uniform(numEntries);
     
     return [_dataEntries objectAtIndex:rand];

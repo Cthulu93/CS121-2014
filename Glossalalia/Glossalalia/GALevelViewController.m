@@ -16,6 +16,13 @@
 
 @implementation GALevelViewController
 
+// speed by which the command word is decreased
+static double const SPEEDUP_DECREASE = 2.0;
+
+// number of words needed to be pressed
+// before movement speeds up
+static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
+
 - (id)initWithMatch:(GKMatch*)match {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
@@ -26,12 +33,15 @@
         _rouSession.delegate = self;
         
         _GAButtonPressedMessage = @"button pressed";
+        _GAConfirmCorrectButtonPressed = @"correct button";
         _GACommandListMessage = @"send command list";
         _GAScoreChangeMessage = @"change score";
         _GAEndMatchMessage = @"end match";
         
         _numButtonWordsPerPlayer = 4;
         
+        // Grab the number of words pairs specified in numButtonsWordsPerPlayer
+        // and initialize buttonWords
         _dataHandler = [GADataHandler new];
         _buttonWords = [_dataHandler grabRandomEntries:_numButtonWordsPerPlayer];
         
@@ -40,18 +50,24 @@
         
         _legalCommandWords = [[NSMutableArray alloc] initWithCapacity:0];
         
+        // Set command words for other devices, based on what
+        // this device's local words are
         _commandsFromLocalButtons = [[NSMutableArray alloc] initWithCapacity:0];
         for (GADataEntry *word in _buttonWords) {
             [_commandsFromLocalButtons addObject:word.remote];
         }
         
-        [self announceButtonWordsToAllPlayers];
+        // Send words out to all the other devices
+        [self sendGameMessage:_GACommandListMessage asDataWithWord:nil andPoints:nil];
+        
         
         _score = 0;
+        // Let high score begin at 5
+        _highScore = 5.0;
         
-        // The amount of time we give players to finish a command.
+        // The initial amount of a time a word will take to scroll across
+        // the screen. It will be changed as the level progresses
         _commandCompletionTimeLimit = 20.0;
-        _commandCompletionTimeRemaining = _commandCompletionTimeLimit;
         
         _fWidth = self.view.frame.size.width;
         _fHeight = self.view.frame.size.height;
@@ -82,13 +98,6 @@
         [_scoreLabel setTextColor:[UIColor blackColor]];
         [_scoreLabel setText:[[NSString alloc] initWithFormat:@"%d", _score]];
         [self.view addSubview:_scoreLabel];
-        
-//        _commandTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.7*_fWidth, 0*_fHeight, 0.3*_fWidth, 0.15*_fHeight)];
-//        [_commandTimeLabel setFont:[UIFont fontWithName:@"Avenir-Medium" size:30.0]];
-//        [_commandTimeLabel setTextAlignment:NSTextAlignmentCenter];
-//        [_commandTimeLabel setTextColor:[UIColor magentaColor]];
-//        [_commandTimeLabel setText:[[NSString alloc] initWithFormat:@"%f", _commandCompletionTimeRemaining]];
-//        [self.view addSubview:_commandTimeLabel];
         
         _commandLabelStartFrame = CGRectMake(-.4*_fWidth, 0.15*_fHeight, 0.4*_fWidth, 0.15*_fHeight);
         _commandLabelEndFrame = CGRectMake(1.4*_fWidth, 0.15*_fHeight, 0.4*_fWidth, 0.15*_fHeight);
@@ -123,27 +132,43 @@
     return self;
 }
 
-- (void) getNewCommandWord {
+// Get a new command word, but we don't want it to be equal to the device's previous command
+// because it might grab a word that is supposed to be swapped out, but whose message hasn't arrive
+- (void) getNewCommandWordThatIsNot:(NSString *)remoteWord {
+    NSString* newWord;
+
     if ([_legalCommandWords count] != 0 && arc4random_uniform(1000000) > 0) {
-        _commandWord = [_legalCommandWords objectAtIndex:arc4random_uniform([_legalCommandWords count])];
+        newWord = [_legalCommandWords objectAtIndex:arc4random_uniform([_legalCommandWords count])];
+        while ([newWord isEqualToString:remoteWord])
+            newWord = [_legalCommandWords objectAtIndex:arc4random_uniform([_legalCommandWords count])];
     }
-    else
-        _commandWord = [_commandsFromLocalButtons objectAtIndex:arc4random_uniform([_commandsFromLocalButtons count])];
+    else {
+        newWord = [_commandsFromLocalButtons objectAtIndex:arc4random_uniform([_commandsFromLocalButtons count])];
+        while ([newWord isEqualToString:remoteWord])
+            newWord = [_commandsFromLocalButtons objectAtIndex:arc4random_uniform([_commandsFromLocalButtons count])];
+    }
+    
+    _commandWord = newWord;
     [_commandLabel setText:_commandWord];
-    //NSLog(@"Recived command word %@", _commandWord);
     [self startCommandCompletionTimer];
 }
 
-- (void) addLegalCommandWords:(NSArray*)newWords {
-    [_legalCommandWords addObjectsFromArray:newWords];
+// get new command word, where we don't have to worry about grabbing a nonexistent command word
+- (void) getNewCommandWord {
+    NSString* newWord;
+    if ([_legalCommandWords count] != 0 && arc4random_uniform(1000000) > 0)
+        newWord = [_legalCommandWords objectAtIndex:arc4random_uniform([_legalCommandWords count])];
+    else
+        newWord = [_commandsFromLocalButtons objectAtIndex:arc4random_uniform([_commandsFromLocalButtons count])];
+
+    _commandWord = newWord;
+    [_commandLabel setText:_commandWord];
+    [self startCommandCompletionTimer];
 }
 
-- (void) announceButtonWordsToAllPlayers {
-    [self sendGameMessage:_GACommandListMessage asDataWithWord:nil andPoints:nil];
-} 
+
 
 - (void) remotePlayerPressedButtonWithWord:(NSString*)remoteWord {
-    //NSLog(@"Remote player pressed button with word: %@", remoteWord);
     
     // If we have no command word, this method should do nothing--we
     // don't want to penalize the player.
@@ -152,54 +177,74 @@
     // query to see if we have this word displayed in the command bar
     // -- if it is, we increase the score and get a new word.
     if ([_commandWord isEqual:remoteWord]) {
-        //NSLog(@"Got the right word! %@ and %@", _commandWord, remoteWord);
         
-        [self changeScoreBy:[NSNumber numberWithInt:10]];
+        // We need this loop to check if a device tapped its own
+        // button in response to a command on its own screen, in which
+        // case we go directly to updating its words. If another device
+        // tapped it button in response to a command not from its own
+        // screen, then we sendGameMessage
+        for (GAElement* elem in _wordButtons) {
+            
+            if ([[elem.word remote] isEqualToString:remoteWord]) {
+                [self updateGAElementWithWord:elem];
+                break;
+            }
+        }
+        
+        [self sendGameMessage:_GAConfirmCorrectButtonPressed asDataWithWord:remoteWord andPoints:nil];
+
+        [self changeScoreBy:[NSNumber numberWithFloat:1.0]];
+        
         [_commandLabel setText:@"Success!"];
         _commandWord = @"";
         [self stopCommandCompletionTimer];
-        [self getNewCommandWord];
+        [self getNewCommandWordThatIsNot:remoteWord];
     }
 }
 
 
 - (void) changeScoreBy:(NSNumber*)points {
-    //NSLog(@"Changing the score by %@ points", points);
     [self sendGameMessage:_GAScoreChangeMessage asDataWithWord:nil andPoints:points];
     [self locallyUpdateScoreBy:points];
 }
 
 // score update is performed here, as well as progress bar updating
 - (void) locallyUpdateScoreBy:(NSNumber*)points {
-    NSLog(@"updating score");
-    _score += [points integerValue];
-    [_scoreLabel setText:[[NSString alloc] initWithFormat:@"%d", _score]];
-    if (_score >= 50) {
-        [self endLevel];
+    _score += [points floatValue];
+    
+    
+    // if we are updating the score because of a button
+    // was correctly pressed
+    if ([points floatValue] > 0) {
+        
+        ++_numWordsCorrect;
+        [self checkForSpeedup];
+    }
+    [_scoreLabel setText:[[NSString alloc] initWithFormat:@"%d", (int)_score]];
+    
+// Commented out in order to implement continuous level
+//    if (_score >= 50) {
+//        [self endLevel];
+//    }
+    
+    if (_score > _highScore) {
+        _highScore = _score;
     }
     
     //progress bar update
-//    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width; // grab screen width
-//    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height; // grab screen height (unused thus far)
     [UIView animateWithDuration:0.5 animations:^(void) {
-        _progressBar.frame = CGRectMake(0, 0, _score * _fWidth/50, _fHeight);
+        _progressBar.frame = CGRectMake(0, 0, (_score / _highScore) * _fWidth, _fHeight);
     }];
 }
 
 - (void) stopCommandCompletionTimer {
-//    if (_commandCompletionTimer) {
-//        [_commandCompletionTimer invalidate];
-//        _commandCompletionTimer = nil;
-//    }
-//    _commandCompletionTimeRemaining = _commandCompletionTimeLimit;
-//    [_commandTimeLabel setText:[[NSString alloc] initWithFormat:@"%f", _commandCompletionTimeRemaining]];
     [self.view.layer removeAllAnimations];
     [_commandLabel setFrame:_commandLabelStartFrame];
 }
 
 - (void) startCommandCompletionTimer {
     [self stopCommandCompletionTimer];
-//    _commandCompletionTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(decrementAndCheckCommandTimeLimit) userInfo:nil repeats:YES];
+    
     [UIView animateWithDuration:_commandCompletionTimeLimit animations:^(void){
         [_commandLabel setFrame:_commandLabelEndFrame];
     } completion:^(BOOL finished){
@@ -209,46 +254,55 @@
     }];
 }
 
-//- (void) decrementAndCheckCommandTimeLimit {
-//    _commandCompletionTimeRemaining -= 0.1;
-//    [_commandTimeLabel setText:[[NSString alloc] initWithFormat:@"%f", _commandCompletionTimeRemaining]];
-//    if (_commandCompletionTimeRemaining <= 0) [self commandTimedOut];
-//    CGPoint newCenter = _commandLabel.center;
-//    newCenter.x += 0.009*_fWidth;
-//    [_commandLabel setCenter:newCenter];
-//}
-
 - (void) commandTimedOut {
+    NSLog(@"Player failed to get this command in time!");
     [_commandLabel setText:@"Spacerats!"];
     _commandWord = @"";
     
     [self stopCommandCompletionTimer];
     
     [self getNewCommandWord];
-    //NSLog(@"Player failed to get this command in time!");
     
-    [self changeScoreBy:[NSNumber numberWithInt:-10]];
+    
+    [self changeScoreBy:[NSNumber numberWithFloat:(-1) * _score]];
+}
+
+// Checks if it's time for a speed boost
+- (void) checkForSpeedup {
+    if (_numWordsCorrect % NUM_WORDS_NEEDED_FOR_SPEEDUP == 0) {
+        _commandCompletionTimeLimit = _commandCompletionTimeLimit - SPEEDUP_DECREASE;
+        NSLog(@"Updating command bar time limit... time limit is now %f",
+              _commandCompletionTimeLimit);
+    }
+    
 }
 
 // Encodes message data generated locally for transmission to other players.
-- (void) sendGameMessage:(NSString*)message asDataWithWord:(NSString*)remoteWord andPoints:(NSNumber*) points {
-    //NSLog(@"Encoding a game message for: %@", message);
+- (void) sendGameMessage:(NSString*)message asDataWithWord:(NSString*)word andPoints:(NSNumber*) points {
     NSData *theMessage;
     int messageCode = -1;
     
     // Encode our message for ease of transmission to other players.
     if ([message  isEqual: _GAButtonPressedMessage]) {
         messageCode = 0;
-        theMessage = [[[NSString alloc] initWithFormat:@"%d;%@", messageCode, remoteWord] dataUsingEncoding:NSUTF8StringEncoding];
+        theMessage = [[[NSString alloc] initWithFormat:@"%d;%@", messageCode, word] dataUsingEncoding:NSUTF8StringEncoding];
     }
     else if ([message  isEqual: _GACommandListMessage]) {
+        
         messageCode = 1;
-        NSMutableArray *commandList = [[NSMutableArray alloc] initWithCapacity:0];
-        for (GADataEntry *word in _buttonWords) {
-            [commandList addObject:word.remote];
+        // if word is nil, that means this command is being used to initially populate
+        // every other device's command word dictionaries
+        if (word == nil) {
+
+            NSString *stringOfCommands = [_commandsFromLocalButtons componentsJoinedByString:@","];
+            theMessage =  [[[NSString alloc] initWithFormat:@"%d;%@", messageCode, stringOfCommands] dataUsingEncoding:NSUTF8StringEncoding];
+            
+        // if word is not nil, then we know the message is being sent to update other devices
+        // because a button has been swapped. The word variable is of the form
+        // newWordToBeInserted;oldWordToBeDeleted
+        } else {
+            theMessage =  [[[NSString alloc] initWithFormat:@"%d;%@", messageCode, word] dataUsingEncoding:NSUTF8StringEncoding];
         }
-        NSString *stringOfCommands = [commandList componentsJoinedByString:@","];
-        theMessage =  [[[NSString alloc] initWithFormat:@"%d;%@", messageCode, stringOfCommands] dataUsingEncoding:NSUTF8StringEncoding];
     }
     else if ([message  isEqual: _GAScoreChangeMessage]) {
         messageCode = 2;
@@ -257,6 +311,10 @@
     else if ([message  isEqual: _GAEndMatchMessage]) {
         messageCode = 3;
         theMessage =  [[[NSString alloc] initWithFormat:@"%d", messageCode] dataUsingEncoding:NSUTF8StringEncoding];
+    }
+    else if ([message isEqual: _GAConfirmCorrectButtonPressed]) {
+        messageCode = 4;
+        theMessage = [[[NSString alloc] initWithFormat:@"%d;%@", messageCode, word] dataUsingEncoding:NSUTF8StringEncoding];
     }
     else {
         NSLog(@"Unrecognized message: %@", message);
@@ -267,16 +325,10 @@
     }
 }
 
-- (void) endLevel {
-    [self stopCommandCompletionTimer];
-//    [self stopCommandRequestTimer];
-    [self.delegate levelDidEnd];
-}
 
 - (void) endMatch {
     [self sendGameMessage:_GAEndMatchMessage asDataWithWord:nil andPoints:nil];
     [self stopCommandCompletionTimer];
-//    [self stopCommandRequestTimer];
     [_theMatch disconnect];
     [_delegate matchDidEnd];
 }
@@ -285,31 +337,107 @@
     NSString* message = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSArray* components = [message componentsSeparatedByString:@";"];
     
+    // message is a button press
     if ([components[0]  isEqual: @"0"]) {
         // query to see if we have this word displayed in the command bar
         [self remotePlayerPressedButtonWithWord:components[1]];
     }
+    
+    // message is a list of command words sent from another device
     else if ([components[0]  isEqual: @"1"]) {
-        // put the received command words into our list.
-        [self addLegalCommandWords:[components[1] componentsSeparatedByString:@","]];
-        //NSLog(@"Got command words: %@", [components[1] componentsSeparatedByString:@","]);
+        
+        // if only two strings in the components, then the
+        // second string contains the initial words to populate
+        // the command word dict with
+        if ([components count] == 2) {
+            // put the received command words into our list.
+            [_legalCommandWords addObjectsFromArray:[components[1] componentsSeparatedByString:@","]];
+        } else if ([components count] == 3){
+        
+            // the second string is newWordToBeInserted, and
+            // the third string is oldWordToBeDeleted
+            NSString* newWordToBeInserted = components[1];
+            NSString* oldWordToBeDeleted = components[2];
+            NSLog(@"new Word message received. newWord: %@ and oldWord: %@", newWordToBeInserted, oldWordToBeDeleted);
+            [self exchangeWordsWithNewWord:newWordToBeInserted andOldWord:oldWordToBeDeleted];
+        }
     }
+    
+    // message is to change the score
     else if ([components[0]  isEqual: @"2"]) {
         // send out a message to increment the score
-        //NSLog(@"Changing the score...");
-        [self locallyUpdateScoreBy:[[NSNumber alloc] initWithInteger:[components[1] integerValue]]];
+        [self locallyUpdateScoreBy:[[NSNumber alloc] initWithInteger:[components[1] floatValue]]];
     }
+    
+    // message is to signal the game is over
     else if ([components[0]  isEqual: @"3"]) {
         // match is over
         [self endMatch];
     }
+    
+    // message is to notify a player that they pressed the correct button,
+    // in order to increment that GAElement's tap count. Only updates
+    // if the receiving device contains a GAElement with the given word
+    else if ([components[0] isEqual: @"4"]) {
+        
+        for (GAElement* elem in _wordButtons) {
+            
+            if ([[elem.word remote] isEqualToString:components[1]]) {
+                [self updateGAElementWithWord:elem];
+                break;
+            }
+        }
+    }
     else NSLog(@"Received unrecognized message code: %@", components[0]);
+}
+
+// Increments the number of times the button has been
+// tapped by 1, and if this is equal to the total number
+// of taps that button needs to be swapped out, it performs
+// the swap
+- (void) updateGAElementWithWord:(GAElement *)elem {
+    
+    // increment the number of times that GAElement
+    // has been correctly tapped
+    elem.numTap += 1;
+
+    
+    // if the number of taps for this button equals
+    // the number needed to swap, create a new GAElement
+    // and swap it with the existing one
+    if ([elem numTap] == [elem numToSwap]) {
+        
+        CGFloat buttonYLoc = elem.frame.origin.y;
+        
+        GADataEntry *newWord = [_dataHandler grabRandomEntry];
+        GAElement *newButton = [[GAElement alloc] initRandomWithFrame:CGRectMake(0.05*_fWidth, buttonYLoc, 0.9*_fWidth, 0.15 * _fHeight) andWord:newWord];
+        newButton.delegate = self;
+        
+        NSString* newRemoteWord = [newWord remote];
+        NSString* oldRemoteWord = [elem.word remote];
+        NSLog(@"updating. remote: %@ local: %@", [newWord remote], [elem.word remote]);
+        
+        // update the commandWord dictionaries of the other devices
+        NSString* theMessage = [[NSString alloc] initWithFormat:@"%@;%@", newRemoteWord, oldRemoteWord];
+        [self sendGameMessage:_GACommandListMessage asDataWithWord:theMessage andPoints:nil];
+        
+        // out with the old, in with the new
+        [elem removeFromSuperview];
+        [_wordButtons removeObject:elem];
+        [self.view addSubview:newButton];
+        [_wordButtons addObject:newButton];
+    }
+}
+
+- (void) exchangeWordsWithNewWord:(NSString*)newWord andOldWord:(NSString*)oldWord {
+    [_legalCommandWords removeObject:oldWord];
+    [_legalCommandWords addObject:newWord];
+    
 }
 
 #pragma mark ROUSessionDelegate methods
 
 -(void)session:(ROUSession *)session preparedDataForSending:(NSData *)data{
-    // 7. Send prepared data from ROUSession to GKMatch
     NSError *theError;
     [_theMatch sendDataToAllPlayers:data
                        withDataMode:GKMatchSendDataUnreliable // we can use unreliable mode now
@@ -319,7 +447,6 @@
 }
 
 -(void)session:(ROUSession *)session receivedData:(NSData *)data{
-    // 8. Process ready data from ROUSession
     [self receiveDataFromPlayer:data];
 }
 
@@ -343,7 +470,6 @@
 #pragma mark GKMatchDelegate methods
 
 - (void) match:(GKMatch *)match didFailWithError:(NSError *)error {
-    //NSLog(@"%lu recovery options", (unsigned long)[[error localizedRecoveryOptions] count]);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[error localizedDescription] message:[error localizedRecoverySuggestion] delegate:self cancelButtonTitle:[error localizedRecoveryOptions][0] otherButtonTitles:[error localizedRecoveryOptions][1], nil];
     [alert show];
 }
