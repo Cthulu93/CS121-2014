@@ -22,6 +22,8 @@
 
 @interface GALevelViewController : UIViewController <GKMatchDelegate, GAElementDelegate, ROUSessionDelegate>
 
+
+
 @property GKMatch *theMatch;
 @property ROUSession *rouSession;
 @property NSString *GAButtonPressedMessage, *GACommandListMessage,
@@ -54,6 +56,8 @@
 @property UIButton *exitButton;
 @property NSTimer *commandRequestTimer;
 @property NSTimer *commandCompletionTimer;
+
+@property NSMutableArray *buttonColors;
 
 - (id)initWithMatch:(GKMatch*)match;
 

@@ -41,6 +41,7 @@
 		67398FAC18C5E370001BE584 /* UITableViewCell+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 67398F9818C5E370001BE584 /* UITableViewCell+FlatUI.m */; };
 		67398FAD18C5E370001BE584 /* UIToolbar+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 67398F9A18C5E370001BE584 /* UIToolbar+FlatUI.m */; };
 		67398FAF18C5E4AE001BE584 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67398FAE18C5E4AE001BE584 /* CoreText.framework */; };
+		674F3E4018CFEAFF0064BB21 /* GATriangleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 674F3E3F18CFEAFF0064BB21 /* GATriangleView.m */; };
 		67501DCA18BB36EB000992E6 /* GAMatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67501DC918BB36EB000992E6 /* GAMatchViewController.m */; };
 		67BCB5D418B30DB800D5EF9F /* GALevelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67BCB5D318B30DB800D5EF9F /* GALevelViewController.m */; };
 		67CFC54E18C3F1E600D373D2 /* ROUDataTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 67CFC54718C3F1E600D373D2 /* ROUDataTypes.m */; };
@@ -129,6 +130,8 @@
 		67398F9918C5E370001BE584 /* UIToolbar+FlatUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIToolbar+FlatUI.h"; sourceTree = "<group>"; };
 		67398F9A18C5E370001BE584 /* UIToolbar+FlatUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIToolbar+FlatUI.m"; sourceTree = "<group>"; };
 		67398FAE18C5E4AE001BE584 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		674F3E3E18CFEAFF0064BB21 /* GATriangleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GATriangleView.h; sourceTree = "<group>"; };
+		674F3E3F18CFEAFF0064BB21 /* GATriangleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GATriangleView.m; sourceTree = "<group>"; };
 		67501DC818BB36EB000992E6 /* GAMatchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAMatchViewController.h; sourceTree = "<group>"; };
 		67501DC918BB36EB000992E6 /* GAMatchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAMatchViewController.m; sourceTree = "<group>"; };
 		67BCB5D218B30DB800D5EF9F /* GALevelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GALevelViewController.h; sourceTree = "<group>"; };
@@ -229,6 +232,8 @@
 				67398F7318C5E370001BE584 /* FlatUI */,
 				67CFC55118C3F1F600D373D2 /* RoUTP */,
 				673642F918AD90E000EC785D /* GAAppDelegate.h */,
+				674F3E3E18CFEAFF0064BB21 /* GATriangleView.h */,
+				674F3E3F18CFEAFF0064BB21 /* GATriangleView.m */,
 				673642FA18AD90E000EC785D /* GAAppDelegate.m */,
 				6736431918ADE75C00EC785D /* GATestViewController.h */,
 				6736431A18ADE75C00EC785D /* GATestViewController.m */,
@@ -520,6 +525,7 @@
 				67398FA418C5E370001BE584 /* UIFont+FlatUI.m in Sources */,
 				67398FA218C5E370001BE584 /* UIBarButtonItem+FlatUI.m in Sources */,
 				67BCB5D418B30DB800D5EF9F /* GALevelViewController.m in Sources */,
+				674F3E4018CFEAFF0064BB21 /* GATriangleView.m in Sources */,
 				67398FA318C5E370001BE584 /* UIColor+FlatUI.m in Sources */,
 				67398F9E18C5E370001BE584 /* FUIPopoverBackgroundView.m in Sources */,
 				673642F718AD90E000EC785D /* main.m in Sources */,

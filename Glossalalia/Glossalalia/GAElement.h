@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "FlatUIKit.h"
 #import "GADataEntry.h"
+#import "GATriangleView.h"
 
 @protocol GAElementDelegate <NSObject>
 
@@ -18,10 +19,25 @@
 
 @interface GAElement : UIButton
 
+typedef enum {
+    SINGLE_TAP,
+    FIVE_TAP,
+    SLIDE_LEFT,
+    SLIDE_RIGHT,
+    SLIDE_UP,
+    SLIDE_DOWN
+} ButtonType;
+
+@property ButtonType type;
 @property GADataEntry *word;
+@property NSTimer *nTapTimer;
 @property NSInteger *numToSwap;
 @property NSInteger *numTap;
+@property int curNumTaps;
 @property NSObject <GAElementDelegate> *delegate;
+@property UIColor *randomColor;
+@property UIColor *brightColor;
+@property CGFloat backgroundOpacity;
 
 // regular button initializer
 - (id)initWithFrame:(CGRect)frame;
@@ -47,7 +63,9 @@
 // initalizer for button that is randomly triggered (random amongst the GAElements we declared above)
 -(id)initRandomWithFrame:(CGRect)frame andWord:(GADataEntry*)word;
 
--(void)setupStandardButton;
+-(void)setupButton;
+
+-(void) incrementBackgroundNumber;
 
 // method to see if a received word matches the local word on a GAElement
 -(BOOL)checkMatch:(NSString*)received;

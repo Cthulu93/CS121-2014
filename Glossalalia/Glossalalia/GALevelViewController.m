@@ -73,20 +73,27 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
         _fHeight = self.view.frame.size.height;
         
         // instantiate progress bar
-        _progressFrame = CGRectMake(0, 0, 0, _fHeight);
+        _progressFrame = CGRectMake(0, 20, 0, 0.13*_fHeight);
         _progressBar = [[UIView alloc] initWithFrame:_progressFrame];
-        _progressBar.backgroundColor = [UIColor colorWithRed:0.5 green:0.1 blue:0.4 alpha:0.4];
+        //_progressBar.backgroundColor = [UIColor colorWithRed:0.5 green:0.1 blue:0.4 alpha:0.4];
         [self.view addSubview:_progressBar];
         
-        _exitButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_exitButton.layer setCornerRadius:10.0];
-        [_exitButton.layer setBorderWidth:2.0];
-        [_exitButton.layer setBorderColor:[UIColor grayColor].CGColor];
-        [_exitButton setFrame:CGRectMake(0.04*_fWidth, 0.06*_fHeight, 0.20*_fWidth, 0.1*_fHeight)];
-        [_exitButton setTitle: @"Quit" forState:UIControlStateNormal];
-        [_exitButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-MediumOblique" size:20.0]];
-        [_exitButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [_exitButton setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+//        _exitButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//        [_exitButton.layer setCornerRadius:10.0];
+//        [_exitButton.layer setBorderWidth:2.0];
+//        [_exitButton.layer setBorderColor:[UIColor grayColor].CGColor];
+//        [_exitButton setFrame:CGRectMake(0.04*_fWidth, 0.06*_fHeight, 0.20*_fWidth, 0.1*_fHeight)];
+//        [_exitButton setTitle: @"Quit" forState:UIControlStateNormal];
+//        [_exitButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-MediumOblique" size:20.0]];
+//        [_exitButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+//        [_exitButton setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+        
+        _exitButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        [_exitButton setFrame:CGRectMake(20, 0.04*_fHeight, 0.1*_fWidth, 0.1*_fHeight)];
+        [_exitButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-Medium" size:35.0]];
+        [_exitButton setTitle: @"x" forState:UIControlStateNormal];
+        [_exitButton sizeToFit];
+        [_exitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_exitButton addTarget:self action:@selector(endMatch) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:_exitButton];
         
@@ -97,16 +104,18 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
         [_scoreLabel setTextAlignment:NSTextAlignmentCenter];
         [_scoreLabel setTextColor:[UIColor blackColor]];
         [_scoreLabel setText:[[NSString alloc] initWithFormat:@"%d", _score]];
-        [self.view addSubview:_scoreLabel];
+        //[self.view addSubview:_scoreLabel];
         
-        _commandLabelStartFrame = CGRectMake(-.4*_fWidth, 0.15*_fHeight, 0.4*_fWidth, 0.15*_fHeight);
-        _commandLabelEndFrame = CGRectMake(1.4*_fWidth, 0.15*_fHeight, 0.4*_fWidth, 0.15*_fHeight);
+        _commandLabelStartFrame = CGRectMake(-.5*_fWidth, 0.175*_fHeight, 0.5*_fWidth, 0.15*_fHeight);
+        _commandLabelEndFrame = CGRectMake(1.5*_fWidth, 0.175
+                                           *_fHeight, 0.5*_fWidth, 0.15*_fHeight);
         _commandLabel = [[UILabel alloc] initWithFrame:_commandLabelStartFrame];
-        [_commandLabel setFont:[UIFont fontWithName:@"Avenir-Medium" size:35.0]];
+        [_commandLabel setFont:[UIFont fontWithName:@"Avenir-Medium" size:40.0]];
         [_commandLabel setTextAlignment:NSTextAlignmentCenter];
-        [_commandLabel setTextColor:[UIColor magentaColor]];
+        [_commandLabel setTextColor:[UIColor blackColor]];
         [_commandLabel setAdjustsFontSizeToFitWidth:YES];
         [_commandLabel setText:_commandWord];
+        [_commandLabel sizeToFit];
         [self.view addSubview:_commandLabel];
         
         _wordButtons = [[NSMutableArray alloc] initWithCapacity:0];
@@ -115,14 +124,21 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
         
         // create GAElement Buttons
         for (GADataEntry* buttonWord in _buttonWords) {
-            GAElement *wordButton = [[GAElement alloc] initRandomWithFrame:CGRectMake(0.05*_fWidth, y*_fHeight, 0.9*_fWidth, 0.15 * _fHeight) andWord:buttonWord];
+            GAElement *wordButton = [[GAElement alloc] initRandomWithFrame:CGRectMake(0.0*_fWidth, y*_fHeight, 1*_fWidth, 0.16 * _fHeight) andWord:buttonWord];
             
             wordButton.delegate = self;
             [self.view addSubview:wordButton];
             [_wordButtons addObject:wordButton];
             
-            y += 0.17;
+            y += 0.16;
         }
+        
+        _buttonColors = [[NSMutableArray alloc] initWithCapacity:0];
+        for (GAElement *element in _wordButtons) {
+            [_buttonColors addObject:element.backgroundColor];
+        }
+        
+        [self doProgressBarColorAnimation];
 
         // wait for the phones to communicate for a second before the game begins. Should
         // flesh this out into a real wait screen ("Ready, set, go!")
@@ -130,6 +146,21 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
     }
     
     return self;
+}
+
+- (void) doProgressBarColorAnimation {
+    static NSInteger i = 0;
+    
+    if(i >= [_buttonColors count]) {
+        i = 0;
+    }
+    
+    [UIView animateWithDuration:_commandCompletionTimeLimit/15 animations:^{
+        _progressBar.backgroundColor = [_buttonColors objectAtIndex:i];
+    } completion:^(BOOL finished) {
+        ++i;
+        [self doProgressBarColorAnimation];
+    }];
 }
 
 // Get a new command word, but we don't want it to be equal to the device's previous command
@@ -150,6 +181,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
     
     _commandWord = newWord;
     [_commandLabel setText:_commandWord];
+    [_commandLabel sizeToFit];
     [self startCommandCompletionTimer];
 }
 
@@ -163,10 +195,9 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
 
     _commandWord = newWord;
     [_commandLabel setText:_commandWord];
+    [_commandLabel sizeToFit];
     [self startCommandCompletionTimer];
 }
-
-
 
 - (void) remotePlayerPressedButtonWithWord:(NSString*)remoteWord {
     
@@ -184,7 +215,6 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
         // tapped it button in response to a command not from its own
         // screen, then we sendGameMessage
         for (GAElement* elem in _wordButtons) {
-            
             if ([[elem.word remote] isEqualToString:remoteWord]) {
                 [self updateGAElementWithWord:elem];
                 break;
@@ -233,25 +263,41 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
     
     //progress bar update
     [UIView animateWithDuration:0.5 animations:^(void) {
-        _progressBar.frame = CGRectMake(0, 0, (_score / _highScore) * _fWidth, _fHeight);
+        CGRect newFrame = _progressFrame;
+        newFrame.size.width =  (_score / _highScore) * _fWidth;
+        _progressBar.frame = newFrame;
     }];
 }
 
 - (void) stopCommandCompletionTimer {
-    [self.view.layer removeAllAnimations];
+    [_commandLabel.layer removeAllAnimations];
     [_commandLabel setFrame:_commandLabelStartFrame];
 }
 
 - (void) startCommandCompletionTimer {
     [self stopCommandCompletionTimer];
     
-    [UIView animateWithDuration:_commandCompletionTimeLimit animations:^(void){
-        [_commandLabel setFrame:_commandLabelEndFrame];
-    } completion:^(BOOL finished){
-        if (finished) {
-            [self commandTimedOut];
-        }
+    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^(void){
+        CGRect newFrame = _commandLabel.frame;
+        newFrame.origin.x = 0;
+        [_commandLabel setFrame:newFrame];
+    }completion:^(BOOL finished){
+        if (finished)
+            [UIView animateWithDuration:_commandCompletionTimeLimit animations:^(void){
+                CGRect newFrame = _commandLabel.frame;
+                newFrame.origin.x = _fWidth-_commandLabel.frame.size.width;
+                [_commandLabel setFrame:newFrame];
+            } completion:^(BOOL finished){
+                if (finished)
+                    [UIView animateWithDuration:0.5 animations:^(void){
+                        [_commandLabel setFrame:_commandLabelEndFrame];
+                    } completion:^(BOOL finished){
+                        if (finished)
+                            [self commandTimedOut];
+                    }];
+            }];
     }];
+    
 }
 
 - (void) commandTimedOut {
@@ -410,7 +456,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
         CGFloat buttonYLoc = elem.frame.origin.y;
         
         GADataEntry *newWord = [_dataHandler grabRandomEntry];
-        GAElement *newButton = [[GAElement alloc] initRandomWithFrame:CGRectMake(0.05*_fWidth, buttonYLoc, 0.9*_fWidth, 0.15 * _fHeight) andWord:newWord];
+        GAElement *newButton = [[GAElement alloc] initRandomWithFrame:CGRectMake(_fWidth, buttonYLoc, 1.0*_fWidth, 0.16 * _fHeight) andWord:newWord];
         newButton.delegate = self;
         
         NSString* newRemoteWord = [newWord remote];
@@ -421,11 +467,25 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
         NSString* theMessage = [[NSString alloc] initWithFormat:@"%@;%@", newRemoteWord, oldRemoteWord];
         [self sendGameMessage:_GACommandListMessage asDataWithWord:theMessage andPoints:nil];
         
+        //update our button colors
+        [_buttonColors removeObject:elem.backgroundColor];
+        [_buttonColors addObject:newButton.backgroundColor];
+        
         // out with the old, in with the new
-        [elem removeFromSuperview];
         [_wordButtons removeObject:elem];
         [self.view addSubview:newButton];
         [_wordButtons addObject:newButton];
+        
+        [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^(void){
+            CGRect newElemFrame = elem.frame;
+            newElemFrame.origin.x = -_fWidth;
+            [elem setFrame:newElemFrame];
+            CGRect newNewFrame = newButton.frame;
+            newNewFrame.origin.x = 0.0;
+            [newButton setFrame:newNewFrame];
+        }completion:^(BOOL finished){
+            [elem removeFromSuperview];
+        }];
     }
 }
 
