@@ -17,7 +17,9 @@
 @implementation GALevelViewController
 
 // speed by which the command word is decreased
-static double const SPEEDUP_DECREASE = 2.0;
+static double const SPEEDUP_ONECORRECT = 2.0;
+static double const SLOWDOWN_NEWWORD = 5;
+static double const COMMAND_TIME_LIMIT = 20.0;
 
 // number of words needed to be pressed
 // before movement speeds up
@@ -39,6 +41,8 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
         _GAEndMatchMessage = @"end match";
         
         _numButtonWordsPerPlayer = 4;
+        
+        [self setNeedsStatusBarAppearanceUpdate];
         
         // Grab the number of words pairs specified in numButtonsWordsPerPlayer
         // and initialize buttonWords
@@ -67,13 +71,13 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
         
         // The initial amount of a time a word will take to scroll across
         // the screen. It will be changed as the level progresses
-        _commandCompletionTimeLimit = 20.0;
+        _commandCompletionTimeLimit = COMMAND_TIME_LIMIT;
         
         _fWidth = self.view.frame.size.width;
         _fHeight = self.view.frame.size.height;
         
         // instantiate progress bar
-        _progressFrame = CGRectMake(0, 20, 0, 0.13*_fHeight);
+        _progressFrame = CGRectMake(0, 20, 0, 0.1*_fHeight);
         _progressBar = [[UIView alloc] initWithFrame:_progressFrame];
         //_progressBar.backgroundColor = [UIColor colorWithRed:0.5 green:0.1 blue:0.4 alpha:0.4];
         [self.view addSubview:_progressBar];
@@ -88,16 +92,6 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
 //        [_exitButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
 //        [_exitButton setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
         
-        _exitButton = [UIButton buttonWithType:UIButtonTypeSystem];
-        [_exitButton setFrame:CGRectMake(20, 0.04*_fHeight, 0.1*_fWidth, 0.1*_fHeight)];
-        [_exitButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-Medium" size:35.0]];
-        [_exitButton setTitle: @"x" forState:UIControlStateNormal];
-        [_exitButton sizeToFit];
-        [_exitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [_exitButton addTarget:self action:@selector(endMatch) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:_exitButton];
-        
-        
         
         _scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.3*_fWidth, 0*_fHeight, 0.4*_fWidth, 0.15*_fHeight)];
         [_scoreLabel setFont:[UIFont fontWithName:@"Avenir-Medium" size:30.0]];
@@ -106,8 +100,8 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
         [_scoreLabel setText:[[NSString alloc] initWithFormat:@"%d", _score]];
         //[self.view addSubview:_scoreLabel];
         
-        _commandLabelStartFrame = CGRectMake(-.5*_fWidth, 0.175*_fHeight, 0.5*_fWidth, 0.15*_fHeight);
-        _commandLabelEndFrame = CGRectMake(1.5*_fWidth, 0.175
+        _commandLabelStartFrame = CGRectMake(-.5*_fWidth, 0.145*_fHeight, 0.5*_fWidth, 0.15*_fHeight);
+        _commandLabelEndFrame = CGRectMake(1.5*_fWidth, 0.145
                                            *_fHeight, 0.5*_fWidth, 0.15*_fHeight);
         _commandLabel = [[UILabel alloc] initWithFrame:_commandLabelStartFrame];
         [_commandLabel setFont:[UIFont fontWithName:@"Avenir-Medium" size:40.0]];
@@ -120,18 +114,28 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
         
         _wordButtons = [[NSMutableArray alloc] initWithCapacity:0];
         
-        float y = 0.32;
+        float y = 0.29;
         
         // create GAElement Buttons
         for (GADataEntry* buttonWord in _buttonWords) {
-            GAElement *wordButton = [[GAElement alloc] initRandomWithFrame:CGRectMake(0.0*_fWidth, y*_fHeight, 1*_fWidth, 0.16 * _fHeight) andWord:buttonWord];
+            GAElement *wordButton = [[GAElement alloc] initRandomWithFrame:CGRectMake(0.0*_fWidth, y*_fHeight, 1*_fWidth, 0.15 * _fHeight) andWord:buttonWord];
             
             wordButton.delegate = self;
             [self.view addSubview:wordButton];
             [_wordButtons addObject:wordButton];
             
-            y += 0.16;
+            y += 0.15;
         }
+        
+        _exitButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        [_exitButton setFrame:CGRectMake(0, y*_fHeight, _fWidth, _fHeight*(1-y))];
+        [_exitButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-Medium" size:30.0]];
+        [_exitButton setTitle: @"Quit" forState:UIControlStateNormal];
+        [_exitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_exitButton setBackgroundColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1]];
+        [_exitButton addTarget:self action:@selector(endMatch) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:_exitButton];
+        
         
         _buttonColors = [[NSMutableArray alloc] initWithCapacity:0];
         for (GAElement *element in _wordButtons) {
@@ -155,12 +159,50 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
         i = 0;
     }
     
-    [UIView animateWithDuration:_commandCompletionTimeLimit/15 animations:^{
+    float duration = 5*_highScore/pow(_score+1, 2);
+    if (_score == _highScore) {
+        duration = 5/_score;
+    }
+    [UIView animateWithDuration:duration animations:^{
         _progressBar.backgroundColor = [_buttonColors objectAtIndex:i];
     } completion:^(BOOL finished) {
         ++i;
         [self doProgressBarColorAnimation];
     }];
+}
+
+- (void) doProgressBarScoreChange:(BOOL) increase {
+    if (increase) {
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect newFrame = _progressBar.frame;
+            newFrame.size.height += _fHeight*0.03;
+            newFrame.origin.y -= _fHeight*0.015;
+            if (_score >= _highScore)
+                newFrame.size.width = _fWidth;
+            else
+                newFrame.size.width = (_score / _highScore) * _fWidth;
+            [_progressBar setFrame:newFrame];
+            _progressBar.alpha = 0.5;
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.3 animations:^{
+                CGRect newFrame = _progressBar.frame;
+                newFrame.size.height -= _fHeight*0.03;
+                newFrame.origin.y += _fHeight*0.015;
+                [_progressBar setFrame:newFrame];
+                _progressBar.alpha = 1;
+            } completion:nil];
+        }];
+    }
+    else {
+        [UIView animateWithDuration:0.5 animations:^(void) {
+            CGRect newFrame = _progressFrame;
+            if (_score >= _highScore)
+                newFrame.size.width = _fWidth;
+            else
+                newFrame.size.width = (_score / _highScore) * _fWidth;
+            _progressBar.frame = newFrame;
+        }];
+    }
 }
 
 // Get a new command word, but we don't want it to be equal to the device's previous command
@@ -246,10 +288,14 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
     // if we are updating the score because of a button
     // was correctly pressed
     if ([points floatValue] > 0) {
-        
         ++_numWordsCorrect;
         [self checkForSpeedup];
     }
+    // otherwise, reset the command completion time limit.
+    else {
+        _commandCompletionTimeLimit = COMMAND_TIME_LIMIT;
+    }
+
     [_scoreLabel setText:[[NSString alloc] initWithFormat:@"%d", (int)_score]];
     
 // Commented out in order to implement continuous level
@@ -261,12 +307,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
         _highScore = _score;
     }
     
-    //progress bar update
-    [UIView animateWithDuration:0.5 animations:^(void) {
-        CGRect newFrame = _progressFrame;
-        newFrame.size.width =  (_score / _highScore) * _fWidth;
-        _progressBar.frame = newFrame;
-    }];
+    [self doProgressBarScoreChange:([points floatValue] > 0)];
 }
 
 - (void) stopCommandCompletionTimer {
@@ -288,18 +329,20 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
                 newFrame.origin.x = _fWidth-_commandLabel.frame.size.width;
                 [_commandLabel setFrame:newFrame];
             } completion:^(BOOL finished){
-                if (finished)
+                if (finished) {
                     [UIView animateWithDuration:0.5 animations:^(void){
                         [_commandLabel setFrame:_commandLabelEndFrame];
                     } completion:^(BOOL finished){
-                        if (finished)
-                            [self commandTimedOut];
+                        [self getNewCommandWord];
                     }];
+                    [self commandTimedOut];
+                }
             }];
     }];
     
 }
 
+// called when the command has timed out.
 - (void) commandTimedOut {
     NSLog(@"Player failed to get this command in time!");
     [_commandLabel setText:@"Spacerats!"];
@@ -307,16 +350,13 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
     
     [self stopCommandCompletionTimer];
     
-    [self getNewCommandWord];
-    
-    
     [self changeScoreBy:[NSNumber numberWithFloat:(-1) * _score]];
 }
 
 // Checks if it's time for a speed boost
 - (void) checkForSpeedup {
     if (_numWordsCorrect % NUM_WORDS_NEEDED_FOR_SPEEDUP == 0) {
-        _commandCompletionTimeLimit = _commandCompletionTimeLimit - SPEEDUP_DECREASE;
+        _commandCompletionTimeLimit = _commandCompletionTimeLimit - SPEEDUP_ONECORRECT;
         NSLog(@"Updating command bar time limit... time limit is now %f",
               _commandCompletionTimeLimit);
     }
@@ -411,7 +451,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
     
     // message is to change the score
     else if ([components[0]  isEqual: @"2"]) {
-        // send out a message to increment the score
+        // locally update the score
         [self locallyUpdateScoreBy:[[NSNumber alloc] initWithInteger:[components[1] floatValue]]];
     }
     
@@ -425,9 +465,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
     // in order to increment that GAElement's tap count. Only updates
     // if the receiving device contains a GAElement with the given word
     else if ([components[0] isEqual: @"4"]) {
-        
         for (GAElement* elem in _wordButtons) {
-            
             if ([[elem.word remote] isEqualToString:components[1]]) {
                 [self updateGAElementWithWord:elem];
                 break;
@@ -448,10 +486,14 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
     elem.numTap += 1;
 
     
+    
     // if the number of taps for this button equals
     // the number needed to swap, create a new GAElement
     // and swap it with the existing one
     if ([elem numTap] == [elem numToSwap]) {
+        
+        // apply the slowdown for a new word
+        _commandCompletionTimeLimit += SLOWDOWN_NEWWORD;
         
         CGFloat buttonYLoc = elem.frame.origin.y;
         
@@ -562,5 +604,10 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (BOOL) prefersStatusBarHidden {
+    return YES;
+}
+
 
 @end

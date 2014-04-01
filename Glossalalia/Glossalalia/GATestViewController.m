@@ -22,6 +22,8 @@
         _fWidth = self.view.frame.size.width;
         _fHeight = self.view.frame.size.height;
         
+        [self setNeedsStatusBarAppearanceUpdate];
+        
 
         // create buttons, etc.
         
@@ -180,6 +182,10 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (BOOL) prefersStatusBarHidden {
+    return YES;
 }
 
 @end
