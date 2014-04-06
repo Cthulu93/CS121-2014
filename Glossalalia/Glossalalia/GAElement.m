@@ -274,7 +274,7 @@ static NSInteger *const NUMBER_OF_TAPS_UNTIL_SWAP = 12;
                 [self addSubview:num];
                 [num setText:[NSString stringWithFormat:@"%d", i]];
                 [num setTextAlignment:NSTextAlignmentCenter];
-                [num setFont:[UIFont fontWithName:@"Avenir-Medium" size:70.0]];
+                [num setFont:[UIFont fontWithName:@"Avenir-Medium" size:60.0]];
                 [num setBackgroundColor:[UIColor clearColor]];
                 [num setTextColor:_brightColor];
                 [num setAlpha:_backgroundOpacity];
@@ -311,6 +311,8 @@ static NSInteger *const NUMBER_OF_TAPS_UNTIL_SWAP = 12;
     }
     
     [self.titleLabel setFont:[UIFont fontWithName:@"Avenir-MediumOblique" size:30.0]];
+    
+    [self setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     
     [self.titleLabel setAdjustsFontSizeToFitWidth:YES];
     

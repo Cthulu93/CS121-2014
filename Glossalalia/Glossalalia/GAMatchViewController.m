@@ -18,6 +18,7 @@
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         _theMatch = match;
+        [self setNeedsStatusBarAppearanceUpdate];
     }
     return self;
 }
@@ -54,6 +55,10 @@
 
 - (void) levelDidEnd {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (BOOL) prefersStatusBarHidden {
+    return YES;
 }
 
 @end
