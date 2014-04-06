@@ -30,7 +30,7 @@
     [Database initDatabase];
     
     // change this boolean to enable/disable testing mode
-    BOOL testing = TRUE;
+    BOOL testing = FALSE;
     if(![Database isPopulated]){
         if(testing){
             NSLog(@"updating database for testing mode");
