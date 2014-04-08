@@ -249,7 +249,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
 
 - (void) remotePlayerPressedButtonWithWord:(NSString*)remoteWord {
     
-    NSLog(@"in remoteplayerpressed...");
+    NSLog(@"in remoteplayerpressed... with word: %@", remoteWord);
     
     // If we have no command word, this method should do nothing--we
     // don't want to penalize the player.
@@ -284,7 +284,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
 
 
 - (void) changeScoreBy:(NSNumber*)points {
-    NSLog(@"Sending message to update score from changeScoreBy");
+    NSLog(@"Sending message to update score from changeScoreBy. Score change: %@", points);
     [self sendGameMessage:_GAScoreChangeMessage asDataWithWord:nil andPoints:points];
     [self locallyUpdateScoreBy:points];
 }
@@ -292,7 +292,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
 // score update is performed here, as well as progress bar updating
 - (void) locallyUpdateScoreBy:(NSNumber*)points {
     
-    NSLog(@"Locally updating score");
+    NSLog(@"Locally updating score by %@", points);
     _score += [points floatValue];
     
     
@@ -459,7 +459,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
     
     // message is to change the score
     else if ([components[0]  isEqual: _GAScoreChangeMessage]) {
-        NSLog(@"Got scorechange message");
+        NSLog(@"Got scorechange message with score: %f", [components[1] floatValue]);
         // locally update the score
         [self locallyUpdateScoreBy:[[NSNumber alloc] initWithInteger:[components[1] floatValue]]];
     }
@@ -475,7 +475,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
     // in order to increment that GAElement's tap count. Only updates
     // if the receiving device contains a GAElement with the given word
     else if ([components[0] isEqual: _GAConfirmCorrectButtonPressed]) {
-        NSLog(@"Got confirmcorrectbuttonmessage");
+        NSLog(@"Got confirmcorrectbuttonmessage with word: %@", components[1]);
         for (GAElement* elem in _wordButtons) {
             if ([[elem.word remote] isEqualToString:components[1]]) {
                 [self updateGAElementWithWord:elem];
@@ -554,7 +554,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
 -(void)session:(ROUSession *)session preparedDataForSending:(NSData *)data{
     NSError *theError;
     [_theMatch sendDataToAllPlayers:data
-                       withDataMode:GKMatchSendDataReliable // we can use unreliable mode now
+                       withDataMode:GKMatchSendDataUnreliable // we can use unreliable mode now
                               error:&theError];
     if (theError != nil)
         NSLog(@"Error was: %@", [theError localizedDescription]);
@@ -567,7 +567,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
 #pragma mark GAElementDelegate methods
 
 - (void) localPlayerPressedButtonForWord:(GADataEntry *)word {
-    NSLog(@"in localplayerpressed...");
+    NSLog(@"in localplayerpressed... with word: %@ or %@", word.local, word.remote);
     //NSLog(@"Sending data with remote word %@ to all players", word.remote);
     [self sendGameMessage:_GAButtonPressedMessage asDataWithWord:word.remote andPoints:nil];
     
