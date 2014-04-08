@@ -60,7 +60,7 @@
         
         GADataEntry *playWord = [[GADataEntry alloc] initWithEnglish:@"Play" andSpanish:@"Play" andImage:nil];
         
-        _matchmakeButton = [[GAElement alloc] initRandomWithFrame:CGRectMake(0*_fWidth, buttonYLoc, 1.0*_fWidth, 0.15*_fHeight) andWord:playWord];
+        _matchmakeButton = [[GAElement alloc] initSingleTapWithFrame:CGRectMake(0*_fWidth, buttonYLoc, 1.0*_fWidth, 0.15*_fHeight) andWord:playWord];
         _matchmakeButton.delegate = self;
 
         [self.view addSubview:_matchmakeButton];
@@ -70,7 +70,7 @@
         
         GADataEntry *tutorialWord = [[GADataEntry alloc] initWithEnglish:@"Tutorial" andSpanish:@"Tutorial" andImage:nil];
         
-        _tutorialButton = [[GAElement alloc] initRandomWithFrame:CGRectMake(0*_fWidth, buttonYLoc, 1.0*_fWidth, 0.15*_fHeight) andWord:tutorialWord];
+        _tutorialButton = [[GAElement alloc] initSingleTapWithFrame:CGRectMake(0*_fWidth, buttonYLoc, 1.0*_fWidth, 0.15*_fHeight) andWord:tutorialWord];
         _tutorialButton.delegate = self;
         [self.view addSubview:_tutorialButton];
 

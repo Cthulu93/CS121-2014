@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GALevelViewController.h"
 #import "GAElement.h"
 #import "GADataEntry.h"
 
-@interface GADemoViewController : UIViewController
+@interface GADemoViewController : UIViewController <GALevelViewControllerDelegate>
+
+@property GALevelViewController *theLevel;
 
 @property UILabel *commandLabel;
 @property CGRect commandLabelStartFrame;
