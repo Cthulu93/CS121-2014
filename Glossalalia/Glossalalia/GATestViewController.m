@@ -137,6 +137,7 @@
 
 - (void) matchDidEnd {
     [self dismissViewControllerAnimated:YES completion:nil];
+    [_theMatch disconnect];
     _matchOn = NO;
 }
 

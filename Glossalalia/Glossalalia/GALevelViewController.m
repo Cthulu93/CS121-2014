@@ -249,6 +249,8 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
 
 - (void) remotePlayerPressedButtonWithWord:(NSString*)remoteWord {
     
+    NSLog(@"in remoteplayerpressed...");
+    
     // If we have no command word, this method should do nothing--we
     // don't want to penalize the player.
     if ([_commandWord isEqual:@""]) return;
@@ -372,41 +374,34 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
 // Encodes message data generated locally for transmission to other players.
 - (void) sendGameMessage:(NSString*)message asDataWithWord:(NSString*)word andPoints:(NSNumber*) points {
     NSData *theMessage;
-    int messageCode = -1;
     
     // Encode our message for ease of transmission to other players.
     if ([message  isEqual: _GAButtonPressedMessage]) {
-        messageCode = 0;
-        theMessage = [[[NSString alloc] initWithFormat:@"%d;%@", messageCode, word] dataUsingEncoding:NSUTF8StringEncoding];
+        theMessage = [[[NSString alloc] initWithFormat:@"%@;%@", _GAButtonPressedMessage, word] dataUsingEncoding:NSUTF8StringEncoding];
     }
     else if ([message  isEqual: _GACommandListMessage]) {
-        
-        messageCode = 1;
         // if word is nil, that means this command is being used to initially populate
         // every other device's command word dictionaries
         if (word == nil) {
 
             NSString *stringOfCommands = [_commandsFromLocalButtons componentsJoinedByString:@","];
-            theMessage =  [[[NSString alloc] initWithFormat:@"%d;%@", messageCode, stringOfCommands] dataUsingEncoding:NSUTF8StringEncoding];
+            theMessage =  [[[NSString alloc] initWithFormat:@"%@;%@", _GACommandListMessage, stringOfCommands] dataUsingEncoding:NSUTF8StringEncoding];
             
         // if word is not nil, then we know the message is being sent to update other devices
         // because a button has been swapped. The word variable is of the form
         // newWordToBeInserted;oldWordToBeDeleted
         } else {
-            theMessage =  [[[NSString alloc] initWithFormat:@"%d;%@", messageCode, word] dataUsingEncoding:NSUTF8StringEncoding];
+            theMessage =  [[[NSString alloc] initWithFormat:@"%@;%@", _GACommandListMessage, word] dataUsingEncoding:NSUTF8StringEncoding];
         }
     }
     else if ([message  isEqual: _GAScoreChangeMessage]) {
-        messageCode = 2;
-        theMessage =  [[[NSString alloc] initWithFormat:@"%d;%@", messageCode, points] dataUsingEncoding:NSUTF8StringEncoding];
+        theMessage =  [[[NSString alloc] initWithFormat:@"%@;%@", _GAScoreChangeMessage, points] dataUsingEncoding:NSUTF8StringEncoding];
     }
     else if ([message  isEqual: _GAEndMatchMessage]) {
-        messageCode = 3;
-        theMessage =  [[[NSString alloc] initWithFormat:@"%d", messageCode] dataUsingEncoding:NSUTF8StringEncoding];
+        theMessage =  [[[NSString alloc] initWithFormat:@"%@", _GAEndMatchMessage] dataUsingEncoding:NSUTF8StringEncoding];
     }
     else if ([message isEqual: _GAConfirmCorrectButtonPressed]) {
-        messageCode = 4;
-        theMessage = [[[NSString alloc] initWithFormat:@"%d;%@", messageCode, word] dataUsingEncoding:NSUTF8StringEncoding];
+        theMessage = [[[NSString alloc] initWithFormat:@"%@;%@", _GAConfirmCorrectButtonPressed, word] dataUsingEncoding:NSUTF8StringEncoding];
     }
     else {
         NSLog(@"Unrecognized message: %@", message);
@@ -426,18 +421,18 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
 }
 
 - (void) receiveDataFromPlayer:(NSData*)data {
+    NSLog(@"In receivedatafrom...");
     NSString* message = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSArray* components = [message componentsSeparatedByString:@";"];
     
     // message is a button press
-    if ([components[0]  isEqual: @"0"]) {
+    if ([components[0]  isEqual: _GAButtonPressedMessage]) {
         // query to see if we have this word displayed in the command bar
         [self remotePlayerPressedButtonWithWord:components[1]];
     }
     
     // message is a list of command words sent from another device
-    else if ([components[0]  isEqual: @"1"]) {
-        
+    else if ([components[0]  isEqual: _GACommandListMessage]) {
         // if only two strings in the components, then the
         // second string contains the initial words to populate
         // the command word dict with
@@ -456,13 +451,13 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
     }
     
     // message is to change the score
-    else if ([components[0]  isEqual: @"2"]) {
+    else if ([components[0]  isEqual: _GAScoreChangeMessage]) {
         // locally update the score
         [self locallyUpdateScoreBy:[[NSNumber alloc] initWithInteger:[components[1] floatValue]]];
     }
     
     // message is to signal the game is over
-    else if ([components[0]  isEqual: @"3"]) {
+    else if ([components[0]  isEqual: _GAEndMatchMessage]) {
         // match is over
         [self endMatch];
     }
@@ -470,7 +465,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
     // message is to notify a player that they pressed the correct button,
     // in order to increment that GAElement's tap count. Only updates
     // if the receiving device contains a GAElement with the given word
-    else if ([components[0] isEqual: @"4"]) {
+    else if ([components[0] isEqual: _GAConfirmCorrectButtonPressed]) {
         for (GAElement* elem in _wordButtons) {
             if ([[elem.word remote] isEqualToString:components[1]]) {
                 [self updateGAElementWithWord:elem];
@@ -562,6 +557,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
 #pragma mark GAElementDelegate methods
 
 - (void) localPlayerPressedButtonForWord:(GADataEntry *)word {
+    NSLog(@"in localplayerpressed...");
     //NSLog(@"Sending data with remote word %@ to all players", word.remote);
     [self sendGameMessage:_GAButtonPressedMessage asDataWithWord:word.remote andPoints:nil];
     
