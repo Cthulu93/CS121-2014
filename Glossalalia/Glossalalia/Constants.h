@@ -6,13 +6,9 @@
 //  Copyright (c) 2014 Rupert Deese. All rights reserved.
 //
 
-#ifndef Glossalalia_Constants_h
-#define Glossalalia_Constants_h
 
 // Set this to false to disable testing mode
-BOOL testing = false;
+extern const bool  testing;
 
 // Set this to false if you wish to exlude phrases
-bool yesPhrases = true;
-
-#endif
+extern const bool yesPhrases;

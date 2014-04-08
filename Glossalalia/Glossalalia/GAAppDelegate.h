@@ -13,7 +13,6 @@
 #import "GATestViewController.h"
 #import "GAElementViewController.h"
 #import "GADatabaseLoadingView.h"
-#import "Constants.h"
 
 @interface GAAppDelegate : UIResponder <UIApplicationDelegate>
 

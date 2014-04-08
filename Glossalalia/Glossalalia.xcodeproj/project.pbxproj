@@ -59,6 +59,7 @@
 		734DF0B618BB208F000845E0 /* GASlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 734DF0B518BB208F000845E0 /* GASlider.m */; };
 		734DF0BC18BC7F6A000845E0 /* GADatabaseLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 734DF0BB18BC7F6A000845E0 /* GADatabaseLoadingView.m */; };
 		73C002B518B037880066715E /* GADataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C002B418B037880066715E /* GADataViewController.m */; };
+		FA07A44418F3BF4D0037331F /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = FA07A44318F3BF4D0037331F /* Constants.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -168,6 +169,7 @@
 		73C002B318B037880066715E /* GADataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADataViewController.h; sourceTree = "<group>"; };
 		73C002B418B037880066715E /* GADataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GADataViewController.m; sourceTree = "<group>"; };
 		FA07A44218F3B6E00037331F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		FA07A44318F3BF4D0037331F /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,6 +248,7 @@
 				673B9C2118F3607E00FE6126 /* GADemoViewController.h */,
 				673B9C2218F3607E00FE6126 /* GADemoViewController.m */,
 				FA07A44218F3B6E00037331F /* Constants.h */,
+				FA07A44318F3BF4D0037331F /* Constants.m */,
 				734DF0A118B6AD2D000845E0 /* GAElements */,
 				7318B5DC18ADB59300FC9245 /* backend */,
 				673642FC18AD90E000EC785D /* Images.xcassets */,
@@ -530,6 +533,7 @@
 				67CFC55018C3F1E600D373D2 /* ROUSession.m in Sources */,
 				7318B5E718ADC8F500FC9245 /* GADataEntry.m in Sources */,
 				67CFC54E18C3F1E600D373D2 /* ROUDataTypes.m in Sources */,
+				FA07A44418F3BF4D0037331F /* Constants.m in Sources */,
 				67398FA418C5E370001BE584 /* UIFont+FlatUI.m in Sources */,
 				67398FA218C5E370001BE584 /* UIBarButtonItem+FlatUI.m in Sources */,
 				67BCB5D418B30DB800D5EF9F /* GALevelViewController.m in Sources */,

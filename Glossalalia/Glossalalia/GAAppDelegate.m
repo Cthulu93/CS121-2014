@@ -7,6 +7,7 @@
 //
 
 #import "GAAppDelegate.h"
+#import "Constants.h"
 
 
 @implementation GAAppDelegate
