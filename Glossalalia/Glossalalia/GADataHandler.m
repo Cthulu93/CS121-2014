@@ -30,12 +30,12 @@
     // generate random number with numEntries as upper bound
     NSUInteger rand = arc4random_uniform(numEntries);
     GADataEntry *randEntry = [_dataEntries objectAtIndex:rand];
-    if (includePhrases) {
-        NSLog(@"Rand Entry: %@ and result of space check: %d", randEntry, [[randEntry english] rangeOfString:@" "].location != NSNotFound);
-        while ([[randEntry english] rangeOfString:@" "].location != NSNotFound) {
-            randEntry = [_dataEntries objectAtIndex:rand];
-        }
-    }
+//    if (includePhrases) {
+//        while ([[randEntry english] rangeOfString:@" "].location == NSNotFound) {
+//            rand = arc4random_uniform(numEntries);
+//            randEntry = [_dataEntries objectAtIndex:rand];
+//        }
+//    }
     
     return randEntry;
 }
