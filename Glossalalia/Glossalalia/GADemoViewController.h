@@ -1,25 +1,16 @@
 //
-//  GAMatchViewController.h
+//  GADemoViewController.h
 //  Glossalalia
 //
-//  Created by Rupert Deese on 2/24/14.
+//  Created by Rupert Deese on 4/7/14.
 //  Copyright (c) 2014 Rupert Deese. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "GALevelViewController.h"
+#import "GAElement.h"
+#import "GADataEntry.h"
 
-@protocol GAMatchViewControllerDelegate <NSObject>
-
-- (void) matchDidEnd;
-
-@end
-
-@interface GAMatchViewController : UIViewController <GALevelViewControllerDelegate>
-
-@property NSObject <GAMatchViewControllerDelegate> *delegate;
-@property GKMatch *theMatch;
-@property GALevelViewController *theLevel;
+@interface GADemoViewController : UIViewController
 
 @property UILabel *commandLabel;
 @property CGRect commandLabelStartFrame;
@@ -34,7 +25,5 @@
 @property NSMutableArray *buttonColors;
 
 @property UIButton *skipButton;
-
-- (id)initWithMatch:(GKMatch*)match;
 
 @end

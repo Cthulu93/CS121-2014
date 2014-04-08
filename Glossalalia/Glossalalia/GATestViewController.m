@@ -56,18 +56,23 @@
 //        [_matchmakeButton setEnabled:NO];
 //        [self.view addSubview:_matchmakeButton];
         
-        _matchmakeButton = [[FUIButton alloc] initWithFrame:CGRectMake(0.2*_fWidth, 0.6*_fHeight, 0.6*_fWidth, 0.15*_fHeight)];
-        _matchmakeButton.buttonColor = [UIColor carrotColor];
-        _matchmakeButton.shadowColor = [UIColor pumpkinColor];
-        _matchmakeButton.shadowHeight = 3.0f;
-        _matchmakeButton.cornerRadius = 6.0f;
-        [_matchmakeButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-MediumOblique" size:30.0]];
-        [_matchmakeButton setTitleColor:[UIColor cloudsColor] forState:UIControlStateNormal];
-        [_matchmakeButton setTitleColor:[UIColor cloudsColor] forState:UIControlStateHighlighted];
-        [_matchmakeButton setTitle: @"Play" forState:UIControlStateNormal];
-        [_matchmakeButton setTitle: @"Wait" forState:UIControlStateDisabled];
-        [_matchmakeButton setEnabled:NO];
+        float buttonYLoc = 0.55*_fHeight;
+        
+        GADataEntry *playWord = [[GADataEntry alloc] initWithEnglish:@"Play" andSpanish:@"Play" andImage:nil];
+        
+        _matchmakeButton = [[GAElement alloc] initRandomWithFrame:CGRectMake(0*_fWidth, buttonYLoc, 1.0*_fWidth, 0.15*_fHeight) andWord:playWord];
+        _matchmakeButton.delegate = self;
+
         [self.view addSubview:_matchmakeButton];
+        [_matchmakeButton setEnabled:NO];
+        
+        buttonYLoc += 0.15*_fHeight;
+        
+        GADataEntry *tutorialWord = [[GADataEntry alloc] initWithEnglish:@"Tutorial" andSpanish:@"Tutorial" andImage:nil];
+        
+        _tutorialButton = [[GAElement alloc] initRandomWithFrame:CGRectMake(0*_fWidth, buttonYLoc, 1.0*_fWidth, 0.15*_fHeight) andWord:tutorialWord];
+        _tutorialButton.delegate = self;
+        [self.view addSubview:_tutorialButton];
 
         
         _gameStatus = [[UILabel alloc] initWithFrame:CGRectMake(0.05*_fWidth, 0.2*_fHeight, 0.9*_fWidth, 0.3*_fHeight)];
@@ -125,7 +130,6 @@
 // Method called when player is authenticated. more should go here at some point.
 - (void) authenticatedPlayer: (GKLocalPlayer*) lp {
     NSLog(@"%@ has been authenticated!", [lp displayName]);
-    [_matchmakeButton addTarget:self action:@selector(requestMatch) forControlEvents:UIControlEventTouchUpInside];
     [_matchmakeButton setEnabled:YES];
 }
 
@@ -170,6 +174,17 @@
 
 - (void) match:(GKMatch *)match didReceiveData:(NSData *)data fromPlayer:(NSString *)playerID {
     [_gameStatus setText:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];
+}
+
+#pragma mark GAElementDelegate methods
+
+- (void) localPlayerPressedButtonForWord:(GADataEntry*)word {
+    if ([word.local isEqual: @"Play"]) {
+        [self requestMatch];
+    } else if ([word.local isEqual:@"Tutorial"]) {
+        GADemoViewController *demo = [[GADemoViewController alloc] initWithNibName:nil bundle:nil];
+        [self presentViewController:demo animated:YES completion:nil];
+    }
 }
 
 - (void)viewDidLoad

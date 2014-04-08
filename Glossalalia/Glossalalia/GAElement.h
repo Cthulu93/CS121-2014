@@ -31,8 +31,8 @@ typedef enum {
 @property ButtonType type;
 @property GADataEntry *word;
 @property NSTimer *nTapTimer;
-@property NSInteger *numToSwap;
-@property NSInteger *numTap;
+@property NSInteger numToSwap;
+@property NSInteger numTap;
 @property int curNumTaps;
 @property NSObject <GAElementDelegate> *delegate;
 @property UIColor *randomColor;

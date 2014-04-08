@@ -127,10 +127,15 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
             y += 0.15;
         }
         
+        float buffer = 0.02;
+        y += buffer;
+        
         _exitButton = [UIButton buttonWithType:UIButtonTypeSystem];
-        [_exitButton setFrame:CGRectMake(0, y*_fHeight, _fWidth, _fHeight*(1-y))];
+        [_exitButton setFrame:CGRectMake(0, y*_fHeight, _fWidth*0.4, _fHeight*(1-y-buffer))];
         [_exitButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-Medium" size:30.0]];
         [_exitButton setTitle: @"Quit" forState:UIControlStateNormal];
+        [_exitButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
+        [_exitButton setContentEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10)];
         [_exitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_exitButton setBackgroundColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1]];
         [_exitButton addTarget:self action:@selector(endMatch) forControlEvents:UIControlEventTouchUpInside];
@@ -485,12 +490,14 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
     // has been correctly tapped
     elem.numTap += 1;
 
-    
+    NSLog(@"Updating element, now has %d taps", (int)elem.numTap);
     
     // if the number of taps for this button equals
     // the number needed to swap, create a new GAElement
     // and swap it with the existing one
-    if ([elem numTap] == [elem numToSwap]) {
+    if ([elem numTap] >= [elem numToSwap]) {
+        
+        NSLog(@"Swapping element!");
         
         // apply the slowdown for a new word
         _commandCompletionTimeLimit += SLOWDOWN_NEWWORD;
@@ -498,7 +505,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
         CGFloat buttonYLoc = elem.frame.origin.y;
         
         GADataEntry *newWord = [_dataHandler grabRandomEntry];
-        GAElement *newButton = [[GAElement alloc] initRandomWithFrame:CGRectMake(_fWidth, buttonYLoc, 1.0*_fWidth, 0.16 * _fHeight) andWord:newWord];
+        GAElement *newButton = [[GAElement alloc] initRandomWithFrame:CGRectMake(_fWidth, buttonYLoc, 1.0*_fWidth, 0.15 * _fHeight) andWord:newWord];
         newButton.delegate = self;
         
         NSString* newRemoteWord = [newWord remote];
@@ -534,7 +541,6 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
 - (void) exchangeWordsWithNewWord:(NSString*)newWord andOldWord:(NSString*)oldWord {
     [_legalCommandWords removeObject:oldWord];
     [_legalCommandWords addObject:newWord];
-    
 }
 
 #pragma mark ROUSessionDelegate methods

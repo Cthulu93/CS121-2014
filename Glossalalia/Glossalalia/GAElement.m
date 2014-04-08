@@ -10,10 +10,7 @@
 
 @implementation GAElement
 
-// This is hacky right here, but for some reason in the levelviewcontroller
-// the numTap variable increments by 4 every time, so to make it 3
-// taps we set this variable to 3*4 = 12
-static NSInteger *const NUMBER_OF_TAPS_UNTIL_SWAP = 12;
+static const NSInteger NUMBER_OF_TAPS_UNTIL_SWAP = 3;
 
 // All GAElement buttons take the usual coordinate and dimension parameters, as well as a local NSString and a remote NSString
 
@@ -24,15 +21,14 @@ static NSInteger *const NUMBER_OF_TAPS_UNTIL_SWAP = 12;
     if(self){
         self.frame = frame;
         _type = SINGLE_TAP;
-        [self setupButton];
-        
         _word = word;
+        
+        [self setupButton];
         
         UITapGestureRecognizer *singleGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchDetected)];
         singleGesture.numberOfTapsRequired = 1;
         
         [self addGestureRecognizer:singleGesture];
-        [self setTitle:_word.local forState:UIControlStateNormal];
     }
     
     return self;
@@ -46,9 +42,9 @@ static NSInteger *const NUMBER_OF_TAPS_UNTIL_SWAP = 12;
     if(self){
         self.frame = frame;
         _type = FIVE_TAP;
-        [self setupButton];
-        
         _word = word;
+        
+        [self setupButton];
         
 //        UITapGestureRecognizer *fiveGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchDetected)];
 //        fiveGesture.numberOfTapsRequired = 5;
@@ -59,7 +55,6 @@ static NSInteger *const NUMBER_OF_TAPS_UNTIL_SWAP = 12;
 
         [self addGestureRecognizer:oneGesture];
         //[self addGestureRecognizer:fiveGesture];
-        [self setTitle:_word.local forState:UIControlStateNormal];
     }
     
     return self;
@@ -72,16 +67,15 @@ static NSInteger *const NUMBER_OF_TAPS_UNTIL_SWAP = 12;
     if(self){
         self.frame = frame;
         _type = SLIDE_LEFT;
-        [self setupButton];
-        
         _word = word;
+        
+        [self setupButton];
         
         UISwipeGestureRecognizer *slideGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(touchDetected)];
         slideGesture.direction = UISwipeGestureRecognizerDirectionLeft;
         slideGesture.numberOfTouchesRequired = 1;
         
         [self addGestureRecognizer:slideGesture];
-        [self setTitle:_word.local forState:UIControlStateNormal];
     }
     
     return self;
@@ -94,16 +88,15 @@ static NSInteger *const NUMBER_OF_TAPS_UNTIL_SWAP = 12;
     if(self){
         self.frame = frame;
         _type = SLIDE_RIGHT;
-        [self setupButton];
-        
         _word = word;
+        
+        [self setupButton];
         
         UISwipeGestureRecognizer *slideGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(touchDetected)];
         slideGesture.direction = UISwipeGestureRecognizerDirectionRight;
         slideGesture.numberOfTouchesRequired = 1;
         
         [self addGestureRecognizer:slideGesture];
-        [self setTitle:_word.local forState:UIControlStateNormal];
     }
     
     return self;
@@ -116,16 +109,15 @@ static NSInteger *const NUMBER_OF_TAPS_UNTIL_SWAP = 12;
     if(self){
         self.frame = frame;
         _type = SLIDE_DOWN;
-        [self setupButton];
-        
         _word = word;
+        
+        [self setupButton];
         
         UISwipeGestureRecognizer *slideGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(touchDetected)];
         slideGesture.direction = UISwipeGestureRecognizerDirectionDown;
         slideGesture.numberOfTouchesRequired = 1;
         
         [self addGestureRecognizer:slideGesture];
-        [self setTitle:_word.local forState:UIControlStateNormal];
     }
     
     return self;
@@ -138,16 +130,15 @@ static NSInteger *const NUMBER_OF_TAPS_UNTIL_SWAP = 12;
     if(self){
         self.frame = frame;
         _type = SLIDE_UP;
-        [self setupButton];
-        
         _word = word;
+        
+        [self setupButton];
         
         UISwipeGestureRecognizer *slideGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(touchDetected)];
         slideGesture.direction = UISwipeGestureRecognizerDirectionUp;
         slideGesture.numberOfTouchesRequired = 1;
         
         [self addGestureRecognizer:slideGesture];
-        [self setTitle:_word.local forState:UIControlStateNormal];
     }
     
     return self;
@@ -243,7 +234,7 @@ static NSInteger *const NUMBER_OF_TAPS_UNTIL_SWAP = 12;
     
     _backgroundOpacity = 0.3;
     
-    _randomColor = [self randomColor];
+    _randomColor = [self getRandomColor];
     [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self setBackgroundColor:_randomColor];
     
@@ -257,14 +248,8 @@ static NSInteger *const NUMBER_OF_TAPS_UNTIL_SWAP = 12;
     
     switch (_type) {
         case SINGLE_TAP: {
-//            UILabel *leftBar = [UILabel new];
-//            [leftBar setBackgroundColor:[UIColor whiteColor]];
-//            [self addSubview: leftBar];
-//            [leftBar setFrame:CGRectMake(10, 0, 5, self.frame.size.height)];
-//            UILabel *rightBar = [UILabel new];
-//            [rightBar setBackgroundColor:[UIColor whiteColor]];
-//            [self addSubview: rightBar];
-//            [rightBar setFrame:CGRectMake(self.frame.size.width-10, 0, 5, self.frame.size.height)];
+            // do nothing.
+            [self setTitle:@"Tap me once" forState:UIControlStateNormal];
         }; break;
         case FIVE_TAP: {
             CGRect numFrame = CGRectMake(0, 0, self.frame.size.width/5, self.frame.size.height);
@@ -282,17 +267,20 @@ static NSInteger *const NUMBER_OF_TAPS_UNTIL_SWAP = 12;
                 numFrame.origin.x += self.frame.size.width/5;
             }
             [[self viewWithTag:5] setAlpha:1.0];
+            [self setTitle:@"Tap me five times" forState:UIControlStateNormal];
         }; break;
         case SLIDE_LEFT: {
             GATriangleView *rightTri = [[GATriangleView alloc] initWithFrame:CGRectMake(self.frame.size.width - self.frame.size.height, 0, self.frame.size.height, self.frame.size.height)andColor:_brightColor];
             //[rightTri setAlpha:0.5];
             [rightTri setTransform:CGAffineTransformMakeRotation(2*M_PI_2)];
             [self addSubview: rightTri];
+            [self setTitle:@"Slide me left" forState:UIControlStateNormal];
         }; break;
         case SLIDE_RIGHT: {
             GATriangleView *leftTri = [[GATriangleView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.height, self.frame.size.height)andColor:_brightColor];
             //[leftTri setAlpha:0.5];
             [self addSubview: leftTri];
+            [self setTitle:@"Slide me right" forState:UIControlStateNormal];
         }; break;
         case SLIDE_UP: {
             CGRect newFrame = CGRectMake((self.frame.size.width - self.frame.size.height)/2, 0, self.frame.size.height, self.frame.size.height);
@@ -300,6 +288,7 @@ static NSInteger *const NUMBER_OF_TAPS_UNTIL_SWAP = 12;
             //[bottomTri setAlpha:0.5];
             [bottomTri setTransform:CGAffineTransformMakeRotation(3*M_PI_2)];
             [self addSubview: bottomTri];
+            [self setTitle:@"Slide me up" forState:UIControlStateNormal];
         }; break;
         case SLIDE_DOWN: {
             CGRect newFrame = CGRectMake((self.frame.size.width - self.frame.size.height)/2, 0, self.frame.size.height, self.frame.size.height);
@@ -307,6 +296,7 @@ static NSInteger *const NUMBER_OF_TAPS_UNTIL_SWAP = 12;
             //[topTri setAlpha:0.5];
             [topTri setTransform:CGAffineTransformMakeRotation(M_PI_2)];
             [self addSubview: topTri];
+            [self setTitle:@"Slide me down" forState:UIControlStateNormal];
         }; break;
     }
     
@@ -315,6 +305,9 @@ static NSInteger *const NUMBER_OF_TAPS_UNTIL_SWAP = 12;
     [self setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     
     [self.titleLabel setAdjustsFontSizeToFitWidth:YES];
+    
+    if (_word != nil)
+        [self setTitle:_word.local forState:UIControlStateNormal];
     
     self.numToSwap = NUMBER_OF_TAPS_UNTIL_SWAP;
     self.numTap = 0;
@@ -351,7 +344,7 @@ static NSInteger *const NUMBER_OF_TAPS_UNTIL_SWAP = 12;
     [_nTapTimer invalidate];
 }
 
-- (UIColor*) randomColor {
+- (UIColor*) getRandomColor {
     CGFloat hue = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0
     CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from white
     CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.3;  //  0.5 to 1.0, away from black
