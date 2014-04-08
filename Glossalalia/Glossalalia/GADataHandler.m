@@ -30,8 +30,9 @@
     // generate random number with numEntries as upper bound
     NSUInteger rand = arc4random_uniform(numEntries);
     GADataEntry *randEntry = [_dataEntries objectAtIndex:rand];
-    if (!includePhrases) {
-        while (!([[randEntry english] rangeOfString:@" "].location != NSNotFound)) {
+    if (includePhrases) {
+        NSLog(@"Rand Entry: %@ and result of space check: %d", randEntry, [[randEntry english] rangeOfString:@" "].location != NSNotFound);
+        while ([[randEntry english] rangeOfString:@" "].location != NSNotFound) {
             randEntry = [_dataEntries objectAtIndex:rand];
         }
     }
@@ -46,25 +47,7 @@
     // create array of num entries selected at random
     NSMutableArray *randomEntries = [NSMutableArray new];
     while ([randomEntries count] < num) {
-        NSUInteger rand = arc4random_uniform(numEntries);
-        GADataEntry *randEntry = [_dataEntries objectAtIndex:rand];
-        
-        if (includePhrases) {
-            // If we are including phrases, then we add randEntry regardless
-            // of whether it's a phrase or not
-            [randomEntries addObject:[_dataEntries objectAtIndex:rand]];
-            
-        } else {
-            // If we aren't including phrases, we check if the randEntry doesn't include
-            // a space, which means it's not a phrase, and we add it
-            // Otherwise we keep looping
-            if ([[randEntry english] rangeOfString:@" "].location != NSNotFound) {
-                [randomEntries addObject:[_dataEntries objectAtIndex:rand]];
-            } else {
-                continue;
-            }
-        }
-        
+        [randomEntries addObject:[self grabRandomEntryWithPhrases:includePhrases]];
     }
 
     

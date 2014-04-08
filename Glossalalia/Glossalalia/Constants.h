@@ -7,8 +7,8 @@
 //
 
 
-// Set this to false to disable testing mode
-extern const bool  testing;
+// Determines whether app launches in testing mode
+extern const bool TESTING;
 
-// Set this to false if you wish to exlude phrases
-extern const bool yesPhrases;
+// Determines whether only phrases are used, or phrases and words
+extern const bool PHRASESONLY;

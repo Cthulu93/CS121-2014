@@ -8,6 +8,10 @@
 
 #import "Constants.h"
 
-const bool testing = false;
+// Set to true and app will launch in testing mode, where foreign
+// language words are replaced with their English translations
+// prefixed with "!"
+const bool TESTING = false;
 
-const bool yesPhrases = true;
+// Set to true and the app will only use phrases
+const bool PHRASESONLY = true;

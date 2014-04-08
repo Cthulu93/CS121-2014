@@ -34,7 +34,7 @@
     
 
     if(![Database isPopulated]){
-        if(testing){
+        if(TESTING){
             NSLog(@"updating database for testing mode");
             [Database updateDatabaseForTesting];}
         else{
