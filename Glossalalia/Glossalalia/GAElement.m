@@ -239,10 +239,7 @@ static const NSInteger NUMBER_OF_TAPS_UNTIL_SWAP = 3;
     [self setBackgroundColor:_randomColor];
     
     CGFloat hue = 0, sat = 0, bright = 0, alpha = 0;
-    if ([_randomColor getHue:&hue saturation:&sat brightness:&bright alpha:&alpha])
-        NSLog(@"Success");
-    else
-        NSLog(@"failure");
+    [_randomColor getHue:&hue saturation:&sat brightness:&bright alpha:&alpha];
     
     _brightColor = [UIColor colorWithHue:hue saturation:sat brightness:bright+0.2 alpha:alpha];
     

@@ -554,7 +554,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
 -(void)session:(ROUSession *)session preparedDataForSending:(NSData *)data{
     NSError *theError;
     [_theMatch sendDataToAllPlayers:data
-                       withDataMode:GKMatchSendDataUnreliable // we can use unreliable mode now
+                       withDataMode:GKMatchSendDataReliable // we can use unreliable mode now
                               error:&theError];
     if (theError != nil)
         NSLog(@"Error was: %@", [theError localizedDescription]);
