@@ -18,13 +18,13 @@
 @implementation GALevelViewController
 
 // speed by which the command word is decreased
-static double const SPEEDUP_ONECORRECT = 2.0;
-static double const SLOWDOWN_NEWWORD = 5;
+static double const SPEEDUP_ONECORRECT = .6;
+static double const SLOWDOWN_NEWWORD = 1.5;
 static double const COMMAND_TIME_LIMIT = 20.0;
 
 // number of words needed to be pressed
 // before movement speeds up
-static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
+static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
 
 - (id)initWithMatch:(GKMatch*)match {
     self = [super initWithNibName:nil bundle:nil];

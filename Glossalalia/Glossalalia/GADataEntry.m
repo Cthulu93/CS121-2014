@@ -19,8 +19,12 @@
         _image = image;
         
         // randomly decide whether english or spanish is local.
-        if ((arc4random() % 20) < 10) _englishLocal = YES;
-        else _englishLocal = NO;
+//        if ((arc4random() % 20) < 10) _englishLocal = YES;
+//        else _englishLocal = NO;
+        
+        // FIXME always english is local we need to modify this constructor to make it
+        // possible to make the other language local if the user wants.
+        _englishLocal = YES;
     }
     
     return self;

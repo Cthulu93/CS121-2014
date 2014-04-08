@@ -107,6 +107,9 @@
 }
 
 - (void) viewDidAppear:(BOOL)animated {
+    _theLevel = [[GALevelViewController alloc] initWithMatch:nil];
+    _theLevel.delegate = self;
+    
     NSString *secondText = @"Welcome to Glossalalia!";
     CGSize textSize = [secondText sizeWithFont:_commandFont];
     float duration = textSize.width/_fWidth*3.5;
@@ -119,7 +122,7 @@
     [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
         [_commandLabel setFrame:_commandLabelEndFrame];
     } completion:^(BOOL finished) {
-        NSString *secondText = @"Translate the words that appear here to figure out what button to press.";
+        NSString *secondText = @"During the game, words will appear in this bar. Press the button with the correct translation!";
         CGSize textSize = [secondText sizeWithFont:_commandFont];
         float duration = textSize.width/_fWidth*3.5;
         _commandLabelStartFrame = CGRectMake(1.0*_fWidth, 0.145*_fHeight, textSize.width, 0.15*_fHeight);
@@ -131,7 +134,7 @@
         [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
             [_commandLabel setFrame:_commandLabelEndFrame];
         } completion:^(BOOL finished) {
-            NSString *secondText = @"If you don't have the right button, you'll have to work with your teammates...";
+            NSString *secondText = @"The button you need may be on your teammate's screen... work together!";
             CGSize textSize = [secondText sizeWithFont:_commandFont];
             float duration = textSize.width/_fWidth*3.5;
             _commandLabelStartFrame = CGRectMake(1.0*_fWidth, 0.145*_fHeight, textSize.width, 0.15*_fHeight);
@@ -143,7 +146,7 @@
             [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
                 [_commandLabel setFrame:_commandLabelEndFrame];
             } completion:^(BOOL finished) {
-                NSString *secondText = @"Work to fill up your progress bar! If you miss a translation it will empty out.";
+                NSString *secondText = @"You can tell the different types of buttons apart by their background designs.";
                 CGSize textSize = [secondText sizeWithFont:_commandFont];
                 float duration = textSize.width/_fWidth*3.5;
                 _commandLabelStartFrame = CGRectMake(1.0*_fWidth, 0.145*_fHeight, textSize.width, 0.15*_fHeight);
@@ -154,9 +157,8 @@
                 
                 [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
                     [_commandLabel setFrame:_commandLabelEndFrame];
-                    [_progressBar setFrame:_fullProgressFrame];
                 } completion:^(BOOL finished) {
-                    NSString *secondText = @"Good luck!";
+                    NSString *secondText = @"The progress bar shows your current streak. If you miss a word, your streak will end.";
                     CGSize textSize = [secondText sizeWithFont:_commandFont];
                     float duration = textSize.width/_fWidth*3.5;
                     _commandLabelStartFrame = CGRectMake(1.0*_fWidth, 0.145*_fHeight, textSize.width, 0.15*_fHeight);
@@ -167,9 +169,27 @@
                     
                     [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
                         [_commandLabel setFrame:_commandLabelEndFrame];
-                        [_progressBar setFrame:_progressFrame];
+                        [_progressBar setFrame:_fullProgressFrame];
                     } completion:^(BOOL finished) {
-                        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+                        [UIView animateWithDuration:2.0 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+                            [_commandLabel setFrame:_commandLabelEndFrame];
+                            [_progressBar setFrame:_progressFrame];
+                        } completion:^(BOOL finished) {
+                            NSString *secondText = @"Hang around for a practice round!";
+                            CGSize textSize = [secondText sizeWithFont:_commandFont];
+                            float duration = textSize.width/_fWidth*3.5;
+                            _commandLabelStartFrame = CGRectMake(1.0*_fWidth, 0.145*_fHeight, textSize.width, 0.15*_fHeight);
+                            _commandLabelEndFrame = CGRectMake(-textSize.width, 0.145
+                                                               *_fHeight, textSize.width, 0.15*_fHeight);
+                            [_commandLabel setFrame:_commandLabelStartFrame];
+                            [_commandLabel setText:secondText];
+                            
+                            [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+                                [_commandLabel setFrame:_commandLabelEndFrame];
+                            } completion:^(BOOL finished) {
+                                [self presentViewController:_theLevel animated:NO completion:nil];
+                            }];
+                        }];
                     }];
                 }];
             }];
@@ -208,15 +228,14 @@
     return YES;
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark GALevelViewController methods
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void) matchDidEnd {
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
-*/
+
+- (void) levelDidEnd {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 @end
