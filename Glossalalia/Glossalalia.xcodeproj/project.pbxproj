@@ -167,6 +167,7 @@
 		734DF0BB18BC7F6A000845E0 /* GADatabaseLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GADatabaseLoadingView.m; sourceTree = "<group>"; };
 		73C002B318B037880066715E /* GADataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADataViewController.h; sourceTree = "<group>"; };
 		73C002B418B037880066715E /* GADataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GADataViewController.m; sourceTree = "<group>"; };
+		FA07A44218F3B6E00037331F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -244,6 +245,7 @@
 				67BCB5D318B30DB800D5EF9F /* GALevelViewController.m */,
 				673B9C2118F3607E00FE6126 /* GADemoViewController.h */,
 				673B9C2218F3607E00FE6126 /* GADemoViewController.m */,
+				FA07A44218F3B6E00037331F /* Constants.h */,
 				734DF0A118B6AD2D000845E0 /* GAElements */,
 				7318B5DC18ADB59300FC9245 /* backend */,
 				673642FC18AD90E000EC785D /* Images.xcassets */,

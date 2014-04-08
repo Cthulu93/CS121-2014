@@ -31,9 +31,6 @@
     [Database createEditableCopyOfDatabaseIfNeeded];
     [Database initDatabase];
     
-    // change this boolean to enable/disable testing mode
-
-    BOOL testing = FALSE;
 
     if(![Database isPopulated]){
         if(testing){

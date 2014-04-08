@@ -33,7 +33,7 @@
     return [_dataEntries objectAtIndex:rand];
 }
 
--(NSMutableArray*)grabRandomEntries:(int)num{
+-(NSMutableArray*)grabRandomEntries:(int)num withPhrases:(BOOL)includePhrases{
     // find out how many entries we have to work with
     NSUInteger numEntries = [_dataEntries count];
     

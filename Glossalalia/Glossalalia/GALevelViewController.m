@@ -47,7 +47,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
         // Grab the number of words pairs specified in numButtonsWordsPerPlayer
         // and initialize buttonWords
         _dataHandler = [GADataHandler new];
-        _buttonWords = [_dataHandler grabRandomEntries:_numButtonWordsPerPlayer];
+        _buttonWords = [_dataHandler grabRandomEntries:_numButtonWordsPerPlayer withPhrases:yesPhrases];
         
         // no command word yet
         _commandWord = @"No command yet.";

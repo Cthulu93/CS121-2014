@@ -18,6 +18,6 @@
 
 -(GADataEntry*)grabRandomEntry;
 
--(NSMutableArray*)grabRandomEntries:(int)num;
+-(NSMutableArray*)grabRandomEntries:(int)num withPhrases:(BOOL)includePhrases;
 
 @end

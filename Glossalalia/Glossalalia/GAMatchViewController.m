@@ -24,6 +24,7 @@
         _fWidth = self.view.frame.size.width;
         _fHeight = self.view.frame.size.height;
         
+        // Code for Tutorial Screen
         _commandFont = [UIFont fontWithName:@"Avenir-Medium" size:40.0];
         
         NSString* firstText = @"Welcome to Glossalalia! Translate the words that appear here to figure out what button to press. If you don't have the right button, you'll have to work with your teammates...";
@@ -110,75 +111,6 @@
 	// Do any additional setup after loading the view.
     _theLevel = [[GALevelViewController alloc] initWithMatch:_theMatch];
     _theLevel.delegate = self;
-    
-//    NSString *secondText = @"Welcome to Glossalalia!";
-//    CGSize textSize = [secondText sizeWithFont:_commandFont];
-//    float duration = textSize.width/_fWidth*3.5;
-//    _commandLabelStartFrame = CGRectMake(1.0*_fWidth, 0.145*_fHeight, textSize.width, 0.15*_fHeight);
-//    _commandLabelEndFrame = CGRectMake(-textSize.width, 0.145
-//                                       *_fHeight, textSize.width, 0.15*_fHeight);
-//    [_commandLabel setFrame:_commandLabelStartFrame];
-//    [_commandLabel setText:secondText];
-//    
-//    [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
-//        [_commandLabel setFrame:_commandLabelEndFrame];
-//    } completion:^(BOOL finished) {
-//        NSString *secondText = @"Translate the words that appear here to figure out what button to press.";
-//        CGSize textSize = [secondText sizeWithFont:_commandFont];
-//        float duration = textSize.width/_fWidth*3.5;
-//        _commandLabelStartFrame = CGRectMake(1.0*_fWidth, 0.145*_fHeight, textSize.width, 0.15*_fHeight);
-//        _commandLabelEndFrame = CGRectMake(-textSize.width, 0.145
-//                                           *_fHeight, textSize.width, 0.15*_fHeight);
-//        [_commandLabel setFrame:_commandLabelStartFrame];
-//        [_commandLabel setText:secondText];
-//        
-//        [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
-//            [_commandLabel setFrame:_commandLabelEndFrame];
-//        } completion:^(BOOL finished) {
-//            NSString *secondText = @"If you don't have the right button, you'll have to work with your teammates...";
-//            CGSize textSize = [secondText sizeWithFont:_commandFont];
-//            float duration = textSize.width/_fWidth*3.5;
-//            _commandLabelStartFrame = CGRectMake(1.0*_fWidth, 0.145*_fHeight, textSize.width, 0.15*_fHeight);
-//            _commandLabelEndFrame = CGRectMake(-textSize.width, 0.145
-//                                               *_fHeight, textSize.width, 0.15*_fHeight);
-//            [_commandLabel setFrame:_commandLabelStartFrame];
-//            [_commandLabel setText:secondText];
-//            
-//            [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
-//                [_commandLabel setFrame:_commandLabelEndFrame];
-//            } completion:^(BOOL finished) {
-//                NSString *secondText = @"Work to fill up your progress bar! If you miss a translation it will empty out.";
-//                CGSize textSize = [secondText sizeWithFont:_commandFont];
-//                float duration = textSize.width/_fWidth*3.5;
-//                _commandLabelStartFrame = CGRectMake(1.0*_fWidth, 0.145*_fHeight, textSize.width, 0.15*_fHeight);
-//                _commandLabelEndFrame = CGRectMake(-textSize.width, 0.145
-//                                                   *_fHeight, textSize.width, 0.15*_fHeight);
-//                [_commandLabel setFrame:_commandLabelStartFrame];
-//                [_commandLabel setText:secondText];
-//                
-//                [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
-//                    [_commandLabel setFrame:_commandLabelEndFrame];
-//                    [_progressBar setFrame:_fullProgressFrame];
-//                } completion:^(BOOL finished) {
-//                    NSString *secondText = @"Good luck!";
-//                    CGSize textSize = [secondText sizeWithFont:_commandFont];
-//                    float duration = textSize.width/_fWidth*3.5;
-//                    _commandLabelStartFrame = CGRectMake(1.0*_fWidth, 0.145*_fHeight, textSize.width, 0.15*_fHeight);
-//                    _commandLabelEndFrame = CGRectMake(-textSize.width, 0.145
-//                                                       *_fHeight, textSize.width, 0.15*_fHeight);
-//                    [_commandLabel setFrame:_commandLabelStartFrame];
-//                    [_commandLabel setText:secondText];
-//                    
-//                    [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
-//                        [_commandLabel setFrame:_commandLabelEndFrame];
-//                        [_progressBar setFrame:_progressFrame];
-//                    } completion:^(BOOL finished) {
-//                        [self presentViewController:_theLevel animated:NO completion:nil];
-//                    }];
-//                }];
-//            }];
-//        }];
-//    }];
     [self presentViewController:_theLevel animated:NO completion:nil];
 }
 
