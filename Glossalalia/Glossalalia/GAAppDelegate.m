@@ -7,6 +7,7 @@
 //
 
 #import "GAAppDelegate.h"
+#import "Constants.h"
 
 
 @implementation GAAppDelegate
@@ -31,12 +32,7 @@
     [Database createEditableCopyOfDatabaseIfNeeded];
     [Database initDatabase];
     
-    // change this boolean to enable/disable testing mode
-<<<<<<< HEAD
-    BOOL testing = FALSE;
-=======
-    BOOL testing = NO;
->>>>>>> e7c2a77bcb011d5770b9c8e0e9211de408f08073
+
     if(![Database isPopulated]){
         if(testing){
             NSLog(@"updating database for testing mode");

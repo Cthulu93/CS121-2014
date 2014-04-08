@@ -16,8 +16,8 @@
 
 -(id)init;
 
--(GADataEntry*)grabRandomEntry;
+-(GADataEntry*)grabRandomEntryWithPhrases:(bool)includePhrases;
 
--(NSMutableArray*)grabRandomEntries:(int)num;
+-(NSMutableArray*)grabRandomEntries:(int)num withPhrases:(BOOL)includePhrases;
 
 @end

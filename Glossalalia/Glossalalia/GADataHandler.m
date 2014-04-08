@@ -24,25 +24,49 @@
     return self;
 }
 
--(GADataEntry*)grabRandomEntry{
+-(GADataEntry*)grabRandomEntryWithPhrases:(bool)includePhrases{
     NSUInteger numEntries = [_dataEntries count];
     
     // generate random number with numEntries as upper bound
     NSUInteger rand = arc4random_uniform(numEntries);
+    GADataEntry *randEntry = [_dataEntries objectAtIndex:rand];
+    if (!includePhrases) {
+        while (!([[randEntry english] rangeOfString:@" "].location != NSNotFound)) {
+            randEntry = [_dataEntries objectAtIndex:rand];
+        }
+    }
     
-    return [_dataEntries objectAtIndex:rand];
+    return randEntry;
 }
 
--(NSMutableArray*)grabRandomEntries:(int)num{
+-(NSMutableArray*)grabRandomEntries:(int)num withPhrases:(BOOL)includePhrases{
     // find out how many entries we have to work with
     NSUInteger numEntries = [_dataEntries count];
     
     // create array of num entries selected at random
     NSMutableArray *randomEntries = [NSMutableArray new];
-    for(int i = 0; i < num; ++i){
+    while ([randomEntries count] < num) {
         NSUInteger rand = arc4random_uniform(numEntries);
-        [randomEntries addObject:[_dataEntries objectAtIndex:rand]];
+        GADataEntry *randEntry = [_dataEntries objectAtIndex:rand];
+        
+        if (includePhrases) {
+            // If we are including phrases, then we add randEntry regardless
+            // of whether it's a phrase or not
+            [randomEntries addObject:[_dataEntries objectAtIndex:rand]];
+            
+        } else {
+            // If we aren't including phrases, we check if the randEntry doesn't include
+            // a space, which means it's not a phrase, and we add it
+            // Otherwise we keep looping
+            if ([[randEntry english] rangeOfString:@" "].location != NSNotFound) {
+                [randomEntries addObject:[_dataEntries objectAtIndex:rand]];
+            } else {
+                continue;
+            }
+        }
+        
     }
+
     
     return randomEntries;
 }

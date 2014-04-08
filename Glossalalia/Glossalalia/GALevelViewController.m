@@ -9,6 +9,7 @@
 //
 
 #import "GALevelViewController.h"
+#import "Constants.h"
 
 @interface GALevelViewController ()
 @property float fWidth, fHeight;
@@ -47,7 +48,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
         // Grab the number of words pairs specified in numButtonsWordsPerPlayer
         // and initialize buttonWords
         _dataHandler = [GADataHandler new];
-        _buttonWords = [_dataHandler grabRandomEntries:_numButtonWordsPerPlayer];
+        _buttonWords = [_dataHandler grabRandomEntries:_numButtonWordsPerPlayer withPhrases:yesPhrases];
         
         // no command word yet
         _commandWord = @"No command yet.";
@@ -504,7 +505,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 4;
         
         CGFloat buttonYLoc = elem.frame.origin.y;
         
-        GADataEntry *newWord = [_dataHandler grabRandomEntry];
+        GADataEntry *newWord = [_dataHandler grabRandomEntryWithPhrases:yesPhrases];
         GAElement *newButton = [[GAElement alloc] initRandomWithFrame:CGRectMake(_fWidth, buttonYLoc, 1.0*_fWidth, 0.15 * _fHeight) andWord:newWord];
         newButton.delegate = self;
         
