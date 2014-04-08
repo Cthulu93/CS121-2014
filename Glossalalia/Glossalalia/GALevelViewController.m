@@ -258,6 +258,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
     // query to see if we have this word displayed in the command bar
     // -- if it is, we increase the score and get a new word.
     if ([_commandWord isEqual:remoteWord]) {
+        NSLog(@"A match with this command word");
         
         // We need this loop to check if a device tapped its own
         // button in response to a command on its own screen, in which
@@ -275,7 +276,6 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
 
         [self changeScoreBy:[NSNumber numberWithFloat:1.0]];
         
-        [_commandLabel setText:@"Success!"];
         _commandWord = @"";
         [self stopCommandCompletionTimer];
         [self getNewCommandWordThatIsNot:remoteWord];
@@ -284,12 +284,15 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
 
 
 - (void) changeScoreBy:(NSNumber*)points {
+    NSLog(@"Sending message to update score from changeScoreBy");
     [self sendGameMessage:_GAScoreChangeMessage asDataWithWord:nil andPoints:points];
     [self locallyUpdateScoreBy:points];
 }
 
 // score update is performed here, as well as progress bar updating
 - (void) locallyUpdateScoreBy:(NSNumber*)points {
+    
+    NSLog(@"Locally updating score");
     _score += [points floatValue];
     
     
@@ -353,11 +356,8 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
 // called when the command has timed out.
 - (void) commandTimedOut {
     NSLog(@"Player failed to get this command in time!");
-    [_commandLabel setText:@"Spacerats!"];
     _commandWord = @"";
-    
     [self stopCommandCompletionTimer];
-    
     [self changeScoreBy:[NSNumber numberWithFloat:(-1) * _score]];
 }
 
@@ -373,13 +373,16 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
 
 // Encodes message data generated locally for transmission to other players.
 - (void) sendGameMessage:(NSString*)message asDataWithWord:(NSString*)word andPoints:(NSNumber*) points {
+    NSLog(@"In sendgamemessage");
     NSData *theMessage;
     
     // Encode our message for ease of transmission to other players.
     if ([message  isEqual: _GAButtonPressedMessage]) {
+        NSLog(@"Sending buttonpressed message");
         theMessage = [[[NSString alloc] initWithFormat:@"%@;%@", _GAButtonPressedMessage, word] dataUsingEncoding:NSUTF8StringEncoding];
     }
     else if ([message  isEqual: _GACommandListMessage]) {
+        NSLog(@"Sending commandlist message");
         // if word is nil, that means this command is being used to initially populate
         // every other device's command word dictionaries
         if (word == nil) {
@@ -395,12 +398,15 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
         }
     }
     else if ([message  isEqual: _GAScoreChangeMessage]) {
+        NSLog(@"Sending scorechange message");
         theMessage =  [[[NSString alloc] initWithFormat:@"%@;%@", _GAScoreChangeMessage, points] dataUsingEncoding:NSUTF8StringEncoding];
     }
     else if ([message  isEqual: _GAEndMatchMessage]) {
+        NSLog(@"Sending endmatch message");
         theMessage =  [[[NSString alloc] initWithFormat:@"%@", _GAEndMatchMessage] dataUsingEncoding:NSUTF8StringEncoding];
     }
     else if ([message isEqual: _GAConfirmCorrectButtonPressed]) {
+        NSLog(@"Sending correctbutton message");
         theMessage = [[[NSString alloc] initWithFormat:@"%@;%@", _GAConfirmCorrectButtonPressed, word] dataUsingEncoding:NSUTF8StringEncoding];
     }
     else {
@@ -427,12 +433,14 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
     
     // message is a button press
     if ([components[0]  isEqual: _GAButtonPressedMessage]) {
+        NSLog(@"Got buttonpressed message");
         // query to see if we have this word displayed in the command bar
         [self remotePlayerPressedButtonWithWord:components[1]];
     }
     
     // message is a list of command words sent from another device
     else if ([components[0]  isEqual: _GACommandListMessage]) {
+        NSLog(@"Got command list message");
         // if only two strings in the components, then the
         // second string contains the initial words to populate
         // the command word dict with
@@ -440,7 +448,6 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
             // put the received command words into our list.
             [_legalCommandWords addObjectsFromArray:[components[1] componentsSeparatedByString:@","]];
         } else if ([components count] == 3){
-        
             // the second string is newWordToBeInserted, and
             // the third string is oldWordToBeDeleted
             NSString* newWordToBeInserted = components[1];
@@ -452,12 +459,14 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
     
     // message is to change the score
     else if ([components[0]  isEqual: _GAScoreChangeMessage]) {
+        NSLog(@"Got scorechange message");
         // locally update the score
         [self locallyUpdateScoreBy:[[NSNumber alloc] initWithInteger:[components[1] floatValue]]];
     }
     
     // message is to signal the game is over
     else if ([components[0]  isEqual: _GAEndMatchMessage]) {
+        NSLog(@"Got end match message");
         // match is over
         [self endMatch];
     }
@@ -466,6 +475,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
     // in order to increment that GAElement's tap count. Only updates
     // if the receiving device contains a GAElement with the given word
     else if ([components[0] isEqual: _GAConfirmCorrectButtonPressed]) {
+        NSLog(@"Got confirmcorrectbuttonmessage");
         for (GAElement* elem in _wordButtons) {
             if ([[elem.word remote] isEqualToString:components[1]]) {
                 [self updateGAElementWithWord:elem];
