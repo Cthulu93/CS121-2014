@@ -107,7 +107,7 @@ static sqlite3_stmt *updateEntry;
         NSData *imageData = [[NSData alloc] initWithBytes: sqlite3_column_blob(fetchEntries, 3) length: len];
         UIImage *image = [[UIImage alloc] initWithData:imageData];
         
-        // grab the phrase column
+        // grab the phrase column, keep track of how many phrases are encountered
         bool phrase = false;
         int phraseBit = sqlite3_column_int(fetchEntries, 4);
         if (phraseBit == 1) {
@@ -122,7 +122,7 @@ static sqlite3_stmt *updateEntry;
         // create entry object
         GADataEntry *temp = [[GADataEntry alloc] initWithEnglish:english andSpanish:spanish andImage:image andPhrase:phrase];
         
-        // add the entry object to our array depending on whether or not it is a phrase
+        // add the entry object to our return array depending on whether or not it is a phrase
         if (!phrase && PHRASESONLY) {
             continue;
         }
@@ -133,7 +133,7 @@ static sqlite3_stmt *updateEntry;
     
     // tell console about phrases, if necessary
     if (PHRASESONLY) {
-        NSLog(@"Phrases only mode enabled. There are %d phrases in the databsae");
+        NSLog(@"Phrases only mode enabled. There are %d phrases in the database", phraseCount);
     }
     
     // reset the statement, return the array
@@ -153,7 +153,6 @@ static sqlite3_stmt *updateEntry;
     }
 }
 
-// TO DO- fix this function so that it does not erase an arbitrarily large number of database entries
 +(void)eraseAllEntries
 {
     // TODO- enable delete to work properly on the exact number of entries

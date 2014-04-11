@@ -118,7 +118,7 @@
     if (!_matchOn) {
         GKMatchRequest *request = [[GKMatchRequest alloc] init];
         request.minPlayers = 2;
-        request.maxPlayers = 4;
+        request.maxPlayers = 2; // 2 PLAYER MAXIMUM FOR NOW
         
         GKMatchmakerViewController *mmvc = [[GKMatchmakerViewController alloc] initWithMatchRequest:request];
         mmvc.matchmakerDelegate = self;

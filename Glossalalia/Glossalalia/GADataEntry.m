@@ -25,12 +25,20 @@
         
         // FIXME always english is local we need to modify this constructor to make it
         // possible to make the other language local if the user wants.
+        
+        // randomly generate number to determine which language is local
+        int randomInt = (int)(arc4random() % 100);
+        
+        if (randomInt >= 50) {
         _englishLocal = YES;
+        }
+        else {
+            _englishLocal = NO;
+        }
     }
     
     return self;
 }
-
 
 -(NSString*)local {
     if (_englishLocal) return _english;
