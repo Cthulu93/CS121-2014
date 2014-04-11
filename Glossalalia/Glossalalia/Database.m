@@ -93,6 +93,9 @@ static sqlite3_stmt *updateEntry;
     // array of entries to be returned
     NSMutableArray *ret = [NSMutableArray arrayWithCapacity:0];
     
+    // keep count of phrases
+    int phraseCount = 0;
+    
     while (sqlite3_step(fetchEntries) == SQLITE_ROW) {
         
         // query columns from fetch statement
@@ -109,6 +112,7 @@ static sqlite3_stmt *updateEntry;
         int phraseBit = sqlite3_column_int(fetchEntries, 4);
         if (phraseBit == 1) {
             phrase = true;
+            ++phraseCount;
         }
         
         // convert englush and spanish words to NSStrings
@@ -119,10 +123,17 @@ static sqlite3_stmt *updateEntry;
         GADataEntry *temp = [[GADataEntry alloc] initWithEnglish:english andSpanish:spanish andImage:image andPhrase:phrase];
         
         // add the entry object to our array depending on whether or not it is a phrase
-        if (!phrase && PHRASESONLY)
+        if (!phrase && PHRASESONLY) {
             continue;
-        else
+        }
+        else {
             [ret addObject:temp];
+        }
+    }
+    
+    // tell console about phrases, if necessary
+    if (PHRASESONLY) {
+        NSLog(@"Phrases only mode enabled. There are %d phrases in the databsae");
     }
     
     // reset the statement, return the array
