@@ -95,6 +95,7 @@ static sqlite3_stmt *updateEntry;
     
     // keep count of phrases
     int phraseCount = 0;
+    int wordCount = 0;
     
     while (sqlite3_step(fetchEntries) == SQLITE_ROW) {
         
@@ -114,6 +115,10 @@ static sqlite3_stmt *updateEntry;
             phrase = true;
             ++phraseCount;
         }
+        bool word = !phrase;
+        if (word) {
+            ++wordCount;
+        }
         
         // convert englush and spanish words to NSStrings
         NSString *english = [NSString stringWithUTF8String:englishChars];
@@ -126,6 +131,9 @@ static sqlite3_stmt *updateEntry;
         if (!phrase && PHRASESONLY) {
             continue;
         }
+        else if (!word && WORDSONLY) {
+            continue;
+        }
         else {
             [ret addObject:temp];
         }
@@ -134,6 +142,9 @@ static sqlite3_stmt *updateEntry;
     // tell console about phrases, if necessary
     if (PHRASESONLY) {
         NSLog(@"Phrases only mode enabled. There are %d phrases in the database", phraseCount);
+    }
+    if (WORDSONLY) {
+        NSLog(@"Words only mode enabled. There are %d words in the database", wordCount);
     }
     
     // reset the statement, return the array

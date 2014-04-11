@@ -12,3 +12,6 @@ extern const bool TESTING;
 
 // Determines whether only phrases are used, or phrases and words
 extern const bool PHRASESONLY;
+
+// Determines whether only words are used, or phrases and words
+extern const bool WORDSONLY;

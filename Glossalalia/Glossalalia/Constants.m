@@ -14,4 +14,7 @@
 const bool TESTING = false;
 
 // Set to true and the app will only use phrases
-const bool PHRASESONLY = true;
+const bool PHRASESONLY = false;
+
+// Set to true and the app will only use words
+const bool WORDSONLY = false;
