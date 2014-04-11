@@ -1,6 +1,6 @@
 //
 //  GADemoViewController.m
-//  Glossalalia
+//  Glossolalia
 //
 //  Created by Rupert Deese on 4/7/14.
 //  Copyright (c) 2014 Rupert Deese. All rights reserved.
@@ -26,7 +26,7 @@
         
         _commandFont = [UIFont fontWithName:@"Avenir-Medium" size:40.0];
         
-        NSString* firstText = @"Welcome to Glossalalia! Translate the words that appear here to figure out what button to press. If you don't have the right button, you'll have to work with your teammates...";
+        NSString* firstText = @"Welcome to Glossolalia! Translate the words that appear here to figure out what button to press. If you don't have the right button, you'll have to work with your teammates...";
         
         CGSize textSize = [firstText sizeWithFont:_commandFont];
         
@@ -110,7 +110,7 @@
     _theLevel = [[GALevelViewController alloc] initWithMatch:nil];
     _theLevel.delegate = self;
     
-    NSString *secondText = @"Welcome to Glossalalia!";
+    NSString *secondText = @"Welcome to Glossolalia!";
     CGSize textSize = [secondText sizeWithFont:_commandFont];
     float duration = textSize.width/_fWidth*3.5;
     _commandLabelStartFrame = CGRectMake(1.0*_fWidth, 0.145*_fHeight, textSize.width, 0.15*_fHeight);

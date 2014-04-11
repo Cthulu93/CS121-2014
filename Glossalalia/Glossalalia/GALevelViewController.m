@@ -1,6 +1,6 @@
 //
 //  GALevelViewController.m
-//  Glossalalia
+//  Glossolalia
 //
 //  This class presents the main game view. The game happens here!
 //

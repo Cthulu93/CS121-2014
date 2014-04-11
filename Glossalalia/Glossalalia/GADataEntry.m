@@ -1,6 +1,6 @@
 //
 //  GADataEntry.m
-//  Glossalalia
+//  Glossolalia
 //
 //  Created by Paul on 2/13/14.
 //  Copyright (c) 2014 Rupert Deese. All rights reserved.

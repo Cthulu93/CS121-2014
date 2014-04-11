@@ -1,6 +1,6 @@
 //
 //  Database.m
-//  Glossalalia
+//  Glossolalia
 //
 //  Created by Paul on 2/13/2014
 //  Copyright (c) 2014 Harvey Mudd College. All rights reserved.

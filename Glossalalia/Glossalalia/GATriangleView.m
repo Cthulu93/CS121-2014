@@ -1,6 +1,6 @@
 //
 //  GATriangleView.m
-//  Glossalalia
+//  Glossolalia
 //
 //  Created by Rupert Deese on 3/11/14.
 //  Copyright (c) 2014 Rupert Deese. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  GAMatchViewController.m
-//  Glossalalia
+//  Glossolalia
 //
 //  Created by Rupert Deese on 2/24/14.
 //  Copyright (c) 2014 Rupert Deese. All rights reserved.
@@ -27,7 +27,7 @@
         // Code for Tutorial Screen
         _commandFont = [UIFont fontWithName:@"Avenir-Medium" size:40.0];
         
-        NSString* firstText = @"Welcome to Glossalalia! Translate the words that appear here to figure out what button to press. If you don't have the right button, you'll have to work with your teammates...";
+        NSString* firstText = @"Welcome to Glossolalia! Translate the words that appear here to figure out what button to press. If you don't have the right button, you'll have to work with your teammates...";
         
         CGSize textSize = [firstText sizeWithFont:_commandFont];
         

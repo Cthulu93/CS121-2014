@@ -1,6 +1,6 @@
 //
 //  GAAppDelegate.h
-//  Glossalalia
+//  Glossolalia
 //
 //  Created by Rupert Deese on 2/13/14.
 //  Copyright (c) 2014 Rupert Deese. All rights reserved.

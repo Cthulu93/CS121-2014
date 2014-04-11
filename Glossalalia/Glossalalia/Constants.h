@@ -1,6 +1,6 @@
 //
 //  Constants.h
-//  Glossalalia
+//  Glossolalia
 //
 //  Created by Alex Melville on 4/7/14.
 //  Copyright (c) 2014 Rupert Deese. All rights reserved.

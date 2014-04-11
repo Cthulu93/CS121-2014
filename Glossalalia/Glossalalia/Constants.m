@@ -1,6 +1,6 @@
 //
 //  Constants.m
-//  Glossalalia
+//  Glossolalia
 //
 //  Created by Alex Deese on 4/7/14.
 //  Copyright (c) 2014 Alex Melville. All rights reserved.
