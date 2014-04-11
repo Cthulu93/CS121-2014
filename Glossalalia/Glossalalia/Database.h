@@ -10,6 +10,7 @@
 #import <sqlite3.h>
 #import "GADataEntry.h"
 #import "DatabaseCaller.h"
+#import "Constants.h"
 
 @interface Database : NSObject
 
@@ -23,7 +24,7 @@
 
 +(void)eraseAllEntries;
 
-+(void)saveEntryWithEnglish:(NSString*)english andSpanish:(NSString*)spanish andImage:(UIImage *)image;
++(void)saveEntryWithEnglish:(NSString*)english andSpanish:(NSString*)spanish andImage:(UIImage *)image andPhrase:(bool)phrase;
 
 +(void)saveEntry:(GADataEntry*)dataEntry;
 

@@ -26,18 +26,26 @@ $spanishFile = file($spanishFile, true);
 /* Loop through all lines of file and enter each 
    into the database */
 for ($i=0; $i < count($englishFile); $i++) {
+	$phraseBit = 0;
 	$eng = $englishFile[$i];
 	$eng = rtrim($eng);
+	if(strpos($eng, ' ') !== false) {
+		$phraseBit = 1;
+	}
+
 	$engLen = strlen($eng);
 
 	$span = $spanishFile[$i];
 	$span = rtrim($span);
+	if (strpos($span, ' ') !== false) {
+		$phraseBit = 1;
+	}
 	$spanLen = strlen($span);
 
 	/* Query the table and insert the translation */
 	mysqli_query($con,
 		"INSERT INTO Translations 
-		(TransID, English, EnglishLen, Spanish, SpanishLen, Image) 
-		VALUES ('', '$eng', '$engLen', '$span', '$spanLen', '')"); 	
+		(TransID, English, EnglishLen, Spanish, SpanishLen, Image, Phrase) 
+		VALUES ('', '$eng', '$engLen', '$span', '$spanLen', '', '$phraseBit')"); 	
 }
 ?>

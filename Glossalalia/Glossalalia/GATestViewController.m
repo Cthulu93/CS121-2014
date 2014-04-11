@@ -58,7 +58,7 @@
         
         float buttonYLoc = 0.55*_fHeight;
         
-        GADataEntry *playWord = [[GADataEntry alloc] initWithEnglish:@"Play" andSpanish:@"Play" andImage:nil];
+        GADataEntry *playWord = [[GADataEntry alloc] initWithEnglish:@"Play" andSpanish:@"Play" andImage:nil andPhrase:nil];
         
         _matchmakeButton = [[GAElement alloc] initSingleTapWithFrame:CGRectMake(0*_fWidth, buttonYLoc, 1.0*_fWidth, 0.15*_fHeight) andWord:playWord];
         _matchmakeButton.delegate = self;
@@ -68,7 +68,7 @@
         
         buttonYLoc += 0.15*_fHeight;
         
-        GADataEntry *tutorialWord = [[GADataEntry alloc] initWithEnglish:@"Tutorial" andSpanish:@"Tutorial" andImage:nil];
+        GADataEntry *tutorialWord = [[GADataEntry alloc] initWithEnglish:@"Tutorial" andSpanish:@"Tutorial" andImage:nil andPhrase:nil];
         
         _tutorialButton = [[GAElement alloc] initSingleTapWithFrame:CGRectMake(0*_fWidth, buttonYLoc, 1.0*_fWidth, 0.15*_fHeight) andWord:tutorialWord];
         _tutorialButton.delegate = self;

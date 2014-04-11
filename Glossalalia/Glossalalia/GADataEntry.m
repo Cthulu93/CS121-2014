@@ -10,13 +10,14 @@
 
 @implementation GADataEntry
 
--(id)initWithEnglish:(NSString*)english andSpanish:(NSString*)spanish andImage:(UIImage*)image{
+-(id)initWithEnglish:(NSString*)english andSpanish:(NSString*)spanish andImage:(UIImage*)image andPhrase:(bool)phrase{
     self = [super init];
     
     if (self) {
         _english = english;
         _spanish = spanish;
         _image = image;
+        _phrase = phrase;
         
         // randomly decide whether english or spanish is local.
 //        if ((arc4random() % 20) < 10) _englishLocal = YES;

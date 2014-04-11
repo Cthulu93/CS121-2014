@@ -678,7 +678,7 @@
 				GCC_PREFIX_HEADER = "Glossalalia/Glossalalia-Prefix.pch";
 				INFOPLIST_FILE = "Glossalalia/Glossalalia-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "56BB72B8-FF60-40FF-B13D-F1974E034674";
+				PROVISIONING_PROFILE = "1AF1CD65-072D-46BA-9A73-CEB110525257";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -694,7 +694,7 @@
 				GCC_PREFIX_HEADER = "Glossalalia/Glossalalia-Prefix.pch";
 				INFOPLIST_FILE = "Glossalalia/Glossalalia-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "56BB72B8-FF60-40FF-B13D-F1974E034674";
+				PROVISIONING_PROFILE = "1AF1CD65-072D-46BA-9A73-CEB110525257";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

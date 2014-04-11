@@ -26,7 +26,8 @@ while($row = mysqli_fetch_array($result)){
   			   'EnglishLen' => (int)$row['EnglishLen'],
   			   'Spanish' => $row['Spanish'],
   			   'SpanishLen' => (int)$row['SpanishLen'],
-  			   'Image' => $row['Image']);
+  			   'Image' => $row['Image'],
+           'Phrase' => $row['Phrase']);
   /*put all of the json dictionaries into the master array*/
   array_push($masterArray, $arr);
 }

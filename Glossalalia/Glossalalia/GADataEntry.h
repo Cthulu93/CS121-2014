@@ -23,9 +23,10 @@
 
 @property UIImage *image;
 
+@property bool phrase;
 
+-(id)initWithEnglish:(NSString*)english andSpanish:(NSString*)spanish andImage:(UIImage*)image andPhrase:(bool)phrase;
 
--(id)initWithEnglish:(NSString*)english andSpanish:(NSString*)spanish andImage:(UIImage*)image;
 -(NSString*) local;
 -(NSString*) remote;
 

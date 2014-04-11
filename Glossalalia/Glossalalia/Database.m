@@ -44,9 +44,9 @@ static sqlite3_stmt *updateEntry;
 
 + (void)initDatabase {
     // create the statement strings
-    const char *createEntriesString = "CREATE TABLE IF NOT EXISTS entries (rowid INTEGER PRIMARY KEY AUTOINCREMENT, english TEXT, spanish TEXT, photo BLOB)";
+    const char *createEntriesString = "CREATE TABLE IF NOT EXISTS entries (rowid INTEGER PRIMARY KEY AUTOINCREMENT, english TEXT, spanish TEXT, photo BLOB, phrase INTEGER)";
     const char *fetchEntriesString = "SELECT * FROM entries";
-    const char *insertEntryString = "INSERT INTO entries (english, spanish, photo) VALUES (?, ?, ?)";
+    const char *insertEntryString = "INSERT INTO entries (english, spanish, photo, phrase) VALUES (?, ?, ?, ?)";
     const char *deleteEntryString = "DELETE FROM entries WHERE rowid=?";
     
     // create the path to the database
@@ -104,16 +104,25 @@ static sqlite3_stmt *updateEntry;
         NSData *imageData = [[NSData alloc] initWithBytes: sqlite3_column_blob(fetchEntries, 3) length: len];
         UIImage *image = [[UIImage alloc] initWithData:imageData];
         
+        // grab the phrase column
+        bool phrase = false;
+        int phraseBit = sqlite3_column_int(fetchEntries, 4);
+        if (phraseBit == 1) {
+            phrase = true;
+        }
+        
         // convert englush and spanish words to NSStrings
         NSString *english = [NSString stringWithUTF8String:englishChars];
         NSString *spanish = [NSString stringWithUTF8String:spanishChars];
         
-        // create entry objec
-        GADataEntry *temp = [[GADataEntry alloc] initWithEnglish:english andSpanish:spanish andImage:image];
+        // create entry object
+        GADataEntry *temp = [[GADataEntry alloc] initWithEnglish:english andSpanish:spanish andImage:image andPhrase:phrase];
         
-        // add the entry object to our array
-        [ret addObject:temp];
-        
+        // add the entry object to our array depending on whether or not it is a phrase
+        if (!phrase && PHRASESONLY)
+            continue;
+        else
+            [ret addObject:temp];
     }
     
     // reset the statement, return the array
@@ -136,7 +145,6 @@ static sqlite3_stmt *updateEntry;
 // TO DO- fix this function so that it does not erase an arbitrarily large number of database entries
 +(void)eraseAllEntries
 {
-
     // TODO- enable delete to work properly on the exact number of entries
     NSMutableArray *array = [Database fetchAllEntries];
     int numEntries = [array count];
@@ -148,7 +156,7 @@ static sqlite3_stmt *updateEntry;
     }
 }
 
-+(void)saveEntryWithEnglish:(NSString*)english andSpanish:(NSString*)spanish andImage:(UIImage *)image
++(void)saveEntryWithEnglish:(NSString*)english andSpanish:(NSString*)spanish andImage:(UIImage *)image andPhrase:(bool)phrase
 {
     // bind data to the statement
     sqlite3_bind_text(insertEntry, 1, [english UTF8String], -1, SQLITE_TRANSIENT);
@@ -156,6 +164,11 @@ static sqlite3_stmt *updateEntry;
     
     NSData *imageData = [NSData dataWithData:UIImageJPEGRepresentation(image, .7)];
     sqlite3_bind_blob(insertEntry, 3, [imageData bytes], [imageData length], SQLITE_TRANSIENT);
+    
+    int phraseInt = 0;
+    if (phrase)
+        phraseInt = 1;
+    sqlite3_bind_int(insertEntry, 4, phraseInt);
     
     // insert into the database
     int success = sqlite3_step(insertEntry);
@@ -173,6 +186,12 @@ static sqlite3_stmt *updateEntry;
     
     NSData *imageData = [NSData dataWithData:UIImageJPEGRepresentation(dataEntry.image, .7)];
     sqlite3_bind_blob(insertEntry, 3, [imageData bytes], [imageData length], SQLITE_TRANSIENT);
+    
+    bool phrase = [dataEntry phrase];
+    int phraseInt = 0;
+    if (phrase)
+        phraseInt = 1;
+    sqlite3_bind_int(insertEntry, 4, phraseInt);
     
     // insert into the database
     int success = sqlite3_step(insertEntry);
@@ -202,9 +221,16 @@ static sqlite3_stmt *updateEntry;
         NSString *english = [dict objectForKey:@"English"];
         NSString *spanish = [dict objectForKey:@"Spanish"];
         
+        NSString *phraseStr = [dict objectForKey:@"Phrase"];
+        int phraseInt = [phraseStr intValue];
+        bool phrase = NO;
+        if (phraseInt == 1) {
+            phrase = YES;
+        }
+        
         UIImage *image = nil;
         
-        [Database saveEntryWithEnglish:english andSpanish:spanish andImage:image];
+        [Database saveEntryWithEnglish:english andSpanish:spanish andImage:image andPhrase:phrase];
     }
     NSLog(@"Database update complete");
 }
@@ -218,7 +244,7 @@ static sqlite3_stmt *updateEntry;
         
         UIImage *image = nil;
         
-        [Database saveEntryWithEnglish:english andSpanish:englishEx andImage:image];
+        [Database saveEntryWithEnglish:english andSpanish:englishEx andImage:image andPhrase:true];
     }
     NSLog(@"Database update complete");
 }
