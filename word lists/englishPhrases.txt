@@ -1,10 +1,10 @@
 all the best
-are you allergic to any medications
-are you married
-are you OK
-are you religious
-are you single
-are you taking any medications
+are you allergic to any medications?
+are you married?
+are you OK?
+are you religious?
+are you single?
+are you taking any medications?
 as much as possible
 as soon as possible
 be called
@@ -12,30 +12,30 @@ be careful
 best of British
 bon voyage
 call an ambulance
-can I buy you a drink
-can I come in
-can I use your phone
-can you help me
-can you tell us
+can I buy you a drink?
+can I come in?
+can I use your phone?
+can you help me?
+can you tell us?
 cheers
 consider it done
-could I see the menu, please
-do I know you
+could I see the menu, please?
+do I know you?
 do not disturb
 do not enter
-do you accept American dollars
-do you accept credit cards
-do you believe in God
-do you come here often
-do you have a boyfriend
-do you have a menu in English
-do you have any pets
-do you have children
-do you know
-do you need help
-do you speak English
-do you speak something
-does anyone here speak English
+do you accept American dollars?
+do you accept credit cards?
+do you believe in God?
+do you come here often?
+do you have a boyfriend?
+do you have a menu in English?
+do you have any pets?
+do you have children?
+do you know?
+do you need help?
+do you speak English?
+do you speak something?
+does anyone here speak English?
 don't worry
 down with
 enjoy your meal
@@ -64,20 +64,20 @@ have fun
 hello
 help
 here you are
-how are you
-how do I get to
-how do I get to the airport
-how do I get to the bus station
-how do I get to the train station
-how do you do
-how do you pronounce this word
-how do you say...in English
-how do you spell this word
-how much do you charge
-how much does it cost
-how much is it
-how old are you
-how's the weather
+how are you?
+how do I get to?
+how do I get to the airport?
+how do I get to the bus station?
+how do I get to the train station?
+how do you do?
+how do you pronounce this word?
+how do you say...in English?
+how do you spell this word?
+how much do you charge?
+how much does it cost?
+how much is it?
+how old are you?
+how's the weather?
 I am asian
 I am blind
 I am English
@@ -200,11 +200,11 @@ I've been raped
 I've been robbed
 I've burned myself
 I've lost my keys
-is anyone sitting here
-is it going to rain
-is there a grocery store
-is there a smaller size
-isn't it so
+is anyone sitting here?
+is it going to rain?
+is there a grocery store?
+is there a smaller size?
+isn't it so?
 it can't be helped
 it doesn't matter
 it was delicious
@@ -282,39 +282,39 @@ two beers, please
 well, I never
 what a lovely day
 what a pity
-what are you doing
-what date is it today
-what do you mean
-what do you say
-what does this mean
-what is that
-what is your name
-what is your phone number
-what languages do you speak
-what time is it
+what are you doing?
+what date is it today?
+what do you mean?
+what do you say?
+what does this mean?
+what is that?
+what is your name?
+what is your phone number?
+what languages do you speak?
+what time is it?
 what was that
-what's good
-what's new
-what's on your mind
-what's that
-what's the matter
-what's your job
-what's your name
-what's your phone number
-what's your poison
-what's yours
-where are we
-where are you from
-where can I find a hotel
-where do you live
-where does this bus go
-where does this train go
-where is the toilet
-where you at
-who are you
-who cares
-who's calling
-will you marry me
+what's good?
+what's new?
+what's on your mind?
+what's that?
+what's the matter?
+what's your job?
+what's your name?
+what's your phone number?
+what's your poison?
+what's yours?
+where are we?
+where are you from?
+where can I find a hotel?
+where do you live?
+where does this bus go?
+where does this train go?
+where is the toilet?
+where you at?
+who are you?
+who cares?
+who's calling?
+will you marry me?
 wish you well
 with no further ado
 without further adieu

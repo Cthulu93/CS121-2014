@@ -1,9 +1,9 @@
 todo lo mejor
-¿Es alérgico a algún medicamento
-¿Está usted casado
-¿estás bien
-¿Es usted religioso
-¿Está usted soltero
+¿Es alérgico a algún medicamento?
+¿Está usted casado?
+¿estás bien?
+¿Es usted religioso?
+¿Está usted soltero?
 estás tomando algún medicamento
 todo lo posible
 lo antes posible
@@ -12,30 +12,30 @@ tener cuidado
 mejor de los británicos
 buen viaje
 llamar a una ambulancia
-¿Puedo invitarte a una copa
-¿puedo entrar
-¿puedo usar su teléfono
-¿me pueden ayudar
+¿Puedo invitarte a una copa?
+¿puedo entrar?
+¿puedo usar su teléfono?
+¿me pueden ayudar?
 Qué nos puede decir
 aplausos
 considérelo hecho
-¿podría ver el menú, por favor
-¿te conozco
+¿podría ver el menú, por favor?
+¿te conozco?
 no molestar
 no introduzca
 se aceptan los dólares americanos
-¿Acepta tarjetas de crédito
-¿crees en Dios
+¿Acepta tarjetas de crédito?
+¿crees en Dios?
 Por qué vienes aquí a menudo
-¿tienes un novio
-¿tiene un menú en Inglés
-¿tiene alguna mascota
-¿Tiene usted hijos
+¿tienes un novio?
+¿tiene un menú en Inglés?
+¿tiene alguna mascota?
+¿Tiene usted hijos?
 sabes
-¿Necesita ayuda para
+¿Necesita ayuda para?
 habla usted Inglés
 hablas algo
-¿alguien aquí habla Inglés
+¿alguien aquí habla Inglés?
 no te preocupes
 abajo con
 disfrutar de su comida
@@ -44,7 +44,7 @@ olvídalo
 extraviarse
 consiga bien pronto
 dame
-¡buenas tardes
+¡buenas tardes!
 buen día
 buena tarde
 buena suerte
@@ -61,22 +61,22 @@ feliz Ramadán
 tener un buen día
 tener un asiento
 divertirse
-¡hola
+¡hola!
 ayudar
 aquí estás
-¿cómo estás
+¿cómo estás?
 cómo hago para llegar a
 cómo hago para llegar a el aeropuerto
 cómo hago para llegar a la estación de autobuses
 cómo hago para llegar a la estación de tren
-¿cómo se hace
-¿cómo se pronuncia esta palabra
-¿cómo se dice ... en inglés
-¿cómo se escribe esta palabra
-¿cuánto cobras
+¿cómo se hace?
+¿cómo se pronuncia esta palabra?
+¿cómo se dice ... en inglés?
+¿cómo se escribe esta palabra?
+¿cuánto cobras?
 cuánto cuesta
-¿cuánto es
-¿cuántos años tienes
+¿cuánto es?
+¿cuántos años tienes?
 cómo está el tiempo
 Soy asiático
 Soy ciego
@@ -172,7 +172,7 @@ Tengo frío
 Estoy sordo
 Estoy divorciado
 Estoy bien
-¡Estoy bien, gracias
+¡Estoy bien, gracias!
 Estoy lleno
 Soy gay
 Estoy caliente
@@ -200,10 +200,10 @@ He sido violada
 Me han robado
 Yo mismo he quemado
 He perdido mis llaves
-¿hay alguien sentado aquí
+¿hay alguien sentado aquí?
 es que va a llover
-¿hay una tienda de comestibles
-¿existe un tamaño más pequeño
+¿hay una tienda de comestibles?
+¿existe un tamaño más pequeño?
 no es tan
 que no se puede evitar
 no importa
@@ -223,7 +223,7 @@ sentirse como en casa
 muchas gracias
 Quieres casarte conmigo
 yo también
-¡Feliz Navidad
+¡Feliz Navidad!
 Feliz Navidad y un Feliz Año Nuevo
 mente la brecha
 mucho que decir
@@ -253,7 +253,7 @@ ahora mismo
 salaam alaikum
 saludos de la estación
 verte
-¡hasta luego
+¡hasta luego!
 tanto tiempo
 triste
 lo siento , llego tarde
@@ -261,8 +261,8 @@ detener
 detener el coche
 dulces sueños
 tomarlo con calma
-¡gracias
-¡muchas gracias
+¡gracias!
+¡muchas gracias!
 gracias
 gracias por su ayuda
 eso es todo
@@ -281,40 +281,40 @@ a quien corresponda
 dos cervezas , por favor
 bueno, yo nunca
 lo que es un día precioso
-¡qué lástima
-¿qué estás haciendo
+¡qué lástima!
+¿qué estás haciendo?
 qué fecha es hoy
-¿qué quiere decir
-¿qué dices
-¿qué significa esto
-¿qué es eso
-¿cuál es tu nombre
-¿Cuál es su número telefónico
+¿qué quiere decir?
+¿qué dices?
+¿qué significa esto?
+¿qué es eso?
+¿cuál es tu nombre?
+¿Cuál es su número telefónico?
 qué idiomas hablas
-¿Qué hora es
-¿Qué fue eso
+¿Qué hora es?
+¿Qué fue eso?
 lo que es bueno
 qué hay de nuevo
-¿Qué tienes en mente
-¿qué es eso
-¿qué pasa
-¿Cuál es su trabajo
-¿cuál es tu nombre
-¿cuál es tu número de teléfono
+¿Qué tienes en mente?
+¿qué es eso?
+¿qué pasa?
+¿Cuál es su trabajo?
+¿cuál es tu nombre?
+¿cuál es tu número de teléfono?
 cuál es su veneno
 lo que es tuyo
 dónde estamos
 de dónde eres
-¿dónde puedo encontrar un hotel
-¿dónde vives
-¿a dónde va este autobús
-¿a dónde va este tren
-¿dónde está el baño
-¿dónde estás
-¿quién es usted
+¿dónde puedo encontrar un hotel?
+¿dónde vives?
+¿a dónde va este autobús?
+¿a dónde va este tren?
+¿dónde está el baño?
+¿dónde estás?
+¿quién es usted?
 a quién le importa
 quién está llamando
-¿quieres casarte conmigo
+¿quieres casarte conmigo?
 te deseamos lo mejor
 sin más preámbulos
 sin más vueltas
