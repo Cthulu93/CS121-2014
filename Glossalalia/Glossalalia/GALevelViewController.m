@@ -522,6 +522,8 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
         NSString* theMessage = [[NSString alloc] initWithFormat:@"%@;%@", newRemoteWord, oldRemoteWord];
         [self sendGameMessage:_GACommandListMessage asDataWithWord:theMessage andPoints:nil];
         
+        
+        
         //update our button colors
         [_buttonColors removeObject:elem.backgroundColor];
         [_buttonColors addObject:newButton.backgroundColor];
