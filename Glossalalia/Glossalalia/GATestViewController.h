@@ -19,6 +19,7 @@
 @property GAMatchViewController *matchVC;
 @property GAElement *matchmakeButton;
 @property GAElement *tutorialButton;
+@property GAElement *singlePlayerButton;
 @property UILabel *gameStatus;
 @property UIButton *gameButton;
 @property GKMatch *theMatch;

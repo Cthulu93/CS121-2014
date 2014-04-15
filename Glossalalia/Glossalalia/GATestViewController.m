@@ -24,41 +24,9 @@
         
         [self setNeedsStatusBarAppearanceUpdate];
         
-
-        // create buttons, etc.
-        
-//        _matchmakeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//        UIImage *disableButton = [UIImage buttonImageWithColor:[UIColor whiteColor]
-//                                                  cornerRadius:10.0
-//                                                   shadowColor:[UIColor grayColor]
-//                                                  shadowInsets:UIEdgeInsetsMake(2.0, 2.0, 2.0, 2.0)];
-//        UIImage *normalButton = [UIImage buttonImageWithColor:[UIColor whiteColor]
-//                                                 cornerRadius:10.0
-//                                                  shadowColor:[UIColor purpleColor]
-//                                                 shadowInsets:UIEdgeInsetsMake(2.0, 2.0, 2.0, 2.0)];
-//        UIImage *highlightButton = [UIImage buttonImageWithColor:[UIColor whiteColor]
-//                                                    cornerRadius:10.0
-//                                                     shadowColor:[UIColor redColor]
-//                                                    shadowInsets:UIEdgeInsetsMake(2.0, 2.0, 2.0, 2.0)];
-//        
-//        [_matchmakeButton setFrame:CGRectMake(0.2*_fWidth, 0.6*_fHeight, 0.6*_fWidth, 0.15*_fHeight)];
-//
-//
-//        [_matchmakeButton setTitle: @"Play" forState:UIControlStateNormal];
-//        [_matchmakeButton setTitle: @"Wait" forState:UIControlStateDisabled];
-//        [_matchmakeButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-MediumOblique" size:30.0]];
-//        [_matchmakeButton setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
-//        [_matchmakeButton setBackgroundImage:disableButton forState:UIControlStateDisabled];
-//        [_matchmakeButton setTitleColor:[UIColor purpleColor] forState:UIControlStateNormal];
-//        [_matchmakeButton setBackgroundImage:normalButton forState:UIControlStateNormal];
-//        [_matchmakeButton setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
-//        [_matchmakeButton setBackgroundImage:highlightButton forState:UIControlStateHighlighted];
-//        [_matchmakeButton setEnabled:NO];
-//        [self.view addSubview:_matchmakeButton];
-        
         float buttonYLoc = 0.55*_fHeight;
         
-        GADataEntry *playWord = [[GADataEntry alloc] initWithEnglish:@"Play" andSpanish:@"Play" andImage:nil andPhrase:nil];
+        GADataEntry *playWord = [[GADataEntry alloc] initWithEnglish:@"Play with Friends" andSpanish:@"Play with Friends" andImage:nil andPhrase:nil];
         
         _matchmakeButton = [[GAElement alloc] initSingleTapWithFrame:CGRectMake(0*_fWidth, buttonYLoc, 1.0*_fWidth, 0.15*_fHeight) andWord:playWord];
         _matchmakeButton.delegate = self;
@@ -68,12 +36,21 @@
         
         buttonYLoc += 0.15*_fHeight;
         
+        // create tutorial button
         GADataEntry *tutorialWord = [[GADataEntry alloc] initWithEnglish:@"Tutorial" andSpanish:@"Tutorial" andImage:nil andPhrase:nil];
         
         _tutorialButton = [[GAElement alloc] initSingleTapWithFrame:CGRectMake(0*_fWidth, buttonYLoc, 1.0*_fWidth, 0.15*_fHeight) andWord:tutorialWord];
         _tutorialButton.delegate = self;
         [self.view addSubview:_tutorialButton];
-
+        
+        buttonYLoc += 0.15*_fHeight;
+        
+        // create single-player mode button
+        GADataEntry *singlePlayerWord = [[GADataEntry alloc] initWithEnglish:@"Single Player" andSpanish:@"Single Player" andImage:nil andPhrase:nil];
+        
+        _singlePlayerButton = [[GAElement alloc] initSingleTapWithFrame:CGRectMake(0*_fWidth, buttonYLoc, 1.0*_fWidth, 0.15*_fHeight) andWord:singlePlayerWord];
+        _singlePlayerButton.delegate = self;
+        [self.view addSubview:_singlePlayerButton];
         
         _gameStatus = [[UILabel alloc] initWithFrame:CGRectMake(0.05*_fWidth, 0.2*_fHeight, 0.9*_fWidth, 0.3*_fHeight)];
         [_gameStatus setFont:[UIFont fontWithName:@"Avenir-MediumOblique" size:50.0]];
@@ -180,12 +157,17 @@
 #pragma mark GAElementDelegate methods
 
 - (void) localPlayerPressedButtonForWord:(GADataEntry*)word {
-    if ([word.local isEqual: @"Play"]) {
+    if ([word.local isEqual: @"Play with Friends"]) {
         [self requestMatch];
     } else if ([word.local isEqual:@"Tutorial"]) {
         GADemoViewController *demo = [[GADemoViewController alloc] initWithNibName:nil bundle:nil];
-        [self presentViewController:demo animated:YES completion:nil];
+        [self presentViewController:demo animated:NO completion:nil];
+    } else if ([word.local isEqual:@"Single Player"]) {
+        GALevelViewController *singlePlayer = [[GALevelViewController alloc] initWithMatch:nil];
+        singlePlayer.delegate = self;
+        [self presentViewController:singlePlayer animated:NO completion:nil];
     }
+    
 }
 
 - (void)viewDidLoad
