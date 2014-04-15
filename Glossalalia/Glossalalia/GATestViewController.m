@@ -117,6 +117,8 @@
 - (void) authenticatedPlayer: (GKLocalPlayer*) lp {
     NSLog(@"%@ has been authenticated!", [lp displayName]);
     _authenticated = YES;
+    [_matchmakeButton setAlpha:1];
+    [_matchmakeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_matchmakeButton setEnabled:YES];
 }
 
