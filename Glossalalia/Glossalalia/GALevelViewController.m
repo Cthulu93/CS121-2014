@@ -533,6 +533,11 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
         [self.view addSubview:newButton];
         [_wordButtons addObject:newButton];
         
+        // remove GAElement from local buttons, add new element to local buttons
+        [_commandsFromLocalButtons removeObject:elem.word.remote];
+        [_commandsFromLocalButtons addObject:newWord.remote];
+
+        
         [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^(void){
             CGRect newElemFrame = elem.frame;
             newElemFrame.origin.x = -_fWidth;
