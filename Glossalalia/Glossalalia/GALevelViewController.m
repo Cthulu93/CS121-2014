@@ -29,6 +29,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
 - (id)initWithMatch:(GKMatch*)match {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
+        [self.view setBackgroundColor:[UIColor whiteColor]];
         // capture the match
         _theMatch = match;
         _theMatch.delegate = self;
@@ -521,8 +522,6 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
         // update the commandWord dictionaries of the other devices
         NSString* theMessage = [[NSString alloc] initWithFormat:@"%@;%@", newRemoteWord, oldRemoteWord];
         [self sendGameMessage:_GACommandListMessage asDataWithWord:theMessage andPoints:nil];
-        
-        
         
         //update our button colors
         [_buttonColors removeObject:elem.backgroundColor];

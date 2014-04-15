@@ -10,6 +10,7 @@
 
 @interface GATestViewController ()
 @property float fWidth, fHeight;
+@property bool authenticated;
 @end
 
 @implementation GATestViewController
@@ -21,6 +22,7 @@
         // Custom initialization
         _fWidth = self.view.frame.size.width;
         _fHeight = self.view.frame.size.height;
+        _authenticated = NO;
         
         [self setNeedsStatusBarAppearanceUpdate];
         
@@ -32,7 +34,8 @@
         _matchmakeButton.delegate = self;
 
         [self.view addSubview:_matchmakeButton];
-        [_matchmakeButton setEnabled:NO];
+        [_matchmakeButton setEnabled:YES
+         ];
         
         buttonYLoc += 0.15*_fHeight;
         
@@ -86,6 +89,12 @@
         {
 //            [self disableGameCenter];
             NSLog(@"Couldn't auth player");
+            _authenticated = NO;
+            // disable multiplayer button
+            [_matchmakeButton setAlpha:.5];
+            [_matchmakeButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            [_matchmakeButton setEnabled:NO];
+
         }
     };
 }
@@ -107,6 +116,7 @@
 // Method called when player is authenticated. more should go here at some point.
 - (void) authenticatedPlayer: (GKLocalPlayer*) lp {
     NSLog(@"%@ has been authenticated!", [lp displayName]);
+    _authenticated = YES;
     [_matchmakeButton setEnabled:YES];
 }
 
@@ -158,14 +168,21 @@
 
 - (void) localPlayerPressedButtonForWord:(GADataEntry*)word {
     if ([word.local isEqual: @"Play with Friends"]) {
-        [self requestMatch];
+        NSLog(@"play with friends pressed");
+        if (_authenticated) {
+            [self requestMatch];
+        }
+        else {
+            NSLog(@"retrying authentication");
+            [self authenticateLocalPlayer];
+        }
     } else if ([word.local isEqual:@"Tutorial"]) {
         GADemoViewController *demo = [[GADemoViewController alloc] initWithNibName:nil bundle:nil];
-        [self presentViewController:demo animated:NO completion:nil];
+        [self presentViewController:demo animated:YES completion:nil];
     } else if ([word.local isEqual:@"Single Player"]) {
         GALevelViewController *singlePlayer = [[GALevelViewController alloc] initWithMatch:nil];
         singlePlayer.delegate = self;
-        [self presentViewController:singlePlayer animated:NO completion:nil];
+        [self presentViewController:singlePlayer animated:YES completion:nil];
     }
     
 }
