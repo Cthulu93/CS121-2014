@@ -29,4 +29,6 @@
 
 @property UIButton *skipButton;
 
+- (void) presentLevel;
+
 @end
