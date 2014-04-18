@@ -61,15 +61,43 @@
 
 - (id)initWithMatch:(GKMatch*)match;
 
-- (void) getNewCommandWord;
+- (void) doProgressBarColorAnimation;
+- (void) doProgressBarScoreChange:(BOOL) increase;
+
 - (void) getNewCommandWordThatIsNot:(NSString*)remoteWord;
+- (void) getNewCommandWord;
+
 - (void) remotePlayerPressedButtonWithWord:(NSString*)remoteWord;
+
 - (void) changeScoreBy:(NSNumber*) points;
+- (void) locallyUpdateScoreBy:(NSNumber*)points;
+
+- (void) stopCommandCompletionTimer;
+- (void) startCommandCompletionTimer;
 - (void) commandTimedOut;
+
 - (void) checkForSpeedup;
+
 - (void) sendGameMessage:(NSString*)message asDataWithWord:(NSString*)remoteWord andPoints:(NSNumber*) points;
+- (void) endMatch;
+- (void) receiveDataFromPlayer:(NSData*)data;
+
 - (void) updateGAElementWithWord:(GAElement *)elem;
 - (void) exchangeWordsWithNewWord:(NSString*)newWord andOldWord:(NSString*)oldWord;
-- (void) endMatch;
+
+-(void)session:(ROUSession *)session preparedDataForSending:(NSData *)data;
+-(void)session:(ROUSession *)session receivedData:(NSData *)data;
+
+- (void) localPlayerPressedButtonForWord:(GADataEntry *)word;
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
+
+- (void) match:(GKMatch *)match didFailWithError:(NSError *)error;
+- (void) match:(GKMatch *)match didReceiveData:(NSData *)data fromPlayer:(NSString *)playerID;
+- (void) match:(GKMatch *)match player:(NSString *)playerID didChangeState:(GKPlayerConnectionState)state;
+- (BOOL)match:(GKMatch *)match shouldReinvitePlayer:(NSString *)playerID;
+
+- (void)didReceiveMemoryWarning;
+- (BOOL) prefersStatusBarHidden;
 
 @end

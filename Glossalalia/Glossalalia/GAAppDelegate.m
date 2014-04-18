@@ -15,35 +15,34 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
-    
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     
-    // view controller to visualize the contents of the database
-    /* _dataView = [GADataViewController new]; */
+    // create the home view controller
+    _homeView = [[GAHomeViewController alloc] init];
     
-    // create the test view controller
-    _testvc = [[GATestViewController alloc] init];
-    
-    // setup app database, update the database if needed
+    // setup app database, update if needed
     [Database createEditableCopyOfDatabaseIfNeeded];
     [Database initDatabase];
-    
-
-    if(![Database isPopulated]){
-        if(TESTING){
-            NSLog(@"updating database for testing mode");
+    if (![Database isPopulated]) {
+        if (TESTING) {
+            if (consoleSuite) {
+                NSLog(@"updating database for testing mode");
+            }
+            
             [Database updateDatabaseForTesting];}
-        else{
-            NSLog(@"updating database for regular mode");
+        else {
+            if (consoleSuite) {
+                NSLog(@"updating database for regular mode");
+            }
+            
             [Database updateDatabase];
         }
     }
     
-    [self.window setRootViewController:_testvc];
+    [self.window setRootViewController:_homeView];
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -53,14 +52,14 @@
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     
-    [_testvc.matchVC.theLevel endMatch];
+    [_homeView.matchVC.theLevel endMatch];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    [_testvc.matchVC.theLevel endMatch];
+    [_homeView.matchVC.theLevel endMatch];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application

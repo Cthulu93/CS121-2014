@@ -6,12 +6,12 @@
 //  Copyright (c) 2014 Rupert Deese. All rights reserved.
 //
 
-
 // Determines whether app launches in testing mode
 extern const bool TESTING;
 
-// Determines whether only phrases are used, or phrases and words
-extern const bool PHRASESONLY;
+// booleans to include words/phrases
+extern bool useWords;
+extern bool usePhrases;
 
-// Determines whether only words are used, or phrases and words
-extern const bool WORDSONLY;
+// determines whether console logs are shown
+extern const bool consoleSuite;

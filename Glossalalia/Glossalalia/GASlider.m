@@ -13,7 +13,7 @@
 -(id)initWithX:(int)x andY:(int)y andWidth:(int)width andHeight:(int)height andMin:(int)min andMax:(int)max andLocal:(NSString*)local andRemote:(NSString*)remote
 {
     self = [super initWithFrame:CGRectMake(x, y, width, height)];
-    if(self){
+    if (self) {
         // Initialization code for local and remote strings
         _local = local;
         _remote = remote;
@@ -32,7 +32,8 @@
     return self;
 }
 
--(void)sliderChanged{
+-(void)sliderChanged
+{
     float value = self.value;
     // round value from float, cast to int
     int roundedValue = (int)lroundf(value);
@@ -41,11 +42,12 @@
     //[GATransferHandler transferWord:_local atSliderValue:roundedValue];
 }
 
--(BOOL)checkMatch:(NSString*)received{
-    if(received == _local){
+-(BOOL)checkMatch:(NSString*)received
+{
+    if (received == _local) {
         return TRUE;
     }
-    else{
+    else {
         return FALSE;
     }
 }

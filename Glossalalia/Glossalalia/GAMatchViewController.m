@@ -15,7 +15,8 @@
 
 @implementation GAMatchViewController
 
-- (id)initWithMatch:(GKMatch*)match {
+- (id)initWithMatch:(GKMatch*)match
+{
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         _theMatch = match;
@@ -114,7 +115,8 @@
     [self presentViewController:_theLevel animated:NO completion:nil];
 }
 
-- (void) doProgressBarColorAnimation {
+- (void) doProgressBarColorAnimation
+{
     static NSInteger i = 0;
     
     if(i >= [_buttonColors count]) {
@@ -130,7 +132,8 @@
     }];
 }
 
-- (void) skipTutorial {
+- (void) skipTutorial
+{
     [self presentViewController:_theLevel animated:NO completion:nil];
 }
 
@@ -142,15 +145,18 @@
 
 #pragma mark GALevelViewController methods
 
-- (void) matchDidEnd {
+- (void) matchDidEnd
+{
     [self.delegate matchDidEnd];
 }
 
-- (void) levelDidEnd {
+- (void) levelDidEnd
+{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (BOOL) prefersStatusBarHidden {
+- (BOOL) prefersStatusBarHidden
+{
     return YES;
 }
 

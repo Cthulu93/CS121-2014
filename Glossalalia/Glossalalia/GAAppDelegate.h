@@ -9,17 +9,20 @@
 #import <UIKit/UIKit.h>
 #import "Database.h"
 #import "GADataHandler.h"
-#import "GADataViewController.h"
-#import "GATestViewController.h"
-#import "GAElementViewController.h"
+#import "GAHomeViewController.h"
 #import "GADatabaseLoadingView.h"
 
 @interface GAAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property GADataViewController *dataView;
-@property GATestViewController *testvc;
 
-@property GAElementViewController *elementView;
+@property GAHomeViewController *homeView;
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
+- (void)applicationWillResignActive:(UIApplication *)application;
+- (void)applicationDidEnterBackground:(UIApplication *)application;
+- (void)applicationWillEnterForeground:(UIApplication *)application;
+- (void)applicationDidBecomeActive:(UIApplication *)application;
+- (void)applicationWillTerminate:(UIApplication *)application;
 
 @end

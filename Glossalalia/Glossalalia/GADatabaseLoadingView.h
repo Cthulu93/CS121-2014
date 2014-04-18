@@ -10,4 +10,6 @@
 
 @interface GADatabaseLoadingView : UIView
 
+- (id)initWithFrame:(CGRect)frame;
+
 @end
