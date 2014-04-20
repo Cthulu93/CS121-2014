@@ -2,8 +2,8 @@
 //  GATriangleView.h
 //  Glossolalia
 //
-//  Created by Rupert Deese on 3/11/14.
-//  Copyright (c) 2014 Rupert Deese. All rights reserved.
+//  Created by Rupert Deese, Paul Dapolito, Alex Melville on 3/11/14.
+//  Copyright (c) 2014 Rupert Deese, Paul Dapolito, Alex Melville. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

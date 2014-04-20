@@ -21,25 +21,6 @@
 		6736431018AD90E000EC785D /* GlossalaliaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6736430F18AD90E000EC785D /* GlossalaliaTests.m */; };
 		6736431B18ADE75C00EC785D /* GATestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6736431A18ADE75C00EC785D /* GATestViewController.m */; };
 		6736431D18ADFC7700EC785D /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6736431C18ADFC7700EC785D /* GameKit.framework */; };
-		67398F9B18C5E370001BE584 /* FUIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 67398F7618C5E370001BE584 /* FUIAlertView.m */; };
-		67398F9C18C5E370001BE584 /* FUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 67398F7818C5E370001BE584 /* FUIButton.m */; };
-		67398F9D18C5E370001BE584 /* FUICellBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 67398F7A18C5E370001BE584 /* FUICellBackgroundView.m */; };
-		67398F9E18C5E370001BE584 /* FUIPopoverBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 67398F7C18C5E370001BE584 /* FUIPopoverBackgroundView.m */; };
-		67398F9F18C5E370001BE584 /* FUISegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 67398F7E18C5E370001BE584 /* FUISegmentedControl.m */; };
-		67398FA018C5E370001BE584 /* FUISwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 67398F8018C5E370001BE584 /* FUISwitch.m */; };
-		67398FA118C5E370001BE584 /* FUITextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 67398F8218C5E370001BE584 /* FUITextField.m */; };
-		67398FA218C5E370001BE584 /* UIBarButtonItem+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 67398F8418C5E370001BE584 /* UIBarButtonItem+FlatUI.m */; };
-		67398FA318C5E370001BE584 /* UIColor+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 67398F8618C5E370001BE584 /* UIColor+FlatUI.m */; };
-		67398FA418C5E370001BE584 /* UIFont+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 67398F8818C5E370001BE584 /* UIFont+FlatUI.m */; };
-		67398FA518C5E370001BE584 /* UIImage+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 67398F8A18C5E370001BE584 /* UIImage+FlatUI.m */; };
-		67398FA618C5E370001BE584 /* UINavigationBar+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 67398F8C18C5E370001BE584 /* UINavigationBar+FlatUI.m */; };
-		67398FA718C5E370001BE584 /* UIPopoverController+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 67398F8E18C5E370001BE584 /* UIPopoverController+FlatUI.m */; };
-		67398FA818C5E370001BE584 /* UIProgressView+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 67398F9018C5E370001BE584 /* UIProgressView+FlatUI.m */; };
-		67398FA918C5E370001BE584 /* UISlider+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 67398F9218C5E370001BE584 /* UISlider+FlatUI.m */; };
-		67398FAA18C5E370001BE584 /* UIStepper+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 67398F9418C5E370001BE584 /* UIStepper+FlatUI.m */; };
-		67398FAB18C5E370001BE584 /* UITabBar+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 67398F9618C5E370001BE584 /* UITabBar+FlatUI.m */; };
-		67398FAC18C5E370001BE584 /* UITableViewCell+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 67398F9818C5E370001BE584 /* UITableViewCell+FlatUI.m */; };
-		67398FAD18C5E370001BE584 /* UIToolbar+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 67398F9A18C5E370001BE584 /* UIToolbar+FlatUI.m */; };
 		67398FAF18C5E4AE001BE584 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67398FAE18C5E4AE001BE584 /* CoreText.framework */; };
 		673B9C2318F3607E00FE6126 /* GADemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 673B9C2218F3607E00FE6126 /* GADemoViewController.m */; };
 		674F3E4018CFEAFF0064BB21 /* GATriangleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 674F3E3F18CFEAFF0064BB21 /* GATriangleView.m */; };
@@ -92,45 +73,6 @@
 		6736431918ADE75C00EC785D /* GATestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GATestViewController.h; sourceTree = "<group>"; };
 		6736431A18ADE75C00EC785D /* GATestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GATestViewController.m; sourceTree = "<group>"; };
 		6736431C18ADFC7700EC785D /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
-		67398F7418C5E370001BE584 /* FlatUIKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlatUIKit.h; sourceTree = "<group>"; };
-		67398F7518C5E370001BE584 /* FUIAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FUIAlertView.h; sourceTree = "<group>"; };
-		67398F7618C5E370001BE584 /* FUIAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FUIAlertView.m; sourceTree = "<group>"; };
-		67398F7718C5E370001BE584 /* FUIButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FUIButton.h; sourceTree = "<group>"; };
-		67398F7818C5E370001BE584 /* FUIButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FUIButton.m; sourceTree = "<group>"; };
-		67398F7918C5E370001BE584 /* FUICellBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FUICellBackgroundView.h; sourceTree = "<group>"; };
-		67398F7A18C5E370001BE584 /* FUICellBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FUICellBackgroundView.m; sourceTree = "<group>"; };
-		67398F7B18C5E370001BE584 /* FUIPopoverBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FUIPopoverBackgroundView.h; sourceTree = "<group>"; };
-		67398F7C18C5E370001BE584 /* FUIPopoverBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FUIPopoverBackgroundView.m; sourceTree = "<group>"; };
-		67398F7D18C5E370001BE584 /* FUISegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FUISegmentedControl.h; sourceTree = "<group>"; };
-		67398F7E18C5E370001BE584 /* FUISegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FUISegmentedControl.m; sourceTree = "<group>"; };
-		67398F7F18C5E370001BE584 /* FUISwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FUISwitch.h; sourceTree = "<group>"; };
-		67398F8018C5E370001BE584 /* FUISwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FUISwitch.m; sourceTree = "<group>"; };
-		67398F8118C5E370001BE584 /* FUITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FUITextField.h; sourceTree = "<group>"; };
-		67398F8218C5E370001BE584 /* FUITextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FUITextField.m; sourceTree = "<group>"; };
-		67398F8318C5E370001BE584 /* UIBarButtonItem+FlatUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+FlatUI.h"; sourceTree = "<group>"; };
-		67398F8418C5E370001BE584 /* UIBarButtonItem+FlatUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+FlatUI.m"; sourceTree = "<group>"; };
-		67398F8518C5E370001BE584 /* UIColor+FlatUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+FlatUI.h"; sourceTree = "<group>"; };
-		67398F8618C5E370001BE584 /* UIColor+FlatUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+FlatUI.m"; sourceTree = "<group>"; };
-		67398F8718C5E370001BE584 /* UIFont+FlatUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+FlatUI.h"; sourceTree = "<group>"; };
-		67398F8818C5E370001BE584 /* UIFont+FlatUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+FlatUI.m"; sourceTree = "<group>"; };
-		67398F8918C5E370001BE584 /* UIImage+FlatUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+FlatUI.h"; sourceTree = "<group>"; };
-		67398F8A18C5E370001BE584 /* UIImage+FlatUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FlatUI.m"; sourceTree = "<group>"; };
-		67398F8B18C5E370001BE584 /* UINavigationBar+FlatUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+FlatUI.h"; sourceTree = "<group>"; };
-		67398F8C18C5E370001BE584 /* UINavigationBar+FlatUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+FlatUI.m"; sourceTree = "<group>"; };
-		67398F8D18C5E370001BE584 /* UIPopoverController+FlatUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIPopoverController+FlatUI.h"; sourceTree = "<group>"; };
-		67398F8E18C5E370001BE584 /* UIPopoverController+FlatUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIPopoverController+FlatUI.m"; sourceTree = "<group>"; };
-		67398F8F18C5E370001BE584 /* UIProgressView+FlatUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIProgressView+FlatUI.h"; sourceTree = "<group>"; };
-		67398F9018C5E370001BE584 /* UIProgressView+FlatUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIProgressView+FlatUI.m"; sourceTree = "<group>"; };
-		67398F9118C5E370001BE584 /* UISlider+FlatUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UISlider+FlatUI.h"; sourceTree = "<group>"; };
-		67398F9218C5E370001BE584 /* UISlider+FlatUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UISlider+FlatUI.m"; sourceTree = "<group>"; };
-		67398F9318C5E370001BE584 /* UIStepper+FlatUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIStepper+FlatUI.h"; sourceTree = "<group>"; };
-		67398F9418C5E370001BE584 /* UIStepper+FlatUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIStepper+FlatUI.m"; sourceTree = "<group>"; };
-		67398F9518C5E370001BE584 /* UITabBar+FlatUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBar+FlatUI.h"; sourceTree = "<group>"; };
-		67398F9618C5E370001BE584 /* UITabBar+FlatUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBar+FlatUI.m"; sourceTree = "<group>"; };
-		67398F9718C5E370001BE584 /* UITableViewCell+FlatUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+FlatUI.h"; sourceTree = "<group>"; };
-		67398F9818C5E370001BE584 /* UITableViewCell+FlatUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+FlatUI.m"; sourceTree = "<group>"; };
-		67398F9918C5E370001BE584 /* UIToolbar+FlatUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIToolbar+FlatUI.h"; sourceTree = "<group>"; };
-		67398F9A18C5E370001BE584 /* UIToolbar+FlatUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIToolbar+FlatUI.m"; sourceTree = "<group>"; };
 		67398FAE18C5E4AE001BE584 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		673B9C2118F3607E00FE6126 /* GADemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADemoViewController.h; sourceTree = "<group>"; };
 		673B9C2218F3607E00FE6126 /* GADemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GADemoViewController.m; sourceTree = "<group>"; };
@@ -235,7 +177,6 @@
 		673642F018AD90E000EC785D /* Glossalalia */ = {
 			isa = PBXGroup;
 			children = (
-				67398F7318C5E370001BE584 /* FlatUI */,
 				67CFC55118C3F1F600D373D2 /* RoUTP */,
 				673642F918AD90E000EC785D /* GAAppDelegate.h */,
 				673642FA18AD90E000EC785D /* GAAppDelegate.m */,
@@ -284,53 +225,6 @@
 				6736430C18AD90E000EC785D /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		67398F7318C5E370001BE584 /* FlatUI */ = {
-			isa = PBXGroup;
-			children = (
-				67398F7418C5E370001BE584 /* FlatUIKit.h */,
-				67398F7518C5E370001BE584 /* FUIAlertView.h */,
-				67398F7618C5E370001BE584 /* FUIAlertView.m */,
-				67398F7718C5E370001BE584 /* FUIButton.h */,
-				67398F7818C5E370001BE584 /* FUIButton.m */,
-				67398F7918C5E370001BE584 /* FUICellBackgroundView.h */,
-				67398F7A18C5E370001BE584 /* FUICellBackgroundView.m */,
-				67398F7B18C5E370001BE584 /* FUIPopoverBackgroundView.h */,
-				67398F7C18C5E370001BE584 /* FUIPopoverBackgroundView.m */,
-				67398F7D18C5E370001BE584 /* FUISegmentedControl.h */,
-				67398F7E18C5E370001BE584 /* FUISegmentedControl.m */,
-				67398F7F18C5E370001BE584 /* FUISwitch.h */,
-				67398F8018C5E370001BE584 /* FUISwitch.m */,
-				67398F8118C5E370001BE584 /* FUITextField.h */,
-				67398F8218C5E370001BE584 /* FUITextField.m */,
-				67398F8318C5E370001BE584 /* UIBarButtonItem+FlatUI.h */,
-				67398F8418C5E370001BE584 /* UIBarButtonItem+FlatUI.m */,
-				67398F8518C5E370001BE584 /* UIColor+FlatUI.h */,
-				67398F8618C5E370001BE584 /* UIColor+FlatUI.m */,
-				67398F8718C5E370001BE584 /* UIFont+FlatUI.h */,
-				67398F8818C5E370001BE584 /* UIFont+FlatUI.m */,
-				67398F8918C5E370001BE584 /* UIImage+FlatUI.h */,
-				67398F8A18C5E370001BE584 /* UIImage+FlatUI.m */,
-				67398F8B18C5E370001BE584 /* UINavigationBar+FlatUI.h */,
-				67398F8C18C5E370001BE584 /* UINavigationBar+FlatUI.m */,
-				67398F8D18C5E370001BE584 /* UIPopoverController+FlatUI.h */,
-				67398F8E18C5E370001BE584 /* UIPopoverController+FlatUI.m */,
-				67398F8F18C5E370001BE584 /* UIProgressView+FlatUI.h */,
-				67398F9018C5E370001BE584 /* UIProgressView+FlatUI.m */,
-				67398F9118C5E370001BE584 /* UISlider+FlatUI.h */,
-				67398F9218C5E370001BE584 /* UISlider+FlatUI.m */,
-				67398F9318C5E370001BE584 /* UIStepper+FlatUI.h */,
-				67398F9418C5E370001BE584 /* UIStepper+FlatUI.m */,
-				67398F9518C5E370001BE584 /* UITabBar+FlatUI.h */,
-				67398F9618C5E370001BE584 /* UITabBar+FlatUI.m */,
-				67398F9718C5E370001BE584 /* UITableViewCell+FlatUI.h */,
-				67398F9818C5E370001BE584 /* UITableViewCell+FlatUI.m */,
-				67398F9918C5E370001BE584 /* UIToolbar+FlatUI.h */,
-				67398F9A18C5E370001BE584 /* UIToolbar+FlatUI.m */,
-			);
-			name = FlatUI;
-			path = ios;
 			sourceTree = "<group>";
 		};
 		67CFC54518C3F1E500D373D2 /* Private */ = {
@@ -515,42 +409,23 @@
 			files = (
 				73C002B518B037880066715E /* GADataViewController.m in Sources */,
 				673642FB18AD90E000EC785D /* GAAppDelegate.m in Sources */,
-				67398FA618C5E370001BE584 /* UINavigationBar+FlatUI.m in Sources */,
 				73251C8918B16A7F000ABEAD /* GADataHandler.m in Sources */,
-				67398FA718C5E370001BE584 /* UIPopoverController+FlatUI.m in Sources */,
 				673B9C2318F3607E00FE6126 /* GADemoViewController.m in Sources */,
 				734DF0AD18B6B0AB000845E0 /* GAElementViewController.m in Sources */,
 				734DF0BC18BC7F6A000845E0 /* GADatabaseLoadingView.m in Sources */,
-				67398FAC18C5E370001BE584 /* UITableViewCell+FlatUI.m in Sources */,
-				67398F9F18C5E370001BE584 /* FUISegmentedControl.m in Sources */,
-				67398FA118C5E370001BE584 /* FUITextField.m in Sources */,
-				67398FA018C5E370001BE584 /* FUISwitch.m in Sources */,
-				67398FA518C5E370001BE584 /* UIImage+FlatUI.m in Sources */,
 				7318B5D818ADB48F00FC9245 /* Database.m in Sources */,
 				7318B5DB18ADB53A00FC9245 /* DatabaseCaller.m in Sources */,
-				67398FAD18C5E370001BE584 /* UIToolbar+FlatUI.m in Sources */,
 				734DF0B618BB208F000845E0 /* GASlider.m in Sources */,
 				67CFC55018C3F1E600D373D2 /* ROUSession.m in Sources */,
 				7318B5E718ADC8F500FC9245 /* GADataEntry.m in Sources */,
 				67CFC54E18C3F1E600D373D2 /* ROUDataTypes.m in Sources */,
 				FA07A44418F3BF4D0037331F /* Constants.m in Sources */,
-				67398FA418C5E370001BE584 /* UIFont+FlatUI.m in Sources */,
-				67398FA218C5E370001BE584 /* UIBarButtonItem+FlatUI.m in Sources */,
 				67BCB5D418B30DB800D5EF9F /* GALevelViewController.m in Sources */,
 				674F3E4018CFEAFF0064BB21 /* GATriangleView.m in Sources */,
-				67398FA318C5E370001BE584 /* UIColor+FlatUI.m in Sources */,
-				67398F9E18C5E370001BE584 /* FUIPopoverBackgroundView.m in Sources */,
 				673642F718AD90E000EC785D /* main.m in Sources */,
 				67CFC54F18C3F1E600D373D2 /* ROUSerialQueueTimer.m in Sources */,
-				67398FA818C5E370001BE584 /* UIProgressView+FlatUI.m in Sources */,
-				67398FAA18C5E370001BE584 /* UIStepper+FlatUI.m in Sources */,
-				67398FAB18C5E370001BE584 /* UITabBar+FlatUI.m in Sources */,
-				67398F9B18C5E370001BE584 /* FUIAlertView.m in Sources */,
 				67501DCA18BB36EB000992E6 /* GAMatchViewController.m in Sources */,
 				734DF0AA18B6AEE7000845E0 /* GAElement.m in Sources */,
-				67398F9D18C5E370001BE584 /* FUICellBackgroundView.m in Sources */,
-				67398FA918C5E370001BE584 /* UISlider+FlatUI.m in Sources */,
-				67398F9C18C5E370001BE584 /* FUIButton.m in Sources */,
 				6736431B18ADE75C00EC785D /* GATestViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -659,9 +534,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-
 				PROVISIONING_PROFILE = "2AB49F61-8B4B-4954-917C-39DF8724D927";
-
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -677,10 +550,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Glossalalia/Glossalalia-Prefix.pch";
 				INFOPLIST_FILE = "Glossalalia/Glossalalia-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-
 				PROVISIONING_PROFILE = "2AB49F61-8B4B-4954-917C-39DF8724D927";
-
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -695,10 +568,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Glossalalia/Glossalalia-Prefix.pch";
 				INFOPLIST_FILE = "Glossalalia/Glossalalia-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-
 				PROVISIONING_PROFILE = "2AB49F61-8B4B-4954-917C-39DF8724D927";
-
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
