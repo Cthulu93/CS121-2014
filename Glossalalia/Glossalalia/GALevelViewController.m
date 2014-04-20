@@ -67,9 +67,8 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
         // Send words out to all the other devices
         [self sendGameMessage:_GACommandListMessage asDataWithWord:nil andPoints:nil];
         
-        
+        // start the user score at zero, start high score at 5
         _score = 0;
-        // Let high score begin at 5
         _highScore = 5.0;
         
         // The initial amount of a time a word will take to scroll across
@@ -82,27 +81,18 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
         // instantiate progress bar
         _progressFrame = CGRectMake(0, 20, 0, 0.1*_fHeight);
         _progressBar = [[UIView alloc] initWithFrame:_progressFrame];
-        //_progressBar.backgroundColor = [UIColor colorWithRed:0.5 green:0.1 blue:0.4 alpha:0.4];
         [self.view addSubview:_progressBar];
-        
-//        _exitButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//        [_exitButton.layer setCornerRadius:10.0];
-//        [_exitButton.layer setBorderWidth:2.0];
-//        [_exitButton.layer setBorderColor:[UIColor grayColor].CGColor];
-//        [_exitButton setFrame:CGRectMake(0.04*_fWidth, 0.06*_fHeight, 0.20*_fWidth, 0.1*_fHeight)];
-//        [_exitButton setTitle: @"Quit" forState:UIControlStateNormal];
-//        [_exitButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-MediumOblique" size:20.0]];
-//        [_exitButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-//        [_exitButton setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
-        
-        
-        _scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.3*_fWidth, 0*_fHeight, 0.4*_fWidth, 0.15*_fHeight)];
+
+        // setup score label
+        _scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.6*_fWidth, 0.91*_fHeight, 0.4*_fWidth, 0.07*_fHeight)];
         [_scoreLabel setFont:[UIFont fontWithName:@"Avenir-Medium" size:30.0]];
         [_scoreLabel setTextAlignment:NSTextAlignmentCenter];
-        [_scoreLabel setTextColor:[UIColor blackColor]];
-        [_scoreLabel setText:[[NSString alloc] initWithFormat:@"%d", _score]];
-        //[self.view addSubview:_scoreLabel];
+        [_scoreLabel setTextColor:[UIColor whiteColor]];
+        [_scoreLabel setBackgroundColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1]];
+        [_scoreLabel setText:[[NSString alloc] initWithFormat:@"Score: %d", (int)_score]];
+        [self.view addSubview:_scoreLabel];
         
+        // setup the scrolling command label
         _commandLabelStartFrame = CGRectMake(-.5*_fWidth, 0.145*_fHeight, 0.5*_fWidth, 0.15*_fHeight);
         _commandLabelEndFrame = CGRectMake(1.5*_fWidth, 0.145
                                            *_fHeight, 0.5*_fWidth, 0.15*_fHeight);
@@ -115,8 +105,10 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
         [_commandLabel sizeToFit];
         [self.view addSubview:_commandLabel];
         
+        // initialize the array of buttons
         _wordButtons = [[NSMutableArray alloc] initWithCapacity:0];
         
+        // height placeholder
         float y = 0.29;
         
         // create GAElement Buttons
@@ -130,9 +122,11 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
             y += 0.15;
         }
         
+        // establish new buffer, update height placeholder (y)
         float buffer = 0.02;
         y += buffer;
         
+        // setup exit button
         _exitButton = [UIButton buttonWithType:UIButtonTypeSystem];
         [_exitButton setFrame:CGRectMake(0, y*_fHeight, _fWidth*0.4, _fHeight*(1-y-buffer))];
         [_exitButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-Medium" size:30.0]];
@@ -164,7 +158,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
 {
     static NSInteger i = 0;
     
-    if(i >= [_buttonColors count]) {
+    if (i >= [_buttonColors count]) {
         i = 0;
     }
     
@@ -187,10 +181,12 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
             CGRect newFrame = _progressBar.frame;
             newFrame.size.height += _fHeight*0.03;
             newFrame.origin.y -= _fHeight*0.015;
-            if (_score >= _highScore)
+            if (_score >= _highScore) {
                 newFrame.size.width = _fWidth;
-            else
+            }
+            else {
                 newFrame.size.width = (_score / _highScore) * _fWidth;
+            }
             [_progressBar setFrame:newFrame];
             _progressBar.alpha = 0.5;
         } completion:^(BOOL finished) {
@@ -206,10 +202,12 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
     else {
         [UIView animateWithDuration:0.5 animations:^(void) {
             CGRect newFrame = _progressFrame;
-            if (_score >= _highScore)
+            if (_score >= _highScore) {
                 newFrame.size.width = _fWidth;
-            else
+            }
+            else {
                 newFrame.size.width = (_score / _highScore) * _fWidth;
+            }
             _progressBar.frame = newFrame;
         }];
     }
@@ -242,10 +240,12 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
 - (void) getNewCommandWord
 {
     NSString* newWord;
-    if ([_legalCommandWords count] != 0 && arc4random_uniform(1000000) > 0)
+    if ([_legalCommandWords count] != 0 && arc4random_uniform(1000000) > 0) {
         newWord = [_legalCommandWords objectAtIndex:arc4random_uniform([_legalCommandWords count])];
-    else
+    }
+    else {
         newWord = [_commandsFromLocalButtons objectAtIndex:arc4random_uniform([_commandsFromLocalButtons count])];
+    }
 
     _commandWord = newWord;
     [_commandLabel setText:_commandWord];
@@ -290,6 +290,27 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
         [self stopCommandCompletionTimer];
         [self getNewCommandWordThatIsNot:remoteWord];
     }
+    
+    else { // user is incorrect: reset the score, reset the progress bar, and shake the screen!
+        _commandCompletionTimeLimit = COMMAND_TIME_LIMIT;
+        _score = 0;
+        [_scoreLabel setText:[[NSString alloc] initWithFormat:@"Score: %d", (int)_score]];
+        
+        // shake the screen due to an incorrect selection
+        // code taken from:
+        // http://stackoverflow.com/questions/1632364/shake-visual-effect-on-iphone-not-shaking-the-device
+        CAKeyframeAnimation * anim = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
+        anim.values = @[ [ NSValue valueWithCATransform3D:CATransform3DMakeTranslation(-5.0f, 0.0f, 0.0f)], [NSValue valueWithCATransform3D:CATransform3DMakeTranslation(5.0f, 0.0f, 0.0f)]];
+        anim.autoreverses = YES;
+        anim.repeatCount = 2.0f;
+        anim.duration = 0.07f;
+        [self.view.layer addAnimation:anim forKey:nil ];
+        
+        // reset the progress bar
+        [UIView animateWithDuration:1.0 animations:^{
+            [_progressBar setFrame:CGRectMake(0, 20, 0, 0.1*_fHeight)];
+        }];
+    }
 }
 
 
@@ -308,6 +329,8 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
     if (consoleSuite) {
         NSLog(@"Locally updating score by %@", points);
     }
+    
+    // increment the score
     _score += [points floatValue];
     
     // if we are updating the score because a button was correctly pressed
@@ -315,14 +338,11 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
         ++_numWordsCorrect;
         [self checkForSpeedup];
     }
-    // otherwise, reset the command completion time limit.
-    else {
-        _commandCompletionTimeLimit = COMMAND_TIME_LIMIT;
-        // TO DO: when user is wrong, reset progress bar and set score to 0
-    }
 
-    [_scoreLabel setText:[[NSString alloc] initWithFormat:@"%d", (int)_score]];
+    // update the score label
+    [_scoreLabel setText:[[NSString alloc] initWithFormat:@"Score: %d", (int)_score]];
     
+    // update high score, if necessary
     if (_score > _highScore) {
         _highScore = _score;
     }
@@ -450,6 +470,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
         
         theMessage =  nil;
     }
+    
     if (theMessage != nil) {
         [_rouSession sendData:theMessage];
     }
