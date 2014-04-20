@@ -29,6 +29,19 @@
 
 @property UIButton *skipButton;
 
-- (void) presentLevel;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
+
+- (void)viewDidLoad;
+- (void) viewDidAppear:(BOOL)animated;
+
+- (void) doProgressBarColorAnimation;
+
+- (void) skipTutorial;
+
+- (void)didReceiveMemoryWarning;
+- (BOOL) prefersStatusBarHidden;
+
+- (void) matchDidEnd;
+- (void) levelDidEnd;
 
 @end

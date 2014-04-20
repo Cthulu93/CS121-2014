@@ -13,6 +13,6 @@
 @property NSString *direction;
 
 - (id)initWithFrame:(CGRect)frame andColor:(UIColor*) color;
-
+-(void)drawRect:(CGRect)rect;
 
 @end

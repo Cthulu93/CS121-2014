@@ -18,7 +18,8 @@ static sqlite3_stmt *insertEntry;
 static sqlite3_stmt *deleteEntry;
 static sqlite3_stmt *updateEntry;
 
-+ (void)createEditableCopyOfDatabaseIfNeeded {
++ (void)createEditableCopyOfDatabaseIfNeeded
+{
     BOOL success;
 
     // allocate future error message (if necessary)
@@ -42,7 +43,8 @@ static sqlite3_stmt *updateEntry;
     }
 }
 
-+ (void)initDatabase {
++ (void)initDatabase
+{
     // create the statement strings
     const char *createEntriesString = "CREATE TABLE IF NOT EXISTS entries (rowid INTEGER PRIMARY KEY AUTOINCREMENT, english TEXT, spanish TEXT, photo BLOB, phrase INTEGER)";
     const char *fetchEntriesString = "SELECT * FROM entries";
@@ -56,12 +58,16 @@ static sqlite3_stmt *updateEntry;
     
     // open the database connection
     if (sqlite3_open([path UTF8String], &db)) {
-        NSLog(@"ERROR opening the db");
+        if (consoleSuite) {
+            NSLog(@"ERROR opening the db");
+        }
     }
     
     //init table statement
     if (sqlite3_prepare_v2(db, createEntriesString, -1, &createEntries, NULL) != SQLITE_OK) {
-        NSLog(@"Failed to prepare entries create table statement");
+        if (consoleSuite) {
+            NSLog(@"Failed to prepare entries create table statement");
+        }
     }
     
     // execute the table creation statement
@@ -69,22 +75,30 @@ static sqlite3_stmt *updateEntry;
     success = sqlite3_step(createEntries);
     sqlite3_reset(createEntries);
     if (success != SQLITE_DONE) {
-        NSLog(@"ERROR: failed to create entries table");
+        if (consoleSuite) {
+            NSLog(@"ERROR: failed to create entries table");
+        }
     }
     
     //init retrieval statement
     if (sqlite3_prepare_v2(db, fetchEntriesString, -1, &fetchEntries, NULL) != SQLITE_OK) {
-        NSLog(@"ERROR: failed to prepare entries fetching statement");
+        if (consoleSuite) {
+            NSLog(@"ERROR: failed to prepare entries fetching statement");
+        }
     }
     
     //init insertion statement
     if (sqlite3_prepare_v2(db, insertEntryString, -1, &insertEntry, NULL) != SQLITE_OK) {
-        NSLog(@"ERROR: failed to prepare entry inserting statement");
+        if (consoleSuite) {
+            NSLog(@"ERROR: failed to prepare entry inserting statement");
+        }
     }
     
     // init deletion statement
     if (sqlite3_prepare_v2(db, deleteEntryString, -1, &deleteEntry, NULL) != SQLITE_OK) {
-        NSLog(@"ERROR: failed to prepare delete entry statement");
+        if (consoleSuite) {
+            NSLog(@"ERROR: failed to prepare delete entry statement");
+        }
     }
 }
 
@@ -127,26 +141,18 @@ static sqlite3_stmt *updateEntry;
         // create entry object
         GADataEntry *temp = [[GADataEntry alloc] initWithEnglish:english andSpanish:spanish andImage:image andPhrase:phrase];
         
-        // add the entry object to our return array depending on whether or not it is a phrase
-        if (!phrase && PHRASESONLY) {
+        // add the entry object to our return array depending on whether or not it is a word/phrase
+        if (phrase && !usePhrases) {
             continue;
         }
-        else if (!word && WORDSONLY) {
+        else if (word && !useWords) {
             continue;
         }
         else {
             [ret addObject:temp];
         }
     }
-    
-    // tell console about phrases, if necessary
-    if (PHRASESONLY) {
-        NSLog(@"Phrases only mode enabled. There are %d phrases in the database", phraseCount);
-    }
-    if (WORDSONLY) {
-        NSLog(@"Words only mode enabled. There are %d words in the database", wordCount);
-    }
-    
+        
     // reset the statement, return the array
     sqlite3_reset(fetchEntries);
     return ret;
@@ -160,7 +166,9 @@ static sqlite3_stmt *updateEntry;
     int success = sqlite3_step(deleteEntry);
     sqlite3_reset(deleteEntry);
     if (success != SQLITE_DONE) {
-        NSLog(@"ERROR: failed to delete entry");
+        if (consoleSuite) {
+            NSLog(@"ERROR: failed to delete entry");
+        }
     }
 }
 
@@ -171,7 +179,9 @@ static sqlite3_stmt *updateEntry;
     int numEntries = [array count];
     
     // grab all of the entries, get a count of how many we have, and delete them one-by-one
-    NSLog(@"erasing all database entries");
+    if (consoleSuite) {
+        NSLog(@"erasing all database entries");
+    }
     for(int i = 1; i < 100000; ++i){
         [Database deleteEntry:i];
     }
@@ -195,7 +205,9 @@ static sqlite3_stmt *updateEntry;
     int success = sqlite3_step(insertEntry);
     sqlite3_reset(insertEntry);
     if (success != SQLITE_DONE) {
-        NSLog(@"ERROR: failed to insert entry");
+        if (consoleSuite) {
+            NSLog(@"ERROR: failed to insert entry");
+        }
     }
 }
 
@@ -218,26 +230,33 @@ static sqlite3_stmt *updateEntry;
     int success = sqlite3_step(insertEntry);
     sqlite3_reset(insertEntry);
     if (success != SQLITE_DONE) {
-        NSLog(@"ERROR: failed to insert entry");
+        if (consoleSuite) {
+            NSLog(@"ERROR: failed to insert entry");
+        }
     }
 }
 
-+(void)updateDatabase{
++(void)updateDatabase
+{
     // first erase all of the database entries, then make the HTTP request
     [Database eraseAllEntries];
     DatabaseCaller *updateCall = [[DatabaseCaller alloc] initForCallwithTarget:self andAction:@selector(addEntries:) andTesting:FALSE];
 }
 
-+(void)updateDatabaseForTesting{
++(void)updateDatabaseForTesting
+{
     // first erase all of the database entries, then make the HTTP request
     [Database eraseAllEntries];
     DatabaseCaller *updateCall = [[DatabaseCaller alloc] initForCallwithTarget:self andAction:@selector(addEntriesForTesting:) andTesting:TRUE];
     
 }
 
-+(void)addEntries:(NSMutableArray*)array{
++(void)addEntries:(NSMutableArray*)array
+{
     // add an entire array of entries to the database
-    NSLog(@"There are %d entries in the database", [array count]);
+    if (consoleSuite) {
+        NSLog(@"There are %d entries in the database", [array count]);
+    }
     for(NSMutableDictionary *dict in array) {
         NSString *english = [dict objectForKey:@"English"];
         NSString *spanish = [dict objectForKey:@"Spanish"];
@@ -253,13 +272,18 @@ static sqlite3_stmt *updateEntry;
         
         [Database saveEntryWithEnglish:english andSpanish:spanish andImage:image andPhrase:phrase];
     }
-    NSLog(@"Database update complete");
+    if (consoleSuite) {
+        NSLog(@"Database update complete");
+    }
 }
 
-+(void)addEntriesForTesting:(NSMutableArray*)array{
++(void)addEntriesForTesting:(NSMutableArray*)array
+{
     // add an entire array of entries to the database
-    NSLog(@"There are %d entries in the database", [array count]);
-    for(NSMutableDictionary *dict in array) {
+    if (consoleSuite) {
+        NSLog(@"There are %d entries in the database", [array count]);
+    }
+    for (NSMutableDictionary *dict in array) {
         NSString *english = [dict objectForKey:@"English"];
         NSString *englishEx = [dict objectForKey:@"EnglishEx"];
         
@@ -267,7 +291,9 @@ static sqlite3_stmt *updateEntry;
         
         [Database saveEntryWithEnglish:english andSpanish:englishEx andImage:image andPhrase:true];
     }
-    NSLog(@"Database update complete");
+    if (consoleSuite) {
+        NSLog(@"Database update complete");
+    }
 }
 
 + (void)cleanUpDatabaseForQuit
@@ -283,19 +309,25 @@ static sqlite3_stmt *updateEntry;
 
 +(BOOL)isPopulated
 {
-    if ([[Database fetchAllEntries] count] == 0){
-        NSLog(@"database is not populated");
+    if ([[Database fetchAllEntries] count] == 0) {
+        if (consoleSuite) {
+            NSLog(@"database is not populated");
+        }
         return FALSE;
     }
-    else{
-        NSLog(@"database is populated");
+    else {
+        if (consoleSuite) {
+            NSLog(@"database is populated");
+        }
         return TRUE;
     }
 }
 
 +(void)enableTesting
 {
-    NSLog(@"testing database enabled");
+    if (consoleSuite) {
+        NSLog(@"testing database enabled");
+    }
     // first erase all of the database entries, then make the HTTP request with TRUE for testing
     [Database eraseAllEntries];
     DatabaseCaller *updateCall = [[DatabaseCaller alloc] initForCallwithTarget:self andAction:@selector(addEntries:) andTesting:TRUE];
@@ -303,7 +335,9 @@ static sqlite3_stmt *updateEntry;
 
 +(void)disableTesting
 {
-    NSLog(@"testing database disabled");
+    if (consoleSuite) {
+        NSLog(@"testing database disabled");
+    }
     // first erase all of the database entries, then make the HTTP request with FALSE for testing
     [Database eraseAllEntries];
     DatabaseCaller *updateCall = [[DatabaseCaller alloc] initForCallwithTarget:self andAction:@selector(addEntries:) andTesting:FALSE];

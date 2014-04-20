@@ -107,7 +107,8 @@
     // Do any additional setup after loading the view.
 }
 
-- (void) viewDidAppear:(BOOL)animated {
+- (void) viewDidAppear:(BOOL)animated
+{
     _theLevel = [[GALevelViewController alloc] initWithMatch:nil];
     _theLevel.delegate = self;
     
@@ -198,7 +199,8 @@
     }];
 }
 
-- (void) doProgressBarColorAnimation {
+- (void) doProgressBarColorAnimation
+{
     static NSInteger i = 0;
     
     if(i >= [_buttonColors count]) {
@@ -214,7 +216,8 @@
     }];
 }
 
-- (void) skipTutorial {
+- (void) skipTutorial
+{
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -225,17 +228,20 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (BOOL) prefersStatusBarHidden {
+- (BOOL) prefersStatusBarHidden
+{
     return YES;
 }
 
 #pragma mark GALevelViewController methods
 
-- (void) matchDidEnd {
+- (void) matchDidEnd
+{
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void) levelDidEnd {
+- (void) levelDidEnd
+{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

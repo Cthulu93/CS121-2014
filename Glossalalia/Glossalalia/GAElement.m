@@ -14,8 +14,8 @@ static const NSInteger NUMBER_OF_TAPS_UNTIL_SWAP = 3;
 
 // All GAElement buttons take the usual coordinate and dimension parameters, as well as a local NSString and a remote NSString
 
--(id)initSingleTapWithFrame:(CGRect)frame andWord:(GADataEntry*)word{
-    
+-(id)initSingleTapWithFrame:(CGRect)frame andWord:(GADataEntry*)word
+{
     self = [GAElement buttonWithType:UIButtonTypeSystem];
     
     if(self){
@@ -35,8 +35,8 @@ static const NSInteger NUMBER_OF_TAPS_UNTIL_SWAP = 3;
 }
 
 
--(id)init5TapWithFrame:(CGRect)frame andWord:(GADataEntry*)word{
-    
+-(id)init5TapWithFrame:(CGRect)frame andWord:(GADataEntry*)word
+{
     self = [GAElement buttonWithType:UIButtonTypeSystem];
     
     if(self){
@@ -45,10 +45,7 @@ static const NSInteger NUMBER_OF_TAPS_UNTIL_SWAP = 3;
         _word = word;
         
         [self setupButton];
-        
-//        UITapGestureRecognizer *fiveGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchDetected)];
-//        fiveGesture.numberOfTapsRequired = 5;
-        
+    
         _curNumTaps = 0;
         UITapGestureRecognizer *oneGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(incrementBackgroundNumber)];
         oneGesture.numberOfTapsRequired = 1;
@@ -60,8 +57,8 @@ static const NSInteger NUMBER_OF_TAPS_UNTIL_SWAP = 3;
     return self;
 }
 
--(id)initSlideLeftWithFrame:(CGRect)frame andWord:(GADataEntry*)word{
-    
+-(id)initSlideLeftWithFrame:(CGRect)frame andWord:(GADataEntry*)word
+{
     self = [GAElement buttonWithType:UIButtonTypeSystem];
     
     if(self){
@@ -81,8 +78,8 @@ static const NSInteger NUMBER_OF_TAPS_UNTIL_SWAP = 3;
     return self;
 }
 
--(id)initSlideRightWithFrame:(CGRect)frame andWord:(GADataEntry*)word{
-    
+-(id)initSlideRightWithFrame:(CGRect)frame andWord:(GADataEntry*)word
+{
     self = [GAElement buttonWithType:UIButtonTypeSystem];
     
     if(self){
@@ -102,8 +99,8 @@ static const NSInteger NUMBER_OF_TAPS_UNTIL_SWAP = 3;
     return self;
 }
 
--(id)initSlideDownWithFrame:(CGRect)frame andWord:(GADataEntry*)word{
-    
+-(id)initSlideDownWithFrame:(CGRect)frame andWord:(GADataEntry*)word
+{
     self = [GAElement buttonWithType:UIButtonTypeSystem];
     
     if(self){
@@ -123,8 +120,8 @@ static const NSInteger NUMBER_OF_TAPS_UNTIL_SWAP = 3;
     return self;
 }
 
--(id)initSlideUpWithFrame:(CGRect)frame andWord:(GADataEntry*)word{
-    
+-(id)initSlideUpWithFrame:(CGRect)frame andWord:(GADataEntry*)word
+{
     self = [GAElement buttonWithType:UIButtonTypeSystem];
     
     if(self){
@@ -145,7 +142,8 @@ static const NSInteger NUMBER_OF_TAPS_UNTIL_SWAP = 3;
 }
 
 // Randomly selects one of the GAElement types, and creates it
--(id)initRandomWithFrame:(CGRect)frame andWord:(GADataEntry*)word{
+-(id)initRandomWithFrame:(CGRect)frame andWord:(GADataEntry*)word
+{
     int random = arc4random_uniform(6);
     
     if (random == 0) {
@@ -171,7 +169,8 @@ static const NSInteger NUMBER_OF_TAPS_UNTIL_SWAP = 3;
 }
 
 // This method is called when a touch is detected to transfer the local word
--(void)touchDetected{
+-(void)touchDetected
+{
     switch (_type) {
         case SINGLE_TAP: {
             [UIView animateWithDuration:0.08 delay:0 options:UIViewAnimationOptionCurveLinear animations:^(void){
@@ -227,11 +226,8 @@ static const NSInteger NUMBER_OF_TAPS_UNTIL_SWAP = 3;
     }
 }
 
-//
-
-// TODO - stylize buttons within initalizers to differentiate them accordingly //
-- (void) setupButton {
-    
+- (void) setupButton
+{
     _backgroundOpacity = 0.3;
     
     _randomColor = [self getRandomColor];
@@ -310,16 +306,18 @@ static const NSInteger NUMBER_OF_TAPS_UNTIL_SWAP = 3;
     self.numTap = 0;
 }
 
--(BOOL)checkMatch:(NSString*)received{
-    if(received == _word.local){
+-(BOOL)checkMatch:(NSString*)received
+{
+    if(received == _word.local) {
         return TRUE;
     }
-    else{
+    else {
         return FALSE;
     }
 }
 
-- (void) incrementBackgroundNumber {
+- (void) incrementBackgroundNumber
+{
     ++_curNumTaps;
     if (_curNumTaps == 1) {
         _nTapTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(endFiveTapWindow) userInfo:Nil repeats:NO];
@@ -332,7 +330,8 @@ static const NSInteger NUMBER_OF_TAPS_UNTIL_SWAP = 3;
     }
 }
 
-- (void) endFiveTapWindow {
+- (void) endFiveTapWindow
+{
     _curNumTaps = 0;
     for (int i = 1; i <= 4; ++i) {
         [[self viewWithTag:i] setAlpha:_backgroundOpacity];
@@ -341,7 +340,8 @@ static const NSInteger NUMBER_OF_TAPS_UNTIL_SWAP = 3;
     [_nTapTimer invalidate];
 }
 
-- (UIColor*) getRandomColor {
+- (UIColor*) getRandomColor
+{
     CGFloat hue = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0
     CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from white
     CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.3;  //  0.5 to 1.0, away from black

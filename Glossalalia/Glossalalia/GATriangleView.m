@@ -27,7 +27,6 @@
  */
  -(void)drawRect:(CGRect)rect
  {
-     
      CGContextRef ctx = UIGraphicsGetCurrentContext();
      
      CGContextBeginPath(ctx);
