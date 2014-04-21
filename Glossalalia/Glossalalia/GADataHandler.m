@@ -3,7 +3,7 @@
 //  Glossolalia
 //
 //  Created by Paul on 2/16/14.
-//  Copyright (c) 2014 Rupert Deese, Paul Dapolito, Alex Melville. All rights reserved.
+//  Copyright (c) 2014 Rupert Deese. All rights reserved.
 //
 
 #import "GADataHandler.h"

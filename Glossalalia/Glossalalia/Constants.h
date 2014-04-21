@@ -3,7 +3,7 @@
 //  Glossolalia
 //
 //  Created by Alex Melville on 4/7/14.
-//  Copyright (c) 2014 Rupert Deese, Paul Dapolito, Alex Melville. All rights reserved.
+//  Copyright (c) 2014 Rupert Deese. All rights reserved.
 //
 
 // Determines whether app launches in testing mode
