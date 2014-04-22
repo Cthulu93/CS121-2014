@@ -138,7 +138,6 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
         [_exitButton addTarget:self action:@selector(endMatch) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:_exitButton];
         
-        
         _buttonColors = [[NSMutableArray alloc] initWithCapacity:0];
         for (GAElement *element in _wordButtons) {
             [_buttonColors addObject:element.backgroundColor];
@@ -313,7 +312,6 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
     }
 }
 
-
 - (void) changeScoreBy:(NSNumber*)points
 {
     if (consoleSuite) {
@@ -419,14 +417,14 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
     // Encode our message for ease of transmission to other players.
     if ([message  isEqual: _GAButtonPressedMessage]) {
         if (consoleSuite) {
-            NSLog(@"Sending buttonpressed message");
+            NSLog(@"Sending ButtonPressed message");
         }
         
         theMessage = [[[NSString alloc] initWithFormat:@"%@;%@", _GAButtonPressedMessage, word] dataUsingEncoding:NSUTF8StringEncoding];
     }
     else if ([message  isEqual: _GACommandListMessage]) {
         if (consoleSuite) {
-            NSLog(@"Sending commandlist message");
+            NSLog(@"Sending CommandList message");
         }
         // if word is nil, that means this command is being used to initially populate
         // every other device's command word dictionaries
@@ -444,21 +442,21 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
     }
     else if ([message  isEqual: _GAScoreChangeMessage]) {
         if (consoleSuite) {
-            NSLog(@"Sending scorechange message");
+            NSLog(@"Sending ScoreChange message");
         }
         
         theMessage =  [[[NSString alloc] initWithFormat:@"%@;%@", _GAScoreChangeMessage, points] dataUsingEncoding:NSUTF8StringEncoding];
     }
     else if ([message  isEqual: _GAEndMatchMessage]) {
         if (consoleSuite) {
-            NSLog(@"Sending endmatch message");
+            NSLog(@"Sending EndMatch message");
         }
         
         theMessage =  [[[NSString alloc] initWithFormat:@"%@", _GAEndMatchMessage] dataUsingEncoding:NSUTF8StringEncoding];
     }
     else if ([message isEqual: _GAConfirmCorrectButtonPressed]) {
         if (consoleSuite) {
-            NSLog(@"Sending correctbutton message");
+            NSLog(@"Sending CorrectButton message");
         }
         
         theMessage = [[[NSString alloc] initWithFormat:@"%@;%@", _GAConfirmCorrectButtonPressed, word] dataUsingEncoding:NSUTF8StringEncoding];
@@ -476,7 +474,6 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
     }
 }
 
-
 - (void) endMatch
 {
     [self sendGameMessage:_GAEndMatchMessage asDataWithWord:nil andPoints:nil];
@@ -488,7 +485,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
 - (void) receiveDataFromPlayer:(NSData*)data
 {
     if (consoleSuite){
-        NSLog(@"In receivedatafrom...");
+        NSLog(@"In receiveDataFromPlayer");
     }
     
     NSString* message = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
@@ -497,7 +494,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
     // message is a button press
     if ([components[0]  isEqual: _GAButtonPressedMessage]) {
         if (consoleSuite) {
-            NSLog(@"Got buttonpressed message");
+            NSLog(@"Got ButtonPressed message");
         }
         // query to see if we have this word displayed in the command bar
         [self remotePlayerPressedButtonWithWord:components[1]];
@@ -532,7 +529,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
     // message is to change the score
     else if ([components[0]  isEqual: _GAScoreChangeMessage]) {
         if (consoleSuite) {
-            NSLog(@"Got scorechange message with score: %f", [components[1] floatValue]);
+            NSLog(@"Got ScoreChange message with score: %f", [components[1] floatValue]);
         }
         // locally update the score
         [self locallyUpdateScoreBy:[[NSNumber alloc] initWithInteger:[components[1] floatValue]]];
@@ -552,7 +549,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
     // if the receiving device contains a GAElement with the given word
     else if ([components[0] isEqual: _GAConfirmCorrectButtonPressed]) {
         if (consoleSuite) {
-            NSLog(@"Got confirmcorrectbuttonmessage with word: %@", components[1]);
+            NSLog(@"Got ConfirmCorrectButtonMessage with word: %@", components[1]);
         }
         for (GAElement* elem in _wordButtons) {
             if ([[elem.word remote] isEqualToString:components[1]]) {
@@ -670,7 +667,7 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
 - (void) localPlayerPressedButtonForWord:(GADataEntry *)word
 {
     if (consoleSuite) {
-        NSLog(@"in localplayerpressed... with word: %@ or %@", word.local, word.remote);
+        NSLog(@"in localPlayerPressedButtonForWord with word: %@ or %@", word.local, word.remote);
     }
     [self sendGameMessage:_GAButtonPressedMessage asDataWithWord:word.remote andPoints:nil];
     
