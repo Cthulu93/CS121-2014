@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import <GameKit/GameKit.h>
+#import <CoreData/CoreData.h>
 #import "GADataHandler.h"
 #import "GADataEntry.h"
 #import "GAElement.h"
 #import "ROUSession.h"
+#import "Device.h"
 
 @protocol GALevelViewControllerDelegate <NSObject>
 
@@ -21,8 +23,14 @@
 @end
 
 @interface GALevelViewController : UIViewController <GKMatchDelegate, GAElementDelegate, ROUSessionDelegate>
+{
+    // held the pass along the managed object context
+    NSFetchedResultsController *fetchedResultsController;
+    NSManagedObjectContext *managedObjectContext;
+}
 
-
+@property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
 @property GKMatch *theMatch;
 @property ROUSession *rouSession;
@@ -31,8 +39,8 @@
 @property NSObject <GALevelViewControllerDelegate> *delegate;
 @property GADataHandler *dataHandler;
 
+
 @property float score;
-@property float highScore;
 @property int numWordsCorrect;
 @property int numButtonWordsPerPlayer;
 @property CGFloat commandCompletionTimeLimit;
@@ -70,7 +78,9 @@
 - (void) remotePlayerPressedButtonWithWord:(NSString*)remoteWord;
 
 - (void) changeScoreBy:(NSNumber*) points;
+- (void) reportScore: (int64_t) score forLeaderboardID: (NSString*) identifier;
 - (void) locallyUpdateScoreBy:(NSNumber*)points;
+- (void) updateHighScore;
 
 - (void) stopCommandCompletionTimer;
 - (void) startCommandCompletionTimer;

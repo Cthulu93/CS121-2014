@@ -9,13 +9,14 @@
 //
 
 #import "GALevelViewController.h"
-#import "Constants.h"
+#import "Globals.h"
 
 @interface GALevelViewController ()
 @property float fWidth, fHeight;
 @end
 
 @implementation GALevelViewController
+@synthesize fetchedResultsController, managedObjectContext;
 
 // speed by which the command word is decreased
 static double const SPEEDUP_ONECORRECT = .6;
@@ -63,13 +64,12 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
         for (GADataEntry *word in _buttonWords) {
             [_commandsFromLocalButtons addObject:word.remote];
         }
-        
+
         // Send words out to all the other devices
         [self sendGameMessage:_GACommandListMessage asDataWithWord:nil andPoints:nil];
         
         // start the user score at zero, start high score at 5
         _score = 0;
-        _highScore = 5.0;
         
         // The initial amount of a time a word will take to scroll across
         // the screen. It will be changed as the level progresses
@@ -161,8 +161,8 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
         i = 0;
     }
     
-    float duration = 5*_highScore/pow(_score+1, 2);
-    if (_score == _highScore) {
+    float duration = 5*highScore/pow(_score+1, 2);
+    if (_score == highScore) {
         duration = 5/_score;
     }
     [UIView animateWithDuration:duration animations:^{
@@ -180,11 +180,11 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
             CGRect newFrame = _progressBar.frame;
             newFrame.size.height += _fHeight*0.03;
             newFrame.origin.y -= _fHeight*0.015;
-            if (_score >= _highScore) {
+            if (_score >= highScore) {
                 newFrame.size.width = _fWidth;
             }
             else {
-                newFrame.size.width = (_score / _highScore) * _fWidth;
+                newFrame.size.width = (_score / highScore) * _fWidth;
             }
             [_progressBar setFrame:newFrame];
             _progressBar.alpha = 0.5;
@@ -201,11 +201,11 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
     else {
         [UIView animateWithDuration:0.5 animations:^(void) {
             CGRect newFrame = _progressFrame;
-            if (_score >= _highScore) {
+            if (_score >= highScore) {
                 newFrame.size.width = _fWidth;
             }
             else {
-                newFrame.size.width = (_score / _highScore) * _fWidth;
+                newFrame.size.width = (_score / highScore) * _fWidth;
             }
             _progressBar.frame = newFrame;
         }];
@@ -292,8 +292,12 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
     
     else { // user is incorrect: reset the score, reset the progress bar, and shake the screen!
         _commandCompletionTimeLimit = COMMAND_TIME_LIMIT;
-        _score = 0;
-        [_scoreLabel setText:[[NSString alloc] initWithFormat:@"Score: %d", (int)_score]];
+        int oldScore = _score;
+        
+        // report score to the game center before it is decremented
+        // identifier: "GALeaderboard_421"
+        // TO DO: THIS STILL NEEDS TO BE TESTED
+        [self reportScore:_score forLeaderboardID:@"GALeaderboard_421"];
         
         // shake the screen due to an incorrect selection
         // code taken from:
@@ -305,10 +309,9 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
         anim.duration = 0.07f;
         [self.view.layer addAnimation:anim forKey:nil ];
         
-        // reset the progress bar
-        [UIView animateWithDuration:1.0 animations:^{
-            [_progressBar setFrame:CGRectMake(0, 20, 0, 0.1*_fHeight)];
-        }];
+        // reset the progress bar by subtracting the old score from the current score
+        NSNumber *negativeOldScore = [NSNumber numberWithInt:(-oldScore)];
+        [self changeScoreBy:negativeOldScore];
     }
 }
 
@@ -319,6 +322,28 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
     }
     [self sendGameMessage:_GAScoreChangeMessage asDataWithWord:nil andPoints:points];
     [self locallyUpdateScoreBy:points];
+}
+
+// method to report a score to the Game Center (identifier is "GALeaderboard_421"
+- (void) reportScore: (int64_t) score forLeaderboardID: (NSString*) identifier
+{
+    // if the score is zero, do not report it to the Game Center
+    if (score == 0) {
+        NSLog(@"score is 0, skipping report to game center");
+        return;
+    }
+    // otherwise, report the score to the Game Center
+    else {
+        GKScore *scoreReporter = [[GKScore alloc] initWithLeaderboardIdentifier: identifier];
+        scoreReporter.value = score;
+        scoreReporter.context = 0;
+    
+        NSArray *scores = @[scoreReporter];
+        [GKScore reportScores:scores withCompletionHandler:^(NSError *error) {
+            // Do something interesting here.
+            NSLog(@"reporting score of %lld to Game Center", score);
+        }];
+    }
 }
 
 // score update is performed here, as well as progress bar updating
@@ -341,11 +366,39 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
     [_scoreLabel setText:[[NSString alloc] initWithFormat:@"Score: %d", (int)_score]];
     
     // update high score, if necessary
-    if (_score > _highScore) {
-        _highScore = _score;
+    if (_score > highScore) {
+        highScore = _score;
+        [self updateHighScore];
     }
     
     [self doProgressBarScoreChange:([points floatValue] > 0)];
+}
+
+// update high score locally in user's Core Data
+// code taken from: http://wiresareobsolete.com/wordpress/2009/12/adding-core-data-existing-iphone-projects/
+- (void) updateHighScore
+{
+    if (consoleSuite) {
+        NSLog(@"locally saving new high score of %d", highScore);
+    }
+    
+    // Create a new managed object context
+    NSManagedObjectContext *context = self.managedObjectContext;
+
+    // create a new managed object for the new high score
+    NSManagedObject *newScore;
+    
+    // insert the new high score
+    newScore = [NSEntityDescription insertNewObjectForEntityForName:@"Device" inManagedObjectContext:context];
+    [newScore setValue:[NSNumber numberWithInt:highScore] forKey:@"highScore"];
+    
+    NSError *error;
+    // Save the object to persistent store
+    if (![context save:&error]) {
+        if (consoleSuite) {
+            NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+        }
+    }
 }
 
 - (void) stopCommandCompletionTimer
@@ -571,7 +624,6 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
 // the swap
 - (void) updateGAElementWithWord:(GAElement *)elem
 {
-    
     // increment the number of times that GAElement
     // has been correctly tapped
     elem.numTap += 1;
@@ -622,7 +674,6 @@ static int const NUM_WORDS_NEEDED_FOR_SPEEDUP = 1;
         [_commandsFromLocalButtons removeObject:elem.word.remote];
         [_commandsFromLocalButtons addObject:newWord.remote];
 
-        
         [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^(void){
             CGRect newElemFrame = elem.frame;
             newElemFrame.origin.x = -_fWidth;

@@ -43,7 +43,6 @@
 		67398FAF18C5E4AE001BE584 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67398FAE18C5E4AE001BE584 /* CoreText.framework */; };
 		673B9C2318F3607E00FE6126 /* GADemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 673B9C2218F3607E00FE6126 /* GADemoViewController.m */; };
 		674F3E4018CFEAFF0064BB21 /* GATriangleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 674F3E3F18CFEAFF0064BB21 /* GATriangleView.m */; };
-		67501DCA18BB36EB000992E6 /* GAMatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67501DC918BB36EB000992E6 /* GAMatchViewController.m */; };
 		67BCB5D418B30DB800D5EF9F /* GALevelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67BCB5D318B30DB800D5EF9F /* GALevelViewController.m */; };
 		67CFC54E18C3F1E600D373D2 /* ROUDataTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 67CFC54718C3F1E600D373D2 /* ROUDataTypes.m */; };
 		67CFC54F18C3F1E600D373D2 /* ROUSerialQueueTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 67CFC54A18C3F1E600D373D2 /* ROUSerialQueueTimer.m */; };
@@ -56,8 +55,10 @@
 		73251C8918B16A7F000ABEAD /* GADataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 73251C8818B16A7F000ABEAD /* GADataHandler.m */; };
 		734DF0AA18B6AEE7000845E0 /* GAElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 734DF0A918B6AEE7000845E0 /* GAElement.m */; };
 		734DF0B618BB208F000845E0 /* GASlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 734DF0B518BB208F000845E0 /* GASlider.m */; };
-		734DF0BC18BC7F6A000845E0 /* GADatabaseLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 734DF0BB18BC7F6A000845E0 /* GADatabaseLoadingView.m */; };
-		FA07A44418F3BF4D0037331F /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = FA07A44318F3BF4D0037331F /* Constants.m */; };
+		7356E808190B0687003F127F /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7356E806190B0686003F127F /* DataModel.xcdatamodeld */; };
+		7356E80A190D7038003F127F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7356E809190D7038003F127F /* CoreData.framework */; };
+		738DA506190DB4DA0025E748 /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 738DA505190DB4DA0025E748 /* Device.m */; };
+		FA07A44418F3BF4D0037331F /* Globals.m in Sources */ = {isa = PBXBuildFile; fileRef = FA07A44318F3BF4D0037331F /* Globals.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,8 +135,6 @@
 		673B9C2218F3607E00FE6126 /* GADemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GADemoViewController.m; sourceTree = "<group>"; };
 		674F3E3E18CFEAFF0064BB21 /* GATriangleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GATriangleView.h; sourceTree = "<group>"; };
 		674F3E3F18CFEAFF0064BB21 /* GATriangleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GATriangleView.m; sourceTree = "<group>"; };
-		67501DC818BB36EB000992E6 /* GAMatchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAMatchViewController.h; sourceTree = "<group>"; };
-		67501DC918BB36EB000992E6 /* GAMatchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAMatchViewController.m; sourceTree = "<group>"; };
 		67BCB5D218B30DB800D5EF9F /* GALevelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GALevelViewController.h; sourceTree = "<group>"; };
 		67BCB5D318B30DB800D5EF9F /* GALevelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GALevelViewController.m; sourceTree = "<group>"; };
 		67CFC54618C3F1E600D373D2 /* ROUDataTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROUDataTypes.h; sourceTree = "<group>"; };
@@ -160,10 +159,12 @@
 		734DF0A918B6AEE7000845E0 /* GAElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAElement.m; sourceTree = "<group>"; };
 		734DF0B418BB208F000845E0 /* GASlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GASlider.h; sourceTree = "<group>"; };
 		734DF0B518BB208F000845E0 /* GASlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GASlider.m; sourceTree = "<group>"; };
-		734DF0BA18BC7F6A000845E0 /* GADatabaseLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADatabaseLoadingView.h; sourceTree = "<group>"; };
-		734DF0BB18BC7F6A000845E0 /* GADatabaseLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GADatabaseLoadingView.m; sourceTree = "<group>"; };
-		FA07A44218F3B6E00037331F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		FA07A44318F3BF4D0037331F /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		7356E807190B0687003F127F /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		7356E809190D7038003F127F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		738DA504190DB4DA0025E748 /* Device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Device.h; sourceTree = "<group>"; };
+		738DA505190DB4DA0025E748 /* Device.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Device.m; sourceTree = "<group>"; };
+		FA07A44218F3B6E00037331F /* Globals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Globals.h; sourceTree = "<group>"; };
+		FA07A44318F3BF4D0037331F /* Globals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Globals.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +172,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7356E80A190D7038003F127F /* CoreData.framework in Frameworks */,
 				67398FAF18C5E4AE001BE584 /* CoreText.framework in Frameworks */,
 				7318B5E918ADCA9900FC9245 /* libsqlite3.dylib in Frameworks */,
 				673642ED18AD90E000EC785D /* CoreGraphics.framework in Frameworks */,
@@ -215,6 +217,7 @@
 		673642E918AD90E000EC785D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7356E809190D7038003F127F /* CoreData.framework */,
 				67398FAE18C5E4AE001BE584 /* CoreText.framework */,
 				7318B5E818ADCA9900FC9245 /* libsqlite3.dylib */,
 				6736431C18ADFC7700EC785D /* GameKit.framework */,
@@ -231,18 +234,17 @@
 			children = (
 				67398F7318C5E370001BE584 /* FlatUI */,
 				67CFC55118C3F1F600D373D2 /* RoUTP */,
+				738DA507190DB4DE0025E748 /* Data Model */,
 				673642F918AD90E000EC785D /* GAAppDelegate.h */,
 				673642FA18AD90E000EC785D /* GAAppDelegate.m */,
 				6736431918ADE75C00EC785D /* GAHomeViewController.h */,
 				6736431A18ADE75C00EC785D /* GAHomeViewController.m */,
-				67501DC818BB36EB000992E6 /* GAMatchViewController.h */,
-				67501DC918BB36EB000992E6 /* GAMatchViewController.m */,
 				67BCB5D218B30DB800D5EF9F /* GALevelViewController.h */,
 				67BCB5D318B30DB800D5EF9F /* GALevelViewController.m */,
 				673B9C2118F3607E00FE6126 /* GADemoViewController.h */,
 				673B9C2218F3607E00FE6126 /* GADemoViewController.m */,
-				FA07A44218F3B6E00037331F /* Constants.h */,
-				FA07A44318F3BF4D0037331F /* Constants.m */,
+				FA07A44218F3B6E00037331F /* Globals.h */,
+				FA07A44318F3BF4D0037331F /* Globals.m */,
 				734DF0A118B6AD2D000845E0 /* GAElements */,
 				7318B5DC18ADB59300FC9245 /* backend */,
 				673642FC18AD90E000EC785D /* Images.xcassets */,
@@ -330,9 +332,9 @@
 		67CFC54518C3F1E500D373D2 /* Private */ = {
 			isa = PBXGroup;
 			children = (
+				67CFC54818C3F1E600D373D2 /* ROUPrivate.h */,
 				67CFC54618C3F1E600D373D2 /* ROUDataTypes.h */,
 				67CFC54718C3F1E600D373D2 /* ROUDataTypes.m */,
-				67CFC54818C3F1E600D373D2 /* ROUPrivate.h */,
 				67CFC54918C3F1E600D373D2 /* ROUSerialQueueTimer.h */,
 				67CFC54A18C3F1E600D373D2 /* ROUSerialQueueTimer.m */,
 				67CFC54B18C3F1E600D373D2 /* ROUSession_Private.h */,
@@ -368,8 +370,6 @@
 				7318B5D718ADB48E00FC9245 /* Database.m */,
 				7318B5D918ADB53A00FC9245 /* DatabaseCaller.h */,
 				7318B5DA18ADB53A00FC9245 /* DatabaseCaller.m */,
-				734DF0BA18BC7F6A000845E0 /* GADatabaseLoadingView.h */,
-				734DF0BB18BC7F6A000845E0 /* GADatabaseLoadingView.m */,
 			);
 			name = database;
 			sourceTree = "<group>";
@@ -396,6 +396,16 @@
 				674F3E3F18CFEAFF0064BB21 /* GATriangleView.m */,
 			);
 			name = GAElements;
+			sourceTree = "<group>";
+		};
+		738DA507190DB4DE0025E748 /* Data Model */ = {
+			isa = PBXGroup;
+			children = (
+				7356E806190B0686003F127F /* DataModel.xcdatamodeld */,
+				738DA504190DB4DA0025E748 /* Device.h */,
+				738DA505190DB4DA0025E748 /* Device.m */,
+			);
+			name = "Data Model";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -508,7 +518,6 @@
 				73251C8918B16A7F000ABEAD /* GADataHandler.m in Sources */,
 				67398FA718C5E370001BE584 /* UIPopoverController+FlatUI.m in Sources */,
 				673B9C2318F3607E00FE6126 /* GADemoViewController.m in Sources */,
-				734DF0BC18BC7F6A000845E0 /* GADatabaseLoadingView.m in Sources */,
 				67398FAC18C5E370001BE584 /* UITableViewCell+FlatUI.m in Sources */,
 				67398F9F18C5E370001BE584 /* FUISegmentedControl.m in Sources */,
 				67398FA118C5E370001BE584 /* FUITextField.m in Sources */,
@@ -521,7 +530,7 @@
 				67CFC55018C3F1E600D373D2 /* ROUSession.m in Sources */,
 				7318B5E718ADC8F500FC9245 /* GADataEntry.m in Sources */,
 				67CFC54E18C3F1E600D373D2 /* ROUDataTypes.m in Sources */,
-				FA07A44418F3BF4D0037331F /* Constants.m in Sources */,
+				FA07A44418F3BF4D0037331F /* Globals.m in Sources */,
 				67398FA418C5E370001BE584 /* UIFont+FlatUI.m in Sources */,
 				67398FA218C5E370001BE584 /* UIBarButtonItem+FlatUI.m in Sources */,
 				67BCB5D418B30DB800D5EF9F /* GALevelViewController.m in Sources */,
@@ -532,9 +541,10 @@
 				67CFC54F18C3F1E600D373D2 /* ROUSerialQueueTimer.m in Sources */,
 				67398FA818C5E370001BE584 /* UIProgressView+FlatUI.m in Sources */,
 				67398FAA18C5E370001BE584 /* UIStepper+FlatUI.m in Sources */,
+				7356E808190B0687003F127F /* DataModel.xcdatamodeld in Sources */,
 				67398FAB18C5E370001BE584 /* UITabBar+FlatUI.m in Sources */,
+				738DA506190DB4DA0025E748 /* Device.m in Sources */,
 				67398F9B18C5E370001BE584 /* FUIAlertView.m in Sources */,
-				67501DCA18BB36EB000992E6 /* GAMatchViewController.m in Sources */,
 				734DF0AA18B6AEE7000845E0 /* GAElement.m in Sources */,
 				67398F9D18C5E370001BE584 /* FUICellBackgroundView.m in Sources */,
 				67398FA918C5E370001BE584 /* UISlider+FlatUI.m in Sources */,
@@ -756,6 +766,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		7356E806190B0686003F127F /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				7356E807190B0687003F127F /* DataModel.xcdatamodel */,
+			);
+			currentVersion = 7356E807190B0687003F127F /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 673642DF18AD90DF00EC785D /* Project object */;
 }

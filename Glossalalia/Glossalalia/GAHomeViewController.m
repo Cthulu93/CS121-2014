@@ -14,6 +14,7 @@
 @end
 
 @implementation GAHomeViewController
+@synthesize fetchedResultsController, managedObjectContext;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -154,7 +155,7 @@
     _settingsOpen = NO;
 }
 
-// flips the phrases constant held in Constants.m
+// flips the phrases constant held in Globals.m
 - (void) flipPhrases
 {
     usePhrases = !usePhrases;
@@ -174,7 +175,7 @@
     }
 }
 
-// flips the words constant held in Constants.m
+// flips the words constant held in Globals.m
 - (void) flipWords
 {
     useWords = !useWords;
@@ -287,19 +288,6 @@
     }
 }
 
-- (void)matchmakerViewController:(GKMatchmakerViewController *)viewController didFindMatch:(GKMatch *)match
-{    
-    [self dismissViewControllerAnimated:YES completion:^(void) {
-        if (!_matchOn && match.expectedPlayerCount == 0)
-        {
-            _matchOn = YES;
-            _matchVC = [[GAMatchViewController alloc] initWithMatch:match];
-            [_matchVC setDelegate:self];
-            [self presentViewController:_matchVC animated:NO completion:nil];
-        }
-    }];
-}
-
 - (void) match:(GKMatch *)match didReceiveData:(NSData *)data fromPlayer:(NSString *)playerID
 {
     [_gameStatus setText:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];
@@ -337,6 +325,7 @@
     else if ([word.local isEqual:@"Single Player"]) {
         // create single player view controller
         GALevelViewController *singlePlayer = [[GALevelViewController alloc] initWithMatch:nil];
+        [singlePlayer setManagedObjectContext:self.managedObjectContext];
         singlePlayer.delegate = self;
         [self presentViewController:singlePlayer animated:YES completion:nil];
     }

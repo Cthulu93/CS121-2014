@@ -41,7 +41,6 @@
     while ([randomEntries count] < num) {
         [randomEntries addObject:[self grabRandomEntryWithPhrases:includePhrases]];
     }
-
     
     return randomEntries;
 }

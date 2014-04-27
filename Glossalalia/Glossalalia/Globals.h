@@ -13,5 +13,8 @@ extern const bool TESTING;
 extern bool useWords;
 extern bool usePhrases;
 
+// value to hold the user's high score
+extern int highScore;
+
 // determines whether console logs are shown
 extern const bool consoleSuite;

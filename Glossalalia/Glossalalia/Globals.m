@@ -1,12 +1,12 @@
 //
-//  Constants.m
+//  Globals.m
 //  Glossolalia
 //
 //  Created by Alex Deese on 4/7/14.
 //  Copyright (c) 2014 Alex Melville. All rights reserved.
 //
 
-#import "Constants.h"
+#import "Globals.h"
 
 // Set to true and app will launch in testing mode, where foreign
 // language words are replaced with their English translations
@@ -18,6 +18,9 @@ bool useWords = YES;
 
 // Set to true and the app will include phrases
 bool usePhrases = YES;
+
+// Hold the user's high score globally
+int highScore;
 
 // Set to true and the app will print console log messages
 const bool consoleSuite = YES;
