@@ -14,6 +14,7 @@
 @end
 
 @implementation GAHomeViewController
+@synthesize fetchedResultsController, managedObjectContext;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -154,7 +155,7 @@
     _settingsOpen = NO;
 }
 
-// flips the phrases constant held in Constants.m
+// flips the phrases constant held in Globals.m
 - (void) flipPhrases
 {
     usePhrases = !usePhrases;
@@ -174,7 +175,7 @@
     }
 }
 
-// flips the words constant held in Constants.m
+// flips the words constant held in Globals.m
 - (void) flipWords
 {
     useWords = !useWords;
@@ -337,6 +338,7 @@
     else if ([word.local isEqual:@"Single Player"]) {
         // create single player view controller
         GALevelViewController *singlePlayer = [[GALevelViewController alloc] initWithMatch:nil];
+        [singlePlayer setManagedObjectContext:self.managedObjectContext];
         singlePlayer.delegate = self;
         [self presentViewController:singlePlayer animated:YES completion:nil];
     }

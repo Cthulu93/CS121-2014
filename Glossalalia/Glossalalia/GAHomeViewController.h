@@ -15,6 +15,14 @@
 #import "FlatUIKit.h"
 
 @interface GAHomeViewController : UIViewController <GKMatchmakerViewControllerDelegate, GAMatchViewControllerDelegate, GAElementDelegate>
+{
+    // held the pass along the managed object context
+    NSFetchedResultsController *fetchedResultsController;
+    NSManagedObjectContext *managedObjectContext;
+}
+
+@property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
 @property GAMatchViewController *matchVC;
 

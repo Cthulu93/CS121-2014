@@ -10,7 +10,7 @@
 #import <sqlite3.h>
 #import "GADataEntry.h"
 #import "DatabaseCaller.h"
-#import "Constants.h"
+#import "Globals.h"
 
 @interface Database : NSObject
 
