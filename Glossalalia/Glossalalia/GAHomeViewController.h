@@ -8,13 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import <GameKit/GameKit.h>
-#import "GAMatchViewController.h"
 #import "GADemoViewController.h"
 #import "GAElement.h"
 #import "GADataEntry.h"
 #import "FlatUIKit.h"
 
-@interface GAHomeViewController : UIViewController <GKMatchmakerViewControllerDelegate, GAMatchViewControllerDelegate, GAElementDelegate>
+@interface GAHomeViewController : UIViewController <GKMatchmakerViewControllerDelegate, GAElementDelegate>
 {
     // held the pass along the managed object context
     NSFetchedResultsController *fetchedResultsController;
@@ -23,8 +22,6 @@
 
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
-
-@property GAMatchViewController *matchVC;
 
 @property GAElement *matchmakeButton;
 @property GAElement *tutorialButton;

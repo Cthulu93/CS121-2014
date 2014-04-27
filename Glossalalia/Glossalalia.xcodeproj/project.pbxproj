@@ -57,7 +57,6 @@
 		734DF0B618BB208F000845E0 /* GASlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 734DF0B518BB208F000845E0 /* GASlider.m */; };
 		7356E808190B0687003F127F /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7356E806190B0686003F127F /* DataModel.xcdatamodeld */; };
 		7356E80A190D7038003F127F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7356E809190D7038003F127F /* CoreData.framework */; };
-		7356E80D190D890B003F127F /* GAMatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7356E80C190D890B003F127F /* GAMatchViewController.m */; };
 		738DA506190DB4DA0025E748 /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 738DA505190DB4DA0025E748 /* Device.m */; };
 		FA07A44418F3BF4D0037331F /* Globals.m in Sources */ = {isa = PBXBuildFile; fileRef = FA07A44318F3BF4D0037331F /* Globals.m */; };
 /* End PBXBuildFile section */
@@ -162,8 +161,6 @@
 		734DF0B518BB208F000845E0 /* GASlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GASlider.m; sourceTree = "<group>"; };
 		7356E807190B0687003F127F /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		7356E809190D7038003F127F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		7356E80B190D890B003F127F /* GAMatchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAMatchViewController.h; sourceTree = "<group>"; };
-		7356E80C190D890B003F127F /* GAMatchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAMatchViewController.m; sourceTree = "<group>"; };
 		738DA504190DB4DA0025E748 /* Device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Device.h; sourceTree = "<group>"; };
 		738DA505190DB4DA0025E748 /* Device.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Device.m; sourceTree = "<group>"; };
 		FA07A44218F3B6E00037331F /* Globals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Globals.h; sourceTree = "<group>"; };
@@ -240,8 +237,6 @@
 				738DA507190DB4DE0025E748 /* Data Model */,
 				673642F918AD90E000EC785D /* GAAppDelegate.h */,
 				673642FA18AD90E000EC785D /* GAAppDelegate.m */,
-				7356E80B190D890B003F127F /* GAMatchViewController.h */,
-				7356E80C190D890B003F127F /* GAMatchViewController.m */,
 				6736431918ADE75C00EC785D /* GAHomeViewController.h */,
 				6736431A18ADE75C00EC785D /* GAHomeViewController.m */,
 				67BCB5D218B30DB800D5EF9F /* GALevelViewController.h */,
@@ -535,7 +530,6 @@
 				67CFC55018C3F1E600D373D2 /* ROUSession.m in Sources */,
 				7318B5E718ADC8F500FC9245 /* GADataEntry.m in Sources */,
 				67CFC54E18C3F1E600D373D2 /* ROUDataTypes.m in Sources */,
-				7356E80D190D890B003F127F /* GAMatchViewController.m in Sources */,
 				FA07A44418F3BF4D0037331F /* Globals.m in Sources */,
 				67398FA418C5E370001BE584 /* UIFont+FlatUI.m in Sources */,
 				67398FA218C5E370001BE584 /* UIBarButtonItem+FlatUI.m in Sources */,

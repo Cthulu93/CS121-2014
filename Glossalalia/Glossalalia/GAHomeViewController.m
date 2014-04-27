@@ -288,19 +288,6 @@
     }
 }
 
-- (void)matchmakerViewController:(GKMatchmakerViewController *)viewController didFindMatch:(GKMatch *)match
-{    
-    [self dismissViewControllerAnimated:YES completion:^(void) {
-        if (!_matchOn && match.expectedPlayerCount == 0)
-        {
-            _matchOn = YES;
-            _matchVC = [[GAMatchViewController alloc] initWithMatch:match];
-            [_matchVC setDelegate:self];
-            [self presentViewController:_matchVC animated:NO completion:nil];
-        }
-    }];
-}
-
 - (void) match:(GKMatch *)match didReceiveData:(NSData *)data fromPlayer:(NSString *)playerID
 {
     [_gameStatus setText:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];

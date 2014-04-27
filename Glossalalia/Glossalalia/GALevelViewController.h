@@ -81,7 +81,6 @@
 - (void) reportScore: (int64_t) score forLeaderboardID: (NSString*) identifier;
 - (void) locallyUpdateScoreBy:(NSNumber*)points;
 - (void) updateHighScore;
-- (int) fetchHighScore;
 
 - (void) stopCommandCompletionTimer;
 - (void) startCommandCompletionTimer;
