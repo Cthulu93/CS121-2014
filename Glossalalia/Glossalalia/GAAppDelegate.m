@@ -29,11 +29,26 @@
     _homeView = [[GAHomeViewController alloc] init];
     _homeView.managedObjectContext = [self managedObjectContext];
     
-    
-    // setup app database, update if needed
+    // setup app database
     [Database createEditableCopyOfDatabaseIfNeeded];
     [Database initDatabase];
-    if (![Database isPopulated]) {
+    
+    // check to see if the local database is more than 30 days old
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"MM-dd-yyyy"];
+    NSDate *lastUpdate = [dateFormat dateFromString:[self checkForDBUpdateDate]];
+    NSDate *todaysDate = [NSDate date];
+    bool needDBUpdate = NO;
+    // there are 2592000 seconds in 30 days
+    if ([todaysDate timeIntervalSince1970] - [lastUpdate timeIntervalSince1970] > 2592000) {
+        needDBUpdate = YES;
+        if (consoleSuite) {
+            NSLog(@"The database has not been updated in 30 days or more");
+        }
+    }
+    
+    // update database if needed
+    if (![Database isPopulated] || needDBUpdate) {
         if (TESTING) {
             if (consoleSuite) {
                 NSLog(@"updating database for testing mode");
@@ -45,23 +60,12 @@
             }
             [Database updateDatabase];
         }
+        
+        [self saveDBUpdateDate];
     }
     
     // check the see if the user has a high score already saved
     [self checkForHighScore];
-    
-    /****** DATE STORAGE FOR DATABASE UPDATE
-    NSDate *todaysDate = [NSDate date];
-    //Create the dateformatter object
-    NSDateFormatter* formatter = [[NSDateFormatter alloc] init] ;
-    
-    //Set the required date format
-    [formatter setDateFormat:@"MM-dd-yyyy"];
-    
-    //Get the string date
-    NSString* str = [formatter stringFromDate:todaysDate];
-    NSLog(str);
-    ******/
         
     [self.window setRootViewController:_homeView];
     [self.window makeKeyAndVisible];
@@ -152,7 +156,7 @@
 }
 
 // method to check Core Data for a user's high score
--(void) checkForHighScore
+- (void) checkForHighScore
 {
     // grab the managed object context
     NSManagedObjectContext *context = self.managedObjectContext;
@@ -169,7 +173,7 @@
     // there is no score in core data, so start the high score at zero
     if ([results count] == 0) {
         if (consoleSuite) {
-            NSLog(@"Fetched no results from Core Data!");
+            NSLog(@"Fetched no high score results from Core Data!");
         }
         
         // since we didn't find anything in Core Data, set the user's high score to zero
@@ -178,7 +182,7 @@
     // parse the Core Data array and choose the highest score
     else {
         if (consoleSuite) {
-            NSLog(@"Fetched %d results from Core Data!", (int)[results count]);
+            NSLog(@"Fetched %d high score results from Core Data!", (int)[results count]);
         }
         
         // process Core Data array for highest score
@@ -197,7 +201,90 @@
             NSLog(@"highest score of %d was found", highScore);
         }
     }
+}
+
+// method to save latest DB update date
+- (void) saveDBUpdateDate
+{
+     NSDate *todaysDate = [NSDate date];
+     //Create the dateformatter object
+     NSDateFormatter* formatter = [[NSDateFormatter alloc] init] ;
+     
+     //Set the required date format
+     [formatter setDateFormat:@"MM-dd-yyyy"];
+     
+     //Get the string date
+     NSString *dateStr = [formatter stringFromDate:todaysDate];
     
+    if (consoleSuite) {
+        NSLog(@"locally saving new database update date of %@", dateStr);
+    }
+    
+    // Create a new managed object context
+    NSManagedObjectContext *context = self.managedObjectContext;
+    
+    // create a new managed object for the database update date
+    NSManagedObject *updateDate;
+    
+    // insert the database update date
+    updateDate = [NSEntityDescription insertNewObjectForEntityForName:@"Device" inManagedObjectContext:context];
+    [updateDate setValue:[NSString stringWithString:dateStr] forKey:@"lastDBUpdate"];
+    
+    NSError *error;
+    // Save the object to persistent store
+    if (![context save:&error]) {
+        if (consoleSuite) {
+            NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+        }
+    }
+}
+
+// method to check for the date of last database update
+- (NSString*) checkForDBUpdateDate
+{
+    // grab the managed object context
+    NSManagedObjectContext *context = self.managedObjectContext;
+    
+    // create the Core Data request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Device" inManagedObjectContext:managedObjectContext];
+    [request setEntity:entity];
+    
+    // execute the request
+    NSError *error = nil;
+    NSArray *results = [context executeFetchRequest:request error:&error];
+    
+    // there is no date for the previous DB update, so return nil
+    if ([results count] == 0) {
+        if (consoleSuite) {
+            NSLog(@"Fetched no database update results from Core Data!");
+        }
+        
+        // since we didn't find anything in Core Data, return nil
+        return nil;
+    }
+    // parse through the Core Data array and grab the most recent database update date
+    else {
+        if (consoleSuite) {
+            NSLog(@"Fetched %d database update results from Core Data!", (int)[results count]);
+        }
+        
+        // process Core Data array for most recent update date
+        NSString *lastUpdate = nil;
+        for (int i = 0; i < [results count]; i++) {
+            Device *devSave = results[i];
+            NSString *devUpdate = devSave.lastDBUpdate;
+            if (devUpdate != nil) {
+                lastUpdate = devUpdate;
+            }
+        }
+        
+        if (consoleSuite) {
+            NSLog(@"most recent database update on %@ was found", lastUpdate);
+        }
+        
+        return lastUpdate;
+    }
 }
 
 @end

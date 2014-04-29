@@ -37,6 +37,8 @@
 - (void) applicationDidBecomeActive:(UIApplication *)application;
 - (void) applicationWillTerminate:(UIApplication *)application;
 
--(void) checkForHighScore;
+- (void) checkForHighScore;
+- (void) saveDBUpdateDate;
+- (NSString*) checkForDBUpdateDate;
 
 @end
